@@ -11,10 +11,16 @@ using System.Windows.Forms;
 namespace QuanLyData {
   public class cau_hinh {
     public Guid id { get; set; }
-    public int idBatdongbo { get; set; }
     public bool DelImportTruocImport { get; set; }
     public int MaxTop { get; set; }
     public bool IsExportTxt { get; set; }
+  }
+  public class dm_batdongbo {
+    public int id { get; set; }
+    public string ma { get; set; }
+    public string name { get; set; }
+    public int orderid { get; set; }
+    public bool isAct { get; set; }
   }
   public class dm_column {
     public Guid id { get; set; }
@@ -24,6 +30,8 @@ namespace QuanLyData {
     public bool isKey { get; set; }
     public bool isAct { get; set; }
     public bool IsReport { get; set; }
+    public bool isOrder { get; set; }
+    public bool isSearch { get; set; }
     public int orderid { get; set; }
   }
   public class dm_Character {
@@ -73,6 +81,139 @@ namespace QuanLyData {
     }
     #endregion // Fields
 
+    #region dm_batdongbo
+    public static List<dm_batdongbo> Loaddm_batdongbo(string sql) {
+      SqlConnection cnn = null;
+      SqlCommand cmd = null;
+      SqlDataReader reader = null;
+      dm_batdongbo InfoCOMMANDTABLE;
+      List<dm_batdongbo> InfoCOMMANDTABLEs = null;
+
+      try {
+        InfoCOMMANDTABLEs = new List<dm_batdongbo>();
+
+        cnn = new SqlConnection();
+        cnn.ConnectionString = ConnectionString;
+        cnn.Open();
+        cnn.FireInfoMessageEventOnUserErrors = false;
+
+        cmd = new SqlCommand();
+        cmd.CommandText = sql;
+        cmd.Connection = cnn;
+        reader = cmd.ExecuteReader();
+        while (reader.Read()) {
+          InfoCOMMANDTABLE = new dm_batdongbo();
+
+
+          if (!reader.IsDBNull(0))
+            InfoCOMMANDTABLE.id = reader.GetInt32(0);
+          if (!reader.IsDBNull(1))
+            InfoCOMMANDTABLE.ma = reader.GetString(1);
+          if (!reader.IsDBNull(2))
+            InfoCOMMANDTABLE.name = reader.GetString(2);
+          if (!reader.IsDBNull(3))
+            InfoCOMMANDTABLE.orderid = reader.GetInt32(3);
+          if (!reader.IsDBNull(4))
+            InfoCOMMANDTABLE.isAct = reader.GetBoolean(4);
+
+          InfoCOMMANDTABLEs.Add(InfoCOMMANDTABLE);
+        }
+        return InfoCOMMANDTABLEs;
+      }
+      catch (Exception ex) {
+        throw ex;
+      }
+      finally {
+        if (cnn.State == ConnectionState.Open)
+          cnn.Close();
+      }
+    }
+
+    public static bool Adddm_batdongbo(dm_batdongbo record) {
+      SqlConnection cnn = null;
+      SqlCommand cmd = null;
+      object objectID;
+      try {
+        if (record == null)
+          return false;
+
+        cnn = new SqlConnection();
+        cnn.ConnectionString = ConnectionString;
+        cnn.FireInfoMessageEventOnUserErrors = false;
+        cnn.Open();
+
+        cmd = new SqlCommand();
+        cmd.Connection = cnn;
+        //--- Insert Record
+        cmd.CommandText = "Insert into dm_batdongbo( ma, name, orderid, isAct) OUTPUT inserted.id " +
+                            "values(  @ma, @name, @orderid, @isAct)";
+
+        cmd.Parameters.AddWithValue("@ma", record.ma);
+        cmd.Parameters.AddWithValue("@name", record.name);
+        cmd.Parameters.AddWithValue("@orderid", record.orderid);
+        cmd.Parameters.AddWithValue("@isAct", record.isAct);
+        objectID = cmd.ExecuteScalar();
+
+        if (objectID == null || objectID == DBNull.Value)
+          return false;
+
+        record.id = Convert.ToInt32(objectID);
+        return true;
+      }
+      catch (Exception ex) {
+        return false;
+      }
+      finally {
+        if (cnn.State == ConnectionState.Open)
+          cnn.Close();
+      }
+    }
+
+
+    public static bool Updm_batdongbo(dm_batdongbo record) {
+      SqlConnection connection = null;
+      SqlCommand cmd = null;
+
+      try {
+        if (record == null) return false;
+
+        // Make connection to database
+        connection = new SqlConnection();
+        connection.ConnectionString = ConnectionString;
+        connection.FireInfoMessageEventOnUserErrors = false;
+        connection.Open();
+        // Create command to update GeneralGuessGroup record
+        cmd = new SqlCommand();
+        cmd.Connection = connection;
+        //id, ma, name, size, isKey, IsAct, IsGiaoDien, IsReport, orderid
+        cmd.CommandText = "Update dm_batdongbo " +
+                            " Set   ma=@ma, " +
+                            "       name=@name," +
+                            "       orderid=@orderid," +
+                            "       IsAct=@IsAct " +
+                            " where ID='" + record.id + "'";
+        cmd.CommandType = CommandType.Text;
+
+        cmd.Parameters.AddWithValue("@ma", record.ma);
+        cmd.Parameters.AddWithValue("@name", record.name);
+        cmd.Parameters.AddWithValue("@orderid", record.orderid);
+        cmd.Parameters.AddWithValue("@IsAct", record.isAct);
+
+        cmd.ExecuteNonQuery();
+        return true;
+      }
+      catch (Exception ex) {
+        MessageBox.Show(ex.Message, "Updm_batdongbo");
+        return false;
+      }
+      finally {
+        if (connection != null)
+          connection.Close();
+      }
+    }
+
+    #endregion
+
     #region Root
 
     public static List<dm_column> Loaddm_column(string sql) {
@@ -113,7 +254,11 @@ namespace QuanLyData {
           if (!reader.IsDBNull(6))
             InfoCOMMANDTABLE.IsReport = reader.GetBoolean(6);
           if (!reader.IsDBNull(7))
-            InfoCOMMANDTABLE.orderid = reader.GetInt32(7);
+            InfoCOMMANDTABLE.isOrder = reader.GetBoolean(7);
+          if (!reader.IsDBNull(8))
+            InfoCOMMANDTABLE.isSearch = reader.GetBoolean(8);
+          if (!reader.IsDBNull(9))
+            InfoCOMMANDTABLE.orderid = reader.GetInt32(9);
           InfoCOMMANDTABLEs.Add(InfoCOMMANDTABLE);
         }
         return InfoCOMMANDTABLEs;
@@ -145,8 +290,8 @@ namespace QuanLyData {
         cmd = new SqlCommand();
         cmd.Connection = cnn;
         //--- Insert Record
-        cmd.CommandText = "Insert into dm_column( ma, name, size, isKey, IsAct,  IsReport, orderid) OUTPUT inserted.id " +
-                            "values( @ma, @name, @size, @isKey, @IsAct,  @IsReport, @orderid)";
+        cmd.CommandText = "Insert into dm_column( ma, name, size, isKey, isAct, IsReport, isSearch, isOrder, orderid) OUTPUT inserted.id " +
+                            "values( @ma, @name, @size, @isKey, @isAct, @IsReport, @isSearch, @isOrder, @orderid)";
 
         cmd.Parameters.AddWithValue("@ma", record.ma);
         cmd.Parameters.AddWithValue("@name", record.name);
@@ -154,6 +299,8 @@ namespace QuanLyData {
         cmd.Parameters.AddWithValue("@isKey", record.isKey);
         cmd.Parameters.AddWithValue("@IsAct", record.isAct);
         cmd.Parameters.AddWithValue("@IsReport", record.IsReport);
+        cmd.Parameters.AddWithValue("@isSearch", record.isSearch);
+        cmd.Parameters.AddWithValue("@isOrder", record.isOrder);
         cmd.Parameters.AddWithValue("@orderid", record.orderid);
         Guid guid = (Guid)cmd.ExecuteScalar();
 
@@ -196,8 +343,10 @@ namespace QuanLyData {
                             "       size=@size," +
                             "       isKey=@isKey," +
                             "       IsAct=@IsAct," +
-                             "      IsReport=@IsReport,"+
-                             "      orderid=@orderid" +
+                            "       IsReport=@IsReport,"+
+                            "       isSearch=@isSearch," +
+                            "       isOrder=@isOrder," +
+                            "       orderid=@orderid" +
                             " where ID='" + record.id + "'";
         cmd.CommandType = CommandType.Text;
 
@@ -207,6 +356,8 @@ namespace QuanLyData {
         cmd.Parameters.AddWithValue("@isKey", record.isKey);
         cmd.Parameters.AddWithValue("@IsAct", record.isAct);
         cmd.Parameters.AddWithValue("@IsReport", record.IsReport);
+        cmd.Parameters.AddWithValue("@isSearch", record.isSearch);
+        cmd.Parameters.AddWithValue("@isOrder", record.isOrder);
         cmd.Parameters.AddWithValue("@orderid", record.orderid);
 
         cmd.ExecuteNonQuery();
@@ -257,8 +408,6 @@ namespace QuanLyData {
             InfoCOMMANDTABLE.MaxTop = reader.GetInt32(2);
           if (!reader.IsDBNull(3))
             InfoCOMMANDTABLE.IsExportTxt = reader.GetBoolean(3);
-          if (!reader.IsDBNull(4))
-            InfoCOMMANDTABLE.idBatdongbo = reader.GetInt32(4);
 
           InfoCOMMANDTABLEs.Add(InfoCOMMANDTABLE);
         }
@@ -291,15 +440,13 @@ namespace QuanLyData {
         cmd.CommandText = "Update cau_hinh " +
                             " Set   DelImportTruocImport=@DelImportTruocImport," +
                             "       MaxTop=@MaxTop," +
-                            "       IsExportTxt=@IsExportTxt,"+
-                            "       Iddm_batdongbo=@Iddm_batdongbo" +
+                            "       IsExportTxt=@IsExportTxt"+
                             " where ID='" + record.id + "'";
         cmd.CommandType = CommandType.Text;
 
         cmd.Parameters.AddWithValue("@DelImportTruocImport", record.DelImportTruocImport);
         cmd.Parameters.AddWithValue("@MaxTop", record.MaxTop);
         cmd.Parameters.AddWithValue("@IsExportTxt", record.IsExportTxt);
-        cmd.Parameters.AddWithValue("@Iddm_batdongbo", record.idBatdongbo);
 
         cmd.ExecuteNonQuery();
         return true;

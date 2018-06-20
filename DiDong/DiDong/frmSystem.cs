@@ -12,17 +12,23 @@ using System.Windows.Forms.VisualStyles;
 
 namespace QuanLyData {
   public partial class frmSystem : Form {
+    private string _strDatabase = "";
+    private cau_hinh cau_Hinh = null;
+
     public frmSystem() {
       InitializeComponent();
     }
+    public String strDatabase {
+      get { return _strDatabase; }
+      set { _strDatabase = value; }
+    }
 
     private void frmSystem_Load(object sender, EventArgs e) {
-      cau_hinh cau_Hinh = null;
       new Waiting(() => {
         cau_Hinh = SQLDatabase.Loadcau_hinh("select * from cau_hinh").FirstOrDefault();
         BindColumn();
         BindCharacter();
-        BindBatdongbo(cau_Hinh.idBatdongbo);
+        BindSQLBatdongbo();
       }).ShowDialog();
 
       if (cau_Hinh.MaxTop == -1) {
@@ -51,7 +57,7 @@ namespace QuanLyData {
     }
     void BindCharacter() {
       try {
-        string str = string.Format("select ROW_NUMBER() OVER(ORDER BY [orderid]) AS stt, * from dm_Character order by OrderId");
+        string str = string.Format("select * from dm_Character order by OrderId");
         DataTable tb = SQLDatabase.ExcDataTable(str);
         gridviewCharacter.Invoke((Action)delegate {
           gridviewCharacter.DataSource = tb;
@@ -61,31 +67,34 @@ namespace QuanLyData {
         MessageBox.Show(ex.Message, "BindGrid");
       }
     }
-    void BindBatdongbo(int values) {
+    void BindSQLBatdongbo() {
       try {
-        string str = string.Format("select ROW_NUMBER() OVER(ORDER BY [orderid]) AS stt, * from dm_batdongbo order by OrderId");
+        string str = string.Format("select * from [dbo].[dm_batdongbo] order by OrderId");
         DataTable tb = SQLDatabase.ExcDataTable(str);
-        cmdBatDongBo.Invoke((Action)delegate {
-          cmdBatDongBo.DataSource = tb;
-          cmdBatDongBo.ValueMember = "id";
-          cmdBatDongBo.DisplayMember = "name";
-          cmdBatDongBo.SelectedValue = values;
+        gridviewSQLDaluong.Invoke((Action)delegate {
+          gridviewSQLDaluong.DataSource = tb;
         });
       }
       catch (Exception ex) {
-        MessageBox.Show(ex.Message, "BindGrid");
+        MessageBox.Show(ex.Message, "BindSQLBatdongbo");
       }
     }
+   
     private void cậpNhậtToolStripMenuItem_Click(object sender, EventArgs e) {
       try {
-        DataTable tb = SQLDatabase.ExcDataTable("SELECT COLUMN_NAME,CHARACTER_MAXIMUM_LENGTH FROM DiDong.INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = N'Root' AND CHARACTER_MAXIMUM_LENGTH IS NOT NULL");
+        string str = string.Format("SELECT COLUMN_NAME,CHARACTER_MAXIMUM_LENGTH FROM {0}.INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = N'Root' AND CHARACTER_MAXIMUM_LENGTH IS NOT NULL", _strDatabase);
+        DataTable tb = SQLDatabase.ExcDataTable(str);
         foreach (DataRow item in tb.Rows) {
           dm_column root = new dm_column();
           root.name = item["COLUMN_NAME"].ToString();
           root.size = ConvertType.ToInt(item["CHARACTER_MAXIMUM_LENGTH"]);
           root.isAct = true;
           root.isKey = false;
+          root.isOrder = false;
+          root.IsReport = true;
+          root.isSearch = false;
           root.ma = item["COLUMN_NAME"].ToString();
+          root.orderid = ConvertType.ToInt(SQLDatabase.ExcDataTable("SELECT MAX(orderid) from dm_column"))+1;
 
           if (ConvertType.ToInt(SQLDatabase.ExcDataTable(string.Format("select count(*) from dm_column where ma='{0}'", root.ma)).Rows[0][0]) == 0) {
             SQLDatabase.Adddm_column(root);
@@ -116,6 +125,8 @@ namespace QuanLyData {
           bool isActive = (Boolean)GridViewColumn.Rows[e.RowIndex].Cells["IsAct"].Value;
           bool isKey = (Boolean)GridViewColumn.Rows[e.RowIndex].Cells["isKey"].Value;
           bool IsReport = (Boolean)GridViewColumn.Rows[e.RowIndex].Cells["IsReport"].Value;
+          bool isSearch = (Boolean)GridViewColumn.Rows[e.RowIndex].Cells["isSearch"].Value;
+          bool isOrder = (Boolean)GridViewColumn.Rows[e.RowIndex].Cells["isOrder"].Value;
           int vitri = ConvertType.ToInt(GridViewColumn.Rows[e.RowIndex].Cells["orderid"].Value);
 
           dm_column dm_column = SQLDatabase.Loaddm_column(string.Format("select * from dm_column where id='{0}'", Id)).FirstOrDefault();
@@ -123,10 +134,12 @@ namespace QuanLyData {
           dm_column.isAct = isActive;
           dm_column.isKey = isKey;
           dm_column.IsReport = IsReport;
+          dm_column.isSearch = isSearch;
+          dm_column.isOrder = isOrder;
           dm_column.orderid = vitri;
           SQLDatabase.Updm_column(dm_column);
 
-          BindColumn();
+         // BindColumn();
         }
       }
       catch (Exception ex) {
@@ -209,7 +222,7 @@ namespace QuanLyData {
           dm_column.orderid = vitri;
           SQLDatabase.Updm_Character(dm_column);
 
-          BindCharacter();
+          //BindCharacter();
         }
       }
       catch (Exception ex) {
@@ -227,7 +240,7 @@ namespace QuanLyData {
         model.ma = "";
         model.name = "";
         model.isAct = false;
-        model.orderid = ConvertType.ToInt(string.Format("select max([orderid]) from dm_Character")) + 1;
+        model.orderid = ConvertType.ToInt(SQLDatabase.ExcDataTable(string.Format("select max([orderid]) from dm_Character")).Rows[0][0]) + 1;
         SQLDatabase.Adddm_Character(model);
         BindCharacter();
       }
@@ -256,7 +269,7 @@ namespace QuanLyData {
     }
 
     private void gridviewCharacter_CellPainting(object sender, DataGridViewCellPaintingEventArgs e) {
-      if (e.ColumnIndex == 5 && e.RowIndex >= 0) {
+      if (e.ColumnIndex ==4 && e.RowIndex >= 0) {
         var value = (bool?)e.FormattedValue;
         e.Paint(e.CellBounds, DataGridViewPaintParts.All & ~DataGridViewPaintParts.ContentForeground);
         var state = value.HasValue && value.Value ?
@@ -301,12 +314,24 @@ namespace QuanLyData {
 
     private void button3_Click(object sender, EventArgs e) {
       try {
-        List<dm_column> dm_Columns = SQLDatabase.Loaddm_column("select * from dm_column order by orderid");
-        string strcommand = "update root set valueskeySearch=";
-        foreach (dm_column item in dm_Columns) {
-          strcommand += string.Format("isnull(dbo.GetUnsignString({0}), '') ", item.ma)+"+";
+        if (ckhvalueskeySearch.Checked) {
+          DialogResult dialogResult = MessageBox.Show("Bạn có muốn chuẩn hoá dữ liệu tìm kiếm lại từ đầu tất cả dữ liệu không?\n 1-Yes:Chuẩn hoá lại từ đầu. \n 2-No: Chỉ những thông tin chưa được chuẩn hoá", "Some Title", MessageBoxButtons.YesNo);
+          if (dialogResult == DialogResult.Yes) {
+            dm_batdongbo model = SQLDatabase.Loaddm_batdongbo("select * from dm_batdongbo where isAct=1").FirstOrDefault();
+            SQLDatabase.ExcNonQuery(String.Format("update root set isSearch = 0 {0}", model.ma));
+          }
+
+          List<dm_column> dm_Columns = SQLDatabase.Loaddm_column("select * from dm_column where isSearch=1  order by orderid ");
+          string strcommand = "update root set valueskeySearch=";
+          foreach (dm_column item in dm_Columns) {
+            strcommand += string.Format("isnull(dbo.GetUnsignString({0}), '') ", item.ma) + "+";
+          }
+          strcommand = strcommand.Substring(0, strcommand.Length - 1);
+          strcommand += ", isSearch=1 where isSearch=0";
+          SQLDatabase.ExcNonQuery(strcommand);
+          MessageBox.Show("Chuẩn hoá thông tin tìm kiếm thành công", "Thông Báo");
         }
-        strcommand += "isUpdate=1 where isUpdate=0";
+
       }
       catch (Exception ex) {
         MessageBox.Show(ex.Message, "button3_Click");
@@ -319,16 +344,116 @@ namespace QuanLyData {
         cau_Hinh.DelImportTruocImport = ckhDelImport.Checked;
         cau_Hinh.MaxTop = ckhSoLuongHienThi.Checked ? -1 : ConvertType.ToInt(numericUpDown1.Value);
         cau_Hinh.IsExportTxt = radText.Checked;
-        cau_Hinh.idBatdongbo = ConvertType.ToInt(cmdBatDongBo.SelectedValue);
+        //cau_Hinh.idBatdongbo = ConvertType.ToInt(cmdBatDongBo.SelectedValue);
         if (SQLDatabase.Upcau_hinh(cau_Hinh)) {
           MessageBox.Show("Lưu cấu hình thành công, vui lòng khởi động lại hệ thống", "Thông Báo");
         }
         else {
-          MessageBox.Show("Lưu cấu hình thâất bại", "Thông Báo");
+          MessageBox.Show("Lưu cấu hình thất bại", "Thông Báo");
         }
       }
       catch (Exception ex) {
         MessageBox.Show(ex.Message, "button1_Click");
+      }
+    }
+
+    private void gridviewSQLDaluong_CellPainting(object sender, DataGridViewCellPaintingEventArgs e) {
+      if (e.ColumnIndex == 5 && e.RowIndex >= 0) {
+        var value = (bool?)e.FormattedValue;
+        e.Paint(e.CellBounds, DataGridViewPaintParts.All & ~DataGridViewPaintParts.ContentForeground);
+        var state = value.HasValue && value.Value ?  RadioButtonState.CheckedNormal : RadioButtonState.UncheckedNormal;
+        var size = RadioButtonRenderer.GetGlyphSize(e.Graphics, state);
+        var location = new Point((e.CellBounds.Width - size.Width) / 2,
+                                    (e.CellBounds.Height - size.Height) / 2);
+        location.Offset(e.CellBounds.Location);
+        RadioButtonRenderer.DrawRadioButton(e.Graphics, location, state);
+        e.Handled = true;
+      }
+    }
+
+    private void gridviewSQLDaluong_CellContentClick(object sender, DataGridViewCellEventArgs e) {
+      bool Value = System.Convert.ToBoolean(gridviewSQLDaluong.Rows[e.RowIndex].Cells["isActSQLBatdongbo"].Value);
+      string id = gridviewSQLDaluong.Rows[e.RowIndex].Cells["idSQLBatdongbo"].Value.ToString();
+      if (Value) {
+        int Index = e.RowIndex;
+        for (int row = 0; row <= gridviewSQLDaluong.Rows.Count - 1; row++) {
+          if (row != Index)
+            gridviewSQLDaluong.Rows[row].Cells["isActSQLBatdongbo"].Value = false;
+        }
+      }
+      else {
+        gridviewSQLDaluong.Rows[e.RowIndex].Cells["isActSQLBatdongbo"].Value = true;
+        int Index = e.RowIndex;
+        for (int row = 0; row <= gridviewSQLDaluong.Rows.Count - 1; row++) {
+          if (row != Index)
+            gridviewSQLDaluong.Rows[row].Cells["isActSQLBatdongbo"].Value = false;
+        }
+      }
+
+      SQLDatabase.ExcNonQuery("update [dm_batdongbo] set [isAct]=0");
+      SQLDatabase.ExcNonQuery(string.Format("update [dm_batdongbo] set [isAct]=1 where id='{0}'", id));
+    }
+
+    private void xoaToolStripMenuItem1_Click(object sender, EventArgs e) {
+      try {
+        dm_batdongbo model = new dm_batdongbo();
+        model.ma = "";
+        model.name = "";
+        model.isAct = false;
+        model.orderid = ConvertType.ToInt(SQLDatabase.ExcDataTable(string.Format("select max([orderid]) from dm_batdongbo")).Rows[0][0]) + 1;
+        SQLDatabase.Adddm_batdongbo(model);
+        BindSQLBatdongbo();
+      }
+      catch (Exception ex) {
+        MessageBox.Show(ex.Message, "xoaToolStripMenuItem1_Click");
+      }
+    }
+
+    private void gridviewSQLDaluong_CellClick(object sender, DataGridViewCellEventArgs e) {
+      try {
+        if (e.ColumnIndex != -1) {
+          if (e.ColumnIndex == 0) {
+            string Id = gridviewSQLDaluong.Rows[e.RowIndex].Cells["idSQLBatdongbo"].Value.ToString();
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc là sẽ xoá SQL bất đồng bộ?", "Xoá Character", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes) {
+              //do something
+              SQLDatabase.ExcNonQuery(String.Format("DELETE FROM [dm_batdongbo] WHERE ID='{0}'", Id));
+              BindSQLBatdongbo();
+            }
+          }
+        }
+      }
+      catch (Exception ex) {
+        MessageBox.Show(ex.Message, "gridviewSQLDaluong_CellClick");
+      }
+    }
+
+    private void lamTươiToolStripMenuItem1_Click(object sender, EventArgs e) {
+      BindSQLBatdongbo();
+    }
+
+    private void gridviewSQLDaluong_CellValueChanged(object sender, DataGridViewCellEventArgs e) {
+      try {
+
+        if (e.RowIndex != -1) {
+          string Id = gridviewSQLDaluong.Rows[e.RowIndex].Cells["idSQLBatdongbo"].Value.ToString();
+          string ma = gridviewSQLDaluong.Rows[e.RowIndex].Cells["maSQLBatdongbo"].Value.ToString();
+          string name = gridviewSQLDaluong.Rows[e.RowIndex].Cells["nameSQLBatdongbo"].Value.ToString();
+          bool isActive = (Boolean)gridviewSQLDaluong.Rows[e.RowIndex].Cells["isActSQLBatdongbo"].Value;
+          int vitri = ConvertType.ToInt(gridviewSQLDaluong.Rows[e.RowIndex].Cells["orderidSQLBatdongbo"].Value);
+
+          dm_batdongbo dm_column = SQLDatabase.Loaddm_batdongbo(string.Format("select * from dm_batdongbo where id='{0}'", Id)).FirstOrDefault();
+          dm_column.ma = ma;
+          dm_column.name = name;
+          dm_column.isAct = isActive;
+          dm_column.orderid = vitri;
+          SQLDatabase.Updm_batdongbo(dm_column);
+
+          //BindCharacter();
+        }
+      }
+      catch (Exception ex) {
+        MessageBox.Show("Unable to save the record. There might be a blank cell. ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
       }
     }
   }

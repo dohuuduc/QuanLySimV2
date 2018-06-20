@@ -24,7 +24,8 @@ namespace QuanLyData {
     private List<string> dscot;
     private string connectionString = "";
     private cau_hinh _cauhinh = null;
-    private string _batdongbosql = "";
+    private dm_batdongbo Dm_Batdongbo=null;
+    private string _strDatabase;
 
     public frmMain() {
 
@@ -32,6 +33,8 @@ namespace QuanLyData {
       CreateColumnGridView();
 
       _Columns = SQLDatabase.Loaddm_column("select * from dm_column order by orderid");
+      _strDatabase = SQLDatabase.ExcDataTable(string.Format("SELECT DB_NAME(0)AS [DatabaseName]; ")).Rows[0]["DatabaseName"].ToString();
+
       this.groupbox = new TableLayoutPanel[_Columns.Count()];
       this.radioButtons = new RadioButton[_Columns.Count()];
       this.combox = new ComboBox[_Columns.Count()];
@@ -51,8 +54,13 @@ namespace QuanLyData {
 
     private void cấuHìnhToolStripMenuItem1_Click(object sender, EventArgs e) {
       try {
+        //frmSystem frm = new frmSystem();
+        //frm.Show();
         frmSystem frm = new frmSystem();
-        frm.Show();
+        frm.strDatabase = _strDatabase;
+        if (frm.ShowDialog() == DialogResult.OK) {
+         
+        }
       }
       catch (Exception ex) {
         MessageBox.Show(ex.Message, "");
@@ -61,7 +69,7 @@ namespace QuanLyData {
 
     private void frmMain_Load(object sender, EventArgs e) {
       _cauhinh = SQLDatabase.Loadcau_hinh("select * from cau_hinh").FirstOrDefault();
-      _batdongbosql = SQLDatabase.ExcDataTable(string.Format("select ma from [dbo].[dm_batdongbo] where id='{0}'",_cauhinh.idBatdongbo)).Rows[0][0].ToString();
+      Dm_Batdongbo = SQLDatabase.Loaddm_batdongbo(string.Format("select * from dm_batdongbo where isAct=1")).FirstOrDefault();
     }
 
     private void button1_Click(object sender, EventArgs e) {
@@ -349,6 +357,7 @@ namespace QuanLyData {
           columns[i].DataPropertyName = model[i].ma;
           columns[i].HeaderText = model[i].name;
           columns[i].Name = model[i].ma;
+          columns[i].Width=180;
         }
       }
       catch (Exception ex) {
@@ -450,7 +459,7 @@ namespace QuanLyData {
         
         CommandToGetCount = string.Format("Select COUNT(*) As TotalRow From dbo.root where valueskeySearch like '%{0}%' ", ConvertType.convertToUnSign3(txtTim.Text));
         CommandToGetCount = string.Format("with roots as (select ROW_NUMBER() Over (Order By creatdate asc) As RowNumber, {0} " +
-                                         " from dbo.root {1} {2}", Utilities.SelectColumn(), txtTim.Text.Trim() == "" ? "" : string.Format("where valueskeySearch like ''%{0}%''", ConvertType.convertToUnSign3(txtTim.Text.Trim())),_batdongbosql);
+                                         " from dbo.root {1} {2}", Utilities.SelectColumn(), txtTim.Text.Trim() == "" ? "" : string.Format("where valueskeySearch like ''%{0}%''", ConvertType.convertToUnSign3(txtTim.Text.Trim())), Dm_Batdongbo.ma.Trim());
         
         cachedData.CommandToGetCount = CommandToGetCount;
         cachedData.CommandToGetData = CommandToGetData;

@@ -1,0 +1,8 @@
+D:\GitHubDesktop\QuanLySimV2\DiDong\DiDong\obj\Release\DiDong.csprojResolveAssemblyReference.cache
+D:\GitHubDesktop\QuanLySimV2\DiDong\DiDong\obj\Release\QuanLyData.frmMain.resources
+D:\GitHubDesktop\QuanLySimV2\DiDong\DiDong\obj\Release\QuanLyData.frmSearch.resources
+D:\GitHubDesktop\QuanLySimV2\DiDong\DiDong\obj\Release\QuanLyData.frmSystem.resources
+D:\GitHubDesktop\QuanLySimV2\DiDong\DiDong\obj\Release\DiDong.Properties.Resources.resources
+D:\GitHubDesktop\QuanLySimV2\DiDong\DiDong\obj\Release\DiDong.Waiting.resources
+D:\GitHubDesktop\QuanLySimV2\DiDong\DiDong\obj\Release\DiDong.csproj.GenerateResource.cache
+D:\GitHubDesktop\QuanLySimV2\DiDong\DiDong\obj\Release\DiDong.csproj.CoreCompileInputs.cache
