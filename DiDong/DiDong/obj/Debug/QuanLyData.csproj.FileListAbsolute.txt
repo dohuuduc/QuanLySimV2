@@ -1,0 +1,12 @@
+C:\Users\luulong\source\repos\QuanLyData\QuanLyData\bin\Debug\QuanLyData.exe.config
+C:\Users\luulong\source\repos\QuanLyData\QuanLyData\bin\Debug\QuanLyData.exe
+C:\Users\luulong\source\repos\QuanLyData\QuanLyData\bin\Debug\QuanLyData.pdb
+C:\Users\luulong\source\repos\QuanLyData\QuanLyData\obj\Debug\QuanLyData.csprojAssemblyReference.cache
+C:\Users\luulong\source\repos\QuanLyData\QuanLyData\obj\Debug\QuanLyData.frmMain.resources
+C:\Users\luulong\source\repos\QuanLyData\QuanLyData\obj\Debug\QuanLyData.frmSearch.resources
+C:\Users\luulong\source\repos\QuanLyData\QuanLyData\obj\Debug\QuanLyData.frmSystem.resources
+C:\Users\luulong\source\repos\QuanLyData\QuanLyData\obj\Debug\QuanLyData.Properties.Resources.resources
+C:\Users\luulong\source\repos\QuanLyData\QuanLyData\obj\Debug\QuanLyData.csproj.GenerateResource.cache
+C:\Users\luulong\source\repos\QuanLyData\QuanLyData\obj\Debug\QuanLyData.csproj.CoreCompileInputs.cache
+C:\Users\luulong\source\repos\QuanLyData\QuanLyData\obj\Debug\QuanLyData.exe
+C:\Users\luulong\source\repos\QuanLyData\QuanLyData\obj\Debug\QuanLyData.pdb

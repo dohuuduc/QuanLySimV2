@@ -1,0 +1,26 @@
+D:\hosocongty\StorePhone\SchemaSpec\bin\Debug\SchemaSpec.dll
+D:\hosocongty\StorePhone\SchemaSpec\bin\Debug\SchemaSpec.pdb
+D:\hosocongty\StorePhone\SchemaSpec\obj\Debug\SchemaSpec.dll
+D:\hosocongty\StorePhone\SchemaSpec\obj\Debug\SchemaSpec.pdb
+D:\hosocongty\StorePhone\SchemaSpec\obj\Debug\SchemaSpec.csprojResolveAssemblyReference.cache
+D:\GitHub Desktop\QuanLySim\SchemaSpec\bin\Debug\SchemaSpec.dll
+D:\GitHub Desktop\QuanLySim\SchemaSpec\bin\Debug\SchemaSpec.pdb
+D:\GitHub Desktop\QuanLySim\SchemaSpec\obj\Debug\SchemaSpec.dll
+D:\GitHub Desktop\QuanLySim\SchemaSpec\obj\Debug\SchemaSpec.pdb
+D:\GitHub Desktop\QuanLySim\StorePhone\bin\Debug\SchemaSpec.dll
+D:\GitHub Desktop\QuanLySim\StorePhone\bin\Debug\SchemaSpec.pdb
+D:\GitHub Desktop\QuanLySim\SchemaSpec\obj\Debug\SchemaSpec.csproj.CoreCompileInputs.cache
+D:\GitHub Desktop\QuanLySim\SchemaSpec\obj\Debug\SchemaSpec.csprojResolveAssemblyReference.cache
+D:\DiDong\StorePhone\bin\Debug\SchemaSpec.dll
+D:\DiDong\StorePhone\bin\Debug\SchemaSpec.pdb
+D:\DiDong\DiDong\bin\Debug\SchemaSpec.dll
+D:\DiDong\DiDong\bin\Debug\SchemaSpec.pdb
+D:\DiDong\SchemaSpec\obj\Debug\SchemaSpec.csproj.CoreCompileInputs.cache
+D:\DiDong\SchemaSpec\obj\Debug\SchemaSpec.dll
+D:\DiDong\SchemaSpec\obj\Debug\SchemaSpec.pdb
+D:\XoaTam\DiDong\DiDong\DiDong\bin\Debug\SchemaSpec.dll
+D:\XoaTam\DiDong\DiDong\DiDong\bin\Debug\SchemaSpec.pdb
+D:\XoaTam\DiDong\DiDong\SchemaSpec\obj\Debug\SchemaSpec.csproj.CoreCompileInputs.cache
+D:\XoaTam\DiDong\DiDong\SchemaSpec\obj\Debug\SchemaSpec.dll
+D:\XoaTam\DiDong\DiDong\SchemaSpec\obj\Debug\SchemaSpec.pdb
+D:\XoaTam\DiDong\DiDong\SchemaSpec\obj\Debug\SchemaSpec.csprojResolveAssemblyReference.cache
