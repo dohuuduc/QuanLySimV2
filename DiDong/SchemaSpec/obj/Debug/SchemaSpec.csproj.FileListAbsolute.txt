@@ -30,3 +30,9 @@ D:\GitHubDesktop\QuanLySimV2\DiDong\SchemaSpec\obj\Debug\SchemaSpec.csproj.CoreC
 D:\GitHubDesktop\QuanLySimV2\DiDong\SchemaSpec\obj\Debug\SchemaSpec.dll
 D:\GitHubDesktop\QuanLySimV2\DiDong\SchemaSpec\obj\Debug\SchemaSpec.pdb
 D:\GitHubDesktop\QuanLySimV2\DiDong\SchemaSpec\obj\Debug\SchemaSpec.csprojResolveAssemblyReference.cache
+C:\Users\luulong\Documents\GitHub\QuanLySimV2\DiDong\DiDong\bin\Debug\SchemaSpec.dll
+C:\Users\luulong\Documents\GitHub\QuanLySimV2\DiDong\DiDong\bin\Debug\SchemaSpec.pdb
+C:\Users\luulong\Documents\GitHub\QuanLySimV2\DiDong\SchemaSpec\obj\Debug\SchemaSpec.csproj.CoreCompileInputs.cache
+C:\Users\luulong\Documents\GitHub\QuanLySimV2\DiDong\SchemaSpec\obj\Debug\SchemaSpec.dll
+C:\Users\luulong\Documents\GitHub\QuanLySimV2\DiDong\SchemaSpec\obj\Debug\SchemaSpec.pdb
+C:\Users\luulong\Documents\GitHub\QuanLySimV2\DiDong\SchemaSpec\obj\Debug\SchemaSpec.csprojAssemblyReference.cache

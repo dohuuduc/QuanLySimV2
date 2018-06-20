@@ -771,8 +771,8 @@ namespace QuanLyData {
             sqlcommand += "FROM [" + tableName + "] Order by " + columnNames[0];
             break;
           default:
-            for (int i = 0; i < columnNames.Length; i++) {
-              if (i == columnNames.Length - 1)
+            for (int i = 0; i < columnNames.Where(p=>p.Length>0).ToArray().Length; i++) {
+              if (i == columnNames.Where(p => p.Length > 0).ToArray().Length - 1)
                 sqlcommand += "[" + columnNames[i] + "] ";
               else
                 sqlcommand += "[" + columnNames[i] + "],";

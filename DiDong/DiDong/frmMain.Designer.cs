@@ -37,9 +37,18 @@
       this.tabPage2 = new System.Windows.Forms.TabPage();
       this.panel1 = new System.Windows.Forms.Panel();
       this.panel2 = new System.Windows.Forms.Panel();
+      this.panel3 = new System.Windows.Forms.Panel();
+      this.panel5 = new System.Windows.Forms.Panel();
+      this.panel6 = new System.Windows.Forms.Panel();
       this.tabControl2 = new System.Windows.Forms.TabControl();
       this.tabPage3 = new System.Windows.Forms.TabPage();
+      this.dataGridView_tontai = new System.Windows.Forms.DataGridView();
       this.tabPage4 = new System.Windows.Forms.TabPage();
+      this.panel4 = new System.Windows.Forms.Panel();
+      this.panel8 = new System.Windows.Forms.Panel();
+      this.progressBar1 = new System.Windows.Forms.ProgressBar();
+      this.panel7 = new System.Windows.Forms.Panel();
+      this.lblmessage = new System.Windows.Forms.Label();
       this.groupBox2 = new System.Windows.Forms.GroupBox();
       this.palSIPLogs = new System.Windows.Forms.TableLayoutPanel();
       this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -51,6 +60,12 @@
       this.txt_FileName = new System.Windows.Forms.TextBox();
       this.btn_Import = new System.Windows.Forms.Button();
       this.label3 = new System.Windows.Forms.Label();
+      this.dataGrid_ListTelNumberNew = new System.Windows.Forms.DataGridView();
+      this.btnXoaTrungGoc = new System.Windows.Forms.Button();
+      this.button8 = new System.Windows.Forms.Button();
+      this.button4 = new System.Windows.Forms.Button();
+      this.button7 = new System.Windows.Forms.Button();
+      this.button5 = new System.Windows.Forms.Button();
       this.menuStrip1.SuspendLayout();
       this.tabControl1.SuspendLayout();
       this.tabPage1.SuspendLayout();
@@ -60,9 +75,19 @@
       this.tabPage2.SuspendLayout();
       this.panel1.SuspendLayout();
       this.panel2.SuspendLayout();
+      this.panel3.SuspendLayout();
+      this.panel5.SuspendLayout();
+      this.panel6.SuspendLayout();
       this.tabControl2.SuspendLayout();
+      this.tabPage3.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.dataGridView_tontai)).BeginInit();
+      this.tabPage4.SuspendLayout();
+      this.panel4.SuspendLayout();
+      this.panel8.SuspendLayout();
+      this.panel7.SuspendLayout();
       this.groupBox2.SuspendLayout();
       this.groupBox3.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.dataGrid_ListTelNumberNew)).BeginInit();
       this.SuspendLayout();
       // 
       // menuStrip1
@@ -86,7 +111,7 @@
       // cấuHìnhToolStripMenuItem1
       // 
       this.cấuHìnhToolStripMenuItem1.Name = "cấuHìnhToolStripMenuItem1";
-      this.cấuHìnhToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
+      this.cấuHìnhToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
       this.cấuHìnhToolStripMenuItem1.Text = "Cấu Hình";
       this.cấuHìnhToolStripMenuItem1.Click += new System.EventHandler(this.cấuHìnhToolStripMenuItem1_Click);
       // 
@@ -128,11 +153,13 @@
       // 
       this.GridViewMain.AllowUserToAddRows = false;
       this.GridViewMain.AllowUserToResizeRows = false;
+      this.GridViewMain.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
       this.GridViewMain.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
       this.GridViewMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
       this.GridViewMain.Dock = System.Windows.Forms.DockStyle.Fill;
       this.GridViewMain.Location = new System.Drawing.Point(3, 16);
       this.GridViewMain.Name = "GridViewMain";
+      this.GridViewMain.RowHeadersVisible = false;
       this.GridViewMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
       this.GridViewMain.Size = new System.Drawing.Size(827, 327);
       this.GridViewMain.TabIndex = 1;
@@ -206,12 +233,40 @@
       // 
       // panel2
       // 
-      this.panel2.Controls.Add(this.tabControl2);
+      this.panel2.Controls.Add(this.panel3);
       this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
       this.panel2.Location = new System.Drawing.Point(0, 177);
       this.panel2.Name = "panel2";
       this.panel2.Size = new System.Drawing.Size(833, 170);
       this.panel2.TabIndex = 5;
+      // 
+      // panel3
+      // 
+      this.panel3.Controls.Add(this.panel5);
+      this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.panel3.Location = new System.Drawing.Point(0, 0);
+      this.panel3.Name = "panel3";
+      this.panel3.Size = new System.Drawing.Size(833, 170);
+      this.panel3.TabIndex = 1;
+      // 
+      // panel5
+      // 
+      this.panel5.Controls.Add(this.panel6);
+      this.panel5.Controls.Add(this.panel4);
+      this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.panel5.Location = new System.Drawing.Point(0, 0);
+      this.panel5.Name = "panel5";
+      this.panel5.Size = new System.Drawing.Size(833, 170);
+      this.panel5.TabIndex = 1;
+      // 
+      // panel6
+      // 
+      this.panel6.Controls.Add(this.tabControl2);
+      this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.panel6.Location = new System.Drawing.Point(0, 0);
+      this.panel6.Name = "panel6";
+      this.panel6.Size = new System.Drawing.Size(833, 145);
+      this.panel6.TabIndex = 3;
       // 
       // tabControl2
       // 
@@ -221,28 +276,97 @@
       this.tabControl2.Location = new System.Drawing.Point(0, 0);
       this.tabControl2.Name = "tabControl2";
       this.tabControl2.SelectedIndex = 0;
-      this.tabControl2.Size = new System.Drawing.Size(833, 170);
+      this.tabControl2.Size = new System.Drawing.Size(833, 145);
       this.tabControl2.TabIndex = 0;
       // 
       // tabPage3
       // 
+      this.tabPage3.Controls.Add(this.btnXoaTrungGoc);
+      this.tabPage3.Controls.Add(this.button8);
+      this.tabPage3.Controls.Add(this.button4);
+      this.tabPage3.Controls.Add(this.dataGridView_tontai);
       this.tabPage3.Location = new System.Drawing.Point(4, 22);
       this.tabPage3.Name = "tabPage3";
       this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPage3.Size = new System.Drawing.Size(825, 144);
+      this.tabPage3.Size = new System.Drawing.Size(825, 119);
       this.tabPage3.TabIndex = 0;
-      this.tabPage3.Text = "tabPage3";
+      this.tabPage3.Text = "Khách Hàng Đã Tồn Tại Ở File Gốc";
       this.tabPage3.UseVisualStyleBackColor = true;
+      // 
+      // dataGridView_tontai
+      // 
+      this.dataGridView_tontai.AllowUserToAddRows = false;
+      this.dataGridView_tontai.AllowUserToDeleteRows = false;
+      this.dataGridView_tontai.AllowUserToOrderColumns = true;
+      this.dataGridView_tontai.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+      this.dataGridView_tontai.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+      this.dataGridView_tontai.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.dataGridView_tontai.Location = new System.Drawing.Point(3, 3);
+      this.dataGridView_tontai.Name = "dataGridView_tontai";
+      this.dataGridView_tontai.RowHeadersVisible = false;
+      this.dataGridView_tontai.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+      this.dataGridView_tontai.Size = new System.Drawing.Size(819, 113);
+      this.dataGridView_tontai.TabIndex = 0;
       // 
       // tabPage4
       // 
+      this.tabPage4.Controls.Add(this.button7);
+      this.tabPage4.Controls.Add(this.button5);
+      this.tabPage4.Controls.Add(this.dataGrid_ListTelNumberNew);
       this.tabPage4.Location = new System.Drawing.Point(4, 22);
       this.tabPage4.Name = "tabPage4";
       this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPage4.Size = new System.Drawing.Size(825, 144);
+      this.tabPage4.Size = new System.Drawing.Size(825, 119);
       this.tabPage4.TabIndex = 1;
-      this.tabPage4.Text = "tabPage4";
+      this.tabPage4.Text = "Khách Hàng Chưa Tồn Tại Ở File Gốc";
       this.tabPage4.UseVisualStyleBackColor = true;
+      // 
+      // panel4
+      // 
+      this.panel4.Controls.Add(this.panel8);
+      this.panel4.Controls.Add(this.panel7);
+      this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
+      this.panel4.Location = new System.Drawing.Point(0, 145);
+      this.panel4.Name = "panel4";
+      this.panel4.Size = new System.Drawing.Size(833, 25);
+      this.panel4.TabIndex = 2;
+      // 
+      // panel8
+      // 
+      this.panel8.Controls.Add(this.progressBar1);
+      this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.panel8.Location = new System.Drawing.Point(0, 0);
+      this.panel8.Name = "panel8";
+      this.panel8.Size = new System.Drawing.Size(785, 25);
+      this.panel8.TabIndex = 1;
+      // 
+      // progressBar1
+      // 
+      this.progressBar1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.progressBar1.Location = new System.Drawing.Point(0, 0);
+      this.progressBar1.Name = "progressBar1";
+      this.progressBar1.Size = new System.Drawing.Size(785, 25);
+      this.progressBar1.TabIndex = 0;
+      // 
+      // panel7
+      // 
+      this.panel7.Controls.Add(this.lblmessage);
+      this.panel7.Dock = System.Windows.Forms.DockStyle.Right;
+      this.panel7.Location = new System.Drawing.Point(785, 0);
+      this.panel7.Name = "panel7";
+      this.panel7.Size = new System.Drawing.Size(48, 25);
+      this.panel7.TabIndex = 0;
+      // 
+      // lblmessage
+      // 
+      this.lblmessage.AutoSize = true;
+      this.lblmessage.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.lblmessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+      this.lblmessage.Location = new System.Drawing.Point(0, 0);
+      this.lblmessage.Name = "lblmessage";
+      this.lblmessage.Size = new System.Drawing.Size(54, 20);
+      this.lblmessage.TabIndex = 0;
+      this.lblmessage.Text = "100%";
       // 
       // groupBox2
       // 
@@ -299,6 +423,9 @@
       // 
       this.cbb_TypeDataSource.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
       this.cbb_TypeDataSource.FormattingEnabled = true;
+      this.cbb_TypeDataSource.Items.AddRange(new object[] {
+            "Text (* txt)",
+            "SQLServer"});
       this.cbb_TypeDataSource.Location = new System.Drawing.Point(6, 15);
       this.cbb_TypeDataSource.Name = "cbb_TypeDataSource";
       this.cbb_TypeDataSource.Size = new System.Drawing.Size(112, 21);
@@ -324,6 +451,7 @@
       this.btn_View.TabIndex = 7;
       this.btn_View.Text = "Xem Trước";
       this.btn_View.UseVisualStyleBackColor = true;
+      this.btn_View.Click += new System.EventHandler(this.btn_View_Click);
       // 
       // button2
       // 
@@ -375,6 +503,72 @@
       this.label3.TabIndex = 3;
       this.label3.Text = "Tập Tin:";
       // 
+      // dataGrid_ListTelNumberNew
+      // 
+      this.dataGrid_ListTelNumberNew.AllowUserToAddRows = false;
+      this.dataGrid_ListTelNumberNew.AllowUserToDeleteRows = false;
+      this.dataGrid_ListTelNumberNew.AllowUserToResizeColumns = false;
+      this.dataGrid_ListTelNumberNew.AllowUserToResizeRows = false;
+      this.dataGrid_ListTelNumberNew.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+      this.dataGrid_ListTelNumberNew.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+      this.dataGrid_ListTelNumberNew.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.dataGrid_ListTelNumberNew.Location = new System.Drawing.Point(3, 3);
+      this.dataGrid_ListTelNumberNew.Name = "dataGrid_ListTelNumberNew";
+      this.dataGrid_ListTelNumberNew.RowHeadersVisible = false;
+      this.dataGrid_ListTelNumberNew.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+      this.dataGrid_ListTelNumberNew.Size = new System.Drawing.Size(819, 113);
+      this.dataGrid_ListTelNumberNew.TabIndex = 1;
+      // 
+      // btnXoaTrungGoc
+      // 
+      this.btnXoaTrungGoc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.btnXoaTrungGoc.Location = new System.Drawing.Point(750, 90);
+      this.btnXoaTrungGoc.Name = "btnXoaTrungGoc";
+      this.btnXoaTrungGoc.Size = new System.Drawing.Size(70, 23);
+      this.btnXoaTrungGoc.TabIndex = 12;
+      this.btnXoaTrungGoc.Text = "Xoá Gốc";
+      this.btnXoaTrungGoc.UseVisualStyleBackColor = true;
+      // 
+      // button8
+      // 
+      this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.button8.Location = new System.Drawing.Point(592, 90);
+      this.button8.Name = "button8";
+      this.button8.Size = new System.Drawing.Size(75, 23);
+      this.button8.TabIndex = 11;
+      this.button8.Text = "Xuất file";
+      this.button8.UseVisualStyleBackColor = true;
+      // 
+      // button4
+      // 
+      this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.button4.Location = new System.Drawing.Point(671, 90);
+      this.button4.Name = "button4";
+      this.button4.Size = new System.Drawing.Size(75, 23);
+      this.button4.TabIndex = 10;
+      this.button4.Text = "Cập Nhật";
+      this.button4.UseVisualStyleBackColor = true;
+      // 
+      // button7
+      // 
+      this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.button7.Location = new System.Drawing.Point(744, 90);
+      this.button7.Name = "button7";
+      this.button7.Size = new System.Drawing.Size(75, 23);
+      this.button7.TabIndex = 9;
+      this.button7.Text = "Xuất file";
+      this.button7.UseVisualStyleBackColor = true;
+      // 
+      // button5
+      // 
+      this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.button5.Location = new System.Drawing.Point(668, 90);
+      this.button5.Name = "button5";
+      this.button5.Size = new System.Drawing.Size(75, 23);
+      this.button5.TabIndex = 8;
+      this.button5.Text = "Thêm vào dữ liệu gốc";
+      this.button5.UseVisualStyleBackColor = true;
+      // 
       // frmMain
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -396,10 +590,21 @@
       this.tabPage2.ResumeLayout(false);
       this.panel1.ResumeLayout(false);
       this.panel2.ResumeLayout(false);
+      this.panel3.ResumeLayout(false);
+      this.panel5.ResumeLayout(false);
+      this.panel6.ResumeLayout(false);
       this.tabControl2.ResumeLayout(false);
+      this.tabPage3.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.dataGridView_tontai)).EndInit();
+      this.tabPage4.ResumeLayout(false);
+      this.panel4.ResumeLayout(false);
+      this.panel8.ResumeLayout(false);
+      this.panel7.ResumeLayout(false);
+      this.panel7.PerformLayout();
       this.groupBox2.ResumeLayout(false);
       this.groupBox3.ResumeLayout(false);
       this.groupBox3.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.dataGrid_ListTelNumberNew)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -435,6 +640,21 @@
     private System.Windows.Forms.GroupBox groupBox2;
     private System.Windows.Forms.TableLayoutPanel palSIPLogs;
     private System.Windows.Forms.GroupBox groupMain;
+    private System.Windows.Forms.Panel panel3;
+    private System.Windows.Forms.Panel panel5;
+    private System.Windows.Forms.Panel panel6;
+    private System.Windows.Forms.DataGridView dataGridView_tontai;
+    private System.Windows.Forms.Panel panel4;
+    private System.Windows.Forms.Panel panel8;
+    private System.Windows.Forms.ProgressBar progressBar1;
+    private System.Windows.Forms.Panel panel7;
+    private System.Windows.Forms.Label lblmessage;
+    private System.Windows.Forms.DataGridView dataGrid_ListTelNumberNew;
+    private System.Windows.Forms.Button btnXoaTrungGoc;
+    private System.Windows.Forms.Button button8;
+    private System.Windows.Forms.Button button4;
+    private System.Windows.Forms.Button button7;
+    private System.Windows.Forms.Button button5;
   }
 }
 

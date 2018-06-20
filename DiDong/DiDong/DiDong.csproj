@@ -61,6 +61,12 @@
     <Compile Include="frmSearch.Designer.cs">
       <DependentUpon>frmSearch.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmSQLServer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSQLServer.Designer.cs">
+      <DependentUpon>frmSQLServer.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmSystem.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -83,6 +89,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmSearch.resx">
       <DependentUpon>frmSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSQLServer.resx">
+      <DependentUpon>frmSQLServer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmSystem.resx">
       <DependentUpon>frmSystem.cs</DependentUpon>

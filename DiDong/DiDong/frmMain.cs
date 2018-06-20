@@ -10,6 +10,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace QuanLyData {
@@ -26,11 +28,15 @@ namespace QuanLyData {
     private cau_hinh _cauhinh = null;
     private dm_batdongbo Dm_Batdongbo=null;
     private string _strDatabase;
-
+    private string _strDatabase2;
+    private string _strTable2;
     public frmMain() {
 
       InitializeComponent();
-      CreateColumnGridView();
+      CreateColumnGridView(GridViewMain);
+      CreateColumnGridView(dataGridView_tontai);
+      CreateColumnGridView(dataGrid_ListTelNumberNew);
+      
 
       _Columns = SQLDatabase.Loaddm_column("select * from dm_column order by orderid");
       _strDatabase = SQLDatabase.ExcDataTable(string.Format("SELECT DB_NAME(0)AS [DatabaseName]; ")).Rows[0]["DatabaseName"].ToString();
@@ -70,6 +76,9 @@ namespace QuanLyData {
     private void frmMain_Load(object sender, EventArgs e) {
       _cauhinh = SQLDatabase.Loadcau_hinh("select * from cau_hinh").FirstOrDefault();
       Dm_Batdongbo = SQLDatabase.Loaddm_batdongbo(string.Format("select * from dm_batdongbo where isAct=1")).FirstOrDefault();
+      cbb_TypeDataSource.SelectedIndex = 0;
+      dm_Character dm_Character = SQLDatabase.Loaddm_Character("select * from dm_Character where isAct=1").FirstOrDefault();
+      groupBox3.Text = string.Format("Dữ Liệu Nguồn (TXT: {0})", dm_Character.name);
     }
 
     private void button1_Click(object sender, EventArgs e) {
@@ -89,17 +98,25 @@ namespace QuanLyData {
       string[] fileNames;
 
       try {
-        openFile = new OpenFileDialog();
-        openFile.Filter = "Text File (*.txt)|*.txt|All files (*.*)|*.*";
+        if (cbb_TypeDataSource.SelectedIndex == 0) {
+          openFile = new OpenFileDialog();
+          openFile.Filter = "Text File (*.txt)|*.txt|All files (*.*)|*.*";
 
-        if (openFile.ShowDialog() == DialogResult.OK) {
-          txt_FileName.Text = openFile.FileName;
-          NamesFile = openFile.SafeFileName;
-          fileNames = openFile.FileName.Split('.');
-          //if (fileNames[fileNames.Length - 1] == "txt" || fileNames[fileNames.Length - 1] == "TXT")
-          //  EnabledControl(false);
-          //else
-          //  EnabledControl(true);
+          if (openFile.ShowDialog() == DialogResult.OK) {
+            txt_FileName.Text = openFile.FileName;
+            NamesFile = openFile.SafeFileName;
+            fileNames = openFile.FileName.Split('.');
+          }
+        }
+        else {
+          frmSQLServer frm = new frmSQLServer();
+          if (frm.ShowDialog() == DialogResult.OK) {
+            _strDatabase2 = frm.strDatatable;
+            _strTable2 = frm.strTable;
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(SQLDatabase.ConnectionString);
+            connectionString = txt_FileName.Text = string.Format("Provider=sqloledb;Data Source={0};Initial Catalog={1};Integrated Security = SSPI;",builder.DataSource, frm.strDatatable);
+            
+          }
         }
       }
       catch (Exception ex) {
@@ -115,111 +132,133 @@ namespace QuanLyData {
       // DataTable tbGetNameDisplay;
       dscot = new List<string>();
       try {
+        
         if (string.IsNullOrEmpty(txt_FileName.Text)) {
           MessageBox.Show("Chưa có 'dữ liệu nguồn' cần lưu", "load Data Source", MessageBoxButtons.OK, MessageBoxIcon.Warning);
           return;
         }
         else {
-          fileInfo = new FileInfo(txt_FileName.Text);
-          if (fileInfo.Exists == false) {
-            MessageBox.Show("Đường dẫn hoặc tên tập tin của dữ liệu nguồn không đúng. Vui lòng kiểm tra lại !", "load Data Source", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            return;
-          }
-          else {
-            /*kiễm tra định nghĩ cấu hình file txt*/
-            string path = Path.GetDirectoryName(txt_FileName.Text);
-
-            SchemaSpec.SchemeDef sdef = new SchemaSpec.SchemeDef();
-            if (Settings.Default.SchemaSpec == null) {
-              //if (sdef == null)
-              //{
-              sdef.DelimiterType = SchemaSpec.SchemeDef.DelimType.TabDelimited;
-              sdef.UsesHeader = SchemeDef.FirstRowHeader.No;
-              List<ItemSpecification> ColumnDefinition = new List<ItemSpecification>();
-              int i = 1;
-              foreach (dm_column item in _Columns) {
-                ColumnDefinition.Add(new ItemSpecification() { ColumnNumber = i, Name = i.ToString(), ColumnWidth = item.size, TypeData = ItemSpecification.JetDataType.Text });
-                i++;
-              }
-
-              sdef.ColumnDefinition = ColumnDefinition;
-              Settings.Default.SchemaSpec = sdef;
-              Settings.Default.Save();
-              //}
+          if (cbb_TypeDataSource.SelectedIndex == 0) {
+            fileInfo = new FileInfo(txt_FileName.Text);
+            if (fileInfo.Exists == false) {
+              MessageBox.Show("Đường dẫn hoặc tên tập tin của dữ liệu nguồn không đúng. Vui lòng kiểm tra lại !", "load Data Source", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+              return;
             }
             else {
-              sdef = Settings.Default.SchemaSpec;
-            }
-            CreateSchemaIni(txt_FileName.Text);
-            dm_Character dm_Character = SQLDatabase.Loaddm_Character(string.Format("select top 1 * from dm_Character where isAct=1")).FirstOrDefault();
-            // create a variable to hold the connection string
-            string connbit = string.Empty;
-            switch (sdef.DelimiterType) {
-              case SchemaSpec.SchemeDef.DelimType.CsvDelimited:
-                if (sdef.UsesHeader == SchemaSpec.SchemeDef.FirstRowHeader.Yes)
-                  connbit = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + string.Format(@";Extended Properties=""Text;HDR=Yes;FMT=CsvDelimited;CharacterSet={0}""", dm_Character.ma);
-                else
-                  connbit = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + string.Format(@";Extended Properties=""Text;HDR=No;FMT=CsvDelimited;CharacterSet={0}""", dm_Character.ma);
-                break;
-              case SchemaSpec.SchemeDef.DelimType.CustomDelimited:
-                if (sdef.UsesHeader == SchemaSpec.SchemeDef.FirstRowHeader.Yes)
-                  connbit = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + @";Extended Properties=""Text;HDR=Yes;CharacterSet=" + dm_Character.ma + ";FMT=Delimited(" + sdef.CustomDelimiter + ")" + "\"";
-                else
-                  connbit = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + @";Extended Properties=""Text;HDR=No;CharacterSet=" + dm_Character.ma + ";FMT=Delimited(" + sdef.CustomDelimiter + ")" + "\"";
-                break;
-              case SchemaSpec.SchemeDef.DelimType.FixedWidth:
-                if (sdef.UsesHeader == SchemaSpec.SchemeDef.FirstRowHeader.Yes)
-                  connbit = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + string.Format(@";Extended Properties=""Text;HDR=Yes;CharacterSet={0};FMT=FixedLength""", dm_Character.ma);
-                else
-                  connbit = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + string.Format(@";Extended Properties=""Text;HDR=No;CharacterSet={0};FMT=FixedLength""", dm_Character.ma);
-                break;
-              case SchemaSpec.SchemeDef.DelimType.TabDelimited:
-                if (sdef.UsesHeader == SchemaSpec.SchemeDef.FirstRowHeader.Yes)
-                  connbit = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + string.Format(@";Extended Properties=""Text;HDR=Yes;CharacterSet={0};FMT=TabDelimited""", dm_Character.ma);
-                else
-                  connbit = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + string.Format(@";Extended Properties=""Text;HDR=No;CharacterSet={0};FMT=TabDelimited""", dm_Character.ma);
-                break;
-              default:
-                break;
-            }
+              /*kiễm tra định nghĩ cấu hình file txt*/
+              string path = Path.GetDirectoryName(txt_FileName.Text);
 
-            // put the connection string into the properties and save the properties
-            DiDong.Properties.Settings.Default.ConnString = connbit;
-            DiDong.Properties.Settings.Default.Save();
+              SchemaSpec.SchemeDef sdef = new SchemaSpec.SchemeDef();
+              if (Settings.Default.SchemaSpec == null) {
+                //if (sdef == null)
+                //{
+                sdef.DelimiterType = SchemaSpec.SchemeDef.DelimType.TabDelimited;
+                sdef.UsesHeader = SchemeDef.FirstRowHeader.No;
+                List<ItemSpecification> ColumnDefinition = new List<ItemSpecification>();
+                int i = 1;
+                foreach (dm_column item in _Columns) {
+                  ColumnDefinition.Add(new ItemSpecification() { ColumnNumber = i, Name = i.ToString(), ColumnWidth = item.size, TypeData = ItemSpecification.JetDataType.Text });
+                  i++;
+                }
 
-            // make sure we have a connection string before proceeding
-            if (String.IsNullOrEmpty(connbit)) {
-              MessageBox.Show("Mẫu không hợp lệ; sử dụng tiện ích lược đồ để xác định giản đồ cho tệp bạn đang cần mở", "Thông Báo");
-            }
+                sdef.ColumnDefinition = ColumnDefinition;
+                Settings.Default.SchemaSpec = sdef;
+                Settings.Default.Save();
+                //}
+              }
+              else {
+                sdef = Settings.Default.SchemaSpec;
+              }
+              CreateSchemaIni(txt_FileName.Text);
+              dm_Character dm_Character = SQLDatabase.Loaddm_Character(string.Format("select top 1 * from dm_Character where isAct=1")).FirstOrDefault();
+              // create a variable to hold the connection string
+              string connbit = string.Empty;
+              switch (sdef.DelimiterType) {
+                case SchemaSpec.SchemeDef.DelimType.CsvDelimited:
+                  if (sdef.UsesHeader == SchemaSpec.SchemeDef.FirstRowHeader.Yes)
+                    connbit = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + string.Format(@";Extended Properties=""Text;HDR=Yes;FMT=CsvDelimited;CharacterSet={0}""", dm_Character.ma);
+                  else
+                    connbit = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + string.Format(@";Extended Properties=""Text;HDR=No;FMT=CsvDelimited;CharacterSet={0}""", dm_Character.ma);
+                  break;
+                case SchemaSpec.SchemeDef.DelimType.CustomDelimited:
+                  if (sdef.UsesHeader == SchemaSpec.SchemeDef.FirstRowHeader.Yes)
+                    connbit = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + @";Extended Properties=""Text;HDR=Yes;CharacterSet=" + dm_Character.ma + ";FMT=Delimited(" + sdef.CustomDelimiter + ")" + "\"";
+                  else
+                    connbit = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + @";Extended Properties=""Text;HDR=No;CharacterSet=" + dm_Character.ma + ";FMT=Delimited(" + sdef.CustomDelimiter + ")" + "\"";
+                  break;
+                case SchemaSpec.SchemeDef.DelimType.FixedWidth:
+                  if (sdef.UsesHeader == SchemaSpec.SchemeDef.FirstRowHeader.Yes)
+                    connbit = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + string.Format(@";Extended Properties=""Text;HDR=Yes;CharacterSet={0};FMT=FixedLength""", dm_Character.ma);
+                  else
+                    connbit = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + string.Format(@";Extended Properties=""Text;HDR=No;CharacterSet={0};FMT=FixedLength""", dm_Character.ma);
+                  break;
+                case SchemaSpec.SchemeDef.DelimType.TabDelimited:
+                  if (sdef.UsesHeader == SchemaSpec.SchemeDef.FirstRowHeader.Yes)
+                    connbit = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + string.Format(@";Extended Properties=""Text;HDR=Yes;CharacterSet={0};FMT=TabDelimited""", dm_Character.ma);
+                  else
+                    connbit = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + path + string.Format(@";Extended Properties=""Text;HDR=No;CharacterSet={0};FMT=TabDelimited""", dm_Character.ma);
+                  break;
+                default:
+                  break;
+              }
 
-            connectionString = connbit;
+              // put the connection string into the properties and save the properties
+              DiDong.Properties.Settings.Default.ConnString = connbit;
+              DiDong.Properties.Settings.Default.Save();
 
-            fileName = txt_FileName.Text.Split('.');
+              // make sure we have a connection string before proceeding
+              if (String.IsNullOrEmpty(connbit)) {
+                MessageBox.Show("Mẫu không hợp lệ; sử dụng tiện ích lược đồ để xác định giản đồ cho tệp bạn đang cần mở", "Thông Báo");
+              }
 
-            StreamReader sReader;
-            string line;
-            string[] lineParts;
-            //ClearALLControl();
+              connectionString = connbit;
 
-            for (int i = 0; i < combox.Count(); i++) {
-              combox[i].Items.Add("----Chọn----");
-            }
+              fileName = txt_FileName.Text.Split('.');
 
-            sReader = new StreamReader(txt_FileName.Text);
-            _nTongRowsText = File.ReadAllLines(txt_FileName.Text).Count();
-            if (sReader.ReadLine() != null) {
-              line = sReader.ReadLine();
-              char kytu = '\t';
-              lineParts = line.Split(new char[] { kytu });
-              for (int i = 1; i <= lineParts.Count(); i++) {
-                for (int x = 0; x < combox.Count(); x++) {
-                  combox[x].Items.AddRange(new object[] { i.ToString() });
+              StreamReader sReader;
+              string line;
+              string[] lineParts;
+              //ClearALLControl();
+              for (int i = 0; i < combox.Count(); i++) {
+                combox[i].Items.Clear();
+              }
+
+
+              for (int i = 0; i < combox.Count(); i++) {
+                combox[i].Items.Add("----Chọn----");
+              }
+
+              sReader = new StreamReader(txt_FileName.Text);
+              _nTongRowsText = File.ReadAllLines(txt_FileName.Text).Count();
+              if (sReader.ReadLine() != null) {
+                line = sReader.ReadLine();
+                char kytu = '\t';
+                lineParts = line.Split(new char[] { kytu });
+                for (int i = 1; i <= lineParts.Count(); i++) {
+                  for (int x = 0; x < combox.Count(); x++) {
+                    combox[x].Items.AddRange(new object[] { i.ToString() });
+                  }
                 }
               }
+              sReader.Close();
+              for (int i = 0; i < combox.Count(); i++) {
+                combox[i].SelectedIndex = 0;
+              }
             }
-            sReader.Close();
+          }
+          else {/*sql server*/
             for (int i = 0; i < combox.Count(); i++) {
-              combox[i].SelectedIndex = 0;
+              combox[i].Items.Clear();
+            }
+
+            for (int x = 0; x < combox.Count(); x++) {
+              combox[x].Items.Add("----Chọn----");
+            }
+            DataTable tb = SQLDatabase.ExcDataTable(string.Format(" select *  from {0}.INFORMATION_SCHEMA.COLUMNS", _strDatabase2));
+            for (int x = 0; x < combox.Count(); x++) {
+              foreach (DataRow item in tb.Rows) {
+                combox[x].Items.Add(item["COLUMN_NAME"].ToString());
+              }
             }
           }
         }
@@ -229,11 +268,6 @@ namespace QuanLyData {
       }
     }
 
-    private void btn_Import_Click(object sender, EventArgs e) {
-      /*xoa tat ca file tam*/
-      SQLDatabase.ExcNonQuery("TRUNCATE TABLE import");
-      ProcessImport();
-    }
 
     /// <summary>
     /// Create a schema.ini file to control the format and data types used 
@@ -327,6 +361,8 @@ namespace QuanLyData {
       lbl.ColumnCount = 1;
       lbl.Name = string.Format("layoutPanel_", model.ma);
       lbl.Text = model.name;
+      lbl.Height = 15;
+      lbl.AutoSize = true;
       return lbl;
     }
 
@@ -334,13 +370,13 @@ namespace QuanLyData {
       RadioButton radio = new RadioButton();
       radio.Location = new Point(index, 50);
       radio.Name = string.Format(string.Format("rad_{0}", model.ma));
-      radio.Text = model.name;
+      radio.Text = string.Format("{0}_{1}", model.name,index);
       radio.Checked = model.isKey;
       radio.Click += Radio_Click;
       return radio;
     }
 
-    private void CreateColumnGridView() {
+    private void CreateColumnGridView(DataGridView dataGridView) {
       try {
         List<dm_column> model = SQLDatabase.Loaddm_column("select * from dm_column order by OrderId");
         DataGridViewTextBoxColumn[] columns = new DataGridViewTextBoxColumn[model.Count()];
@@ -352,7 +388,7 @@ namespace QuanLyData {
           aa[i] = new DataGridViewTextBoxColumn();
           aa[i] = columns[i];
         }
-        this.GridViewMain.Columns.AddRange(aa);
+        dataGridView.Columns.AddRange(aa);
         for (int i = 0; i < model.Count(); i++) {
           columns[i].DataPropertyName = model[i].ma;
           columns[i].HeaderText = model[i].name;
@@ -373,18 +409,28 @@ namespace QuanLyData {
       return com;
     }
 
+    private async void btn_Import_Click(object sender, EventArgs e) {
+      var text = await AnMethodAsync();
+    }
+
+
+    private Task<string> AnMethodAsync() {
+      //Do somethine async
+      ProcessImport();
+      return Task.FromResult("AppConus");
+    }
+
     public void ProcessImport() {
       OleDbDataReader reader = null;
       try {
+        SQLDatabase.ExcNonQuery("TRUNCATE TABLE import");
+
         List<string> model = new List<string>();
         Dictionary<string, string> dict = new Dictionary<string, string>();
         foreach (var item in combox) {
           if (item.SelectedIndex != 0) model.Add(item.Text);
           dict.Add(item.Name, item.SelectedIndex == 0 ? "" : item.Text);
         }
-        //foreach (dm_column item in _Columns) {
-        //  dict.Add(item.ma, item.SelectedIndex == 0 ? "" : item.Text);
-        //}
         Dictionary<string, string> mode = new Dictionary<string, string>();
         /***********text*****************/
         /*
@@ -397,8 +443,9 @@ namespace QuanLyData {
         dt.TableName = "Data";
         dap.Fill(dt);
         */
+        string tableName = cbb_TypeDataSource.SelectedIndex==0 ? System.IO.Path.GetFileName(txt_FileName.Text) :_strTable2;
 
-        reader = SQLDatabase.ExcOleReaderDataSource(connectionString, System.IO.Path.GetFileName(txt_FileName.Text), model.ToArray());
+        reader = SQLDatabase.ExcOleReaderDataSource(connectionString, tableName, model.ToArray());
 
 
         // Set up the bulk copy object.
@@ -406,13 +453,13 @@ namespace QuanLyData {
           //http://csharp-video-tutorials.blogspot.com/2014/09/part-20-sqlbulkcopy-notifyafter-example_27.html
           bulkCopy.NotifyAfter = 5000;
           bulkCopy.BatchSize = 10000;
-          //bulkCopy.SqlRowsCopied += (sender, e) =>
-          //{
-          //  progressBar11.Value = e.RowsCopied;
-          //  progressBar11.Update();
-          //  lblmessage.Text = string.Format("Insert số liệu vào database. ->{0}/{1}", e.RowsCopied.ToString("N0"), ConvertType.ToInt(totalRow).ToString("N0"));
-          //  Thread.Sleep(0);
-          //};
+          bulkCopy.SqlRowsCopied += (sender, e) =>
+          {
+            progressBar1.Value = ConvertType.ToInt(e.RowsCopied);
+            progressBar1.Update();
+            lblmessage.Text = (ConvertType.ToInt((e.RowsCopied * 100)) / _nTongRowsText).ToString(); //string.Format("Insert số liệu vào database. ->{0}/{1}", e.RowsCopied.ToString("N0"), ConvertType.ToInt(totalRow).ToString("N0"));
+            Thread.Sleep(0);
+          };
 
           bulkCopy.DestinationTableName = "dbo.import";
           foreach (var item in combox) {
@@ -429,7 +476,13 @@ namespace QuanLyData {
             Console.WriteLine(ex.Message);
           }
           finally {
+            progressBar1.Value = 100;
+            progressBar1.Update();
+            lblmessage.Text = "100 %";
+            Thread.Sleep(0);
+
             reader.Close();
+            MessageBox.Show("Hoàn tất import dữ liệu", "Thông Báo");
           }
         }
       }
@@ -502,6 +555,10 @@ namespace QuanLyData {
       new Waiting(() => {
         BindingGridViewMain();
       }).ShowDialog();
+    }
+
+    private void btn_View_Click(object sender, EventArgs e) {
+
     }
   }
 }
