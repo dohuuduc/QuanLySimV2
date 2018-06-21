@@ -42,8 +42,14 @@
       this.panel6 = new System.Windows.Forms.Panel();
       this.tabControl2 = new System.Windows.Forms.TabControl();
       this.tabPage3 = new System.Windows.Forms.TabPage();
+      this.btnXoaTrungGoc = new System.Windows.Forms.Button();
+      this.button8 = new System.Windows.Forms.Button();
+      this.button4 = new System.Windows.Forms.Button();
       this.dataGridView_tontai = new System.Windows.Forms.DataGridView();
       this.tabPage4 = new System.Windows.Forms.TabPage();
+      this.button7 = new System.Windows.Forms.Button();
+      this.button5 = new System.Windows.Forms.Button();
+      this.dataGrid_ListTelNumberNew = new System.Windows.Forms.DataGridView();
       this.panel4 = new System.Windows.Forms.Panel();
       this.panel8 = new System.Windows.Forms.Panel();
       this.progressBar1 = new System.Windows.Forms.ProgressBar();
@@ -60,12 +66,6 @@
       this.txt_FileName = new System.Windows.Forms.TextBox();
       this.btn_Import = new System.Windows.Forms.Button();
       this.label3 = new System.Windows.Forms.Label();
-      this.dataGrid_ListTelNumberNew = new System.Windows.Forms.DataGridView();
-      this.btnXoaTrungGoc = new System.Windows.Forms.Button();
-      this.button8 = new System.Windows.Forms.Button();
-      this.button4 = new System.Windows.Forms.Button();
-      this.button7 = new System.Windows.Forms.Button();
-      this.button5 = new System.Windows.Forms.Button();
       this.menuStrip1.SuspendLayout();
       this.tabControl1.SuspendLayout();
       this.tabPage1.SuspendLayout();
@@ -82,12 +82,12 @@
       this.tabPage3.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridView_tontai)).BeginInit();
       this.tabPage4.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.dataGrid_ListTelNumberNew)).BeginInit();
       this.panel4.SuspendLayout();
       this.panel8.SuspendLayout();
       this.panel7.SuspendLayout();
       this.groupBox2.SuspendLayout();
       this.groupBox3.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.dataGrid_ListTelNumberNew)).BeginInit();
       this.SuspendLayout();
       // 
       // menuStrip1
@@ -111,7 +111,7 @@
       // cấuHìnhToolStripMenuItem1
       // 
       this.cấuHìnhToolStripMenuItem1.Name = "cấuHìnhToolStripMenuItem1";
-      this.cấuHìnhToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+      this.cấuHìnhToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
       this.cấuHìnhToolStripMenuItem1.Text = "Cấu Hình";
       this.cấuHìnhToolStripMenuItem1.Click += new System.EventHandler(this.cấuHìnhToolStripMenuItem1_Click);
       // 
@@ -293,6 +293,36 @@
       this.tabPage3.Text = "Khách Hàng Đã Tồn Tại Ở File Gốc";
       this.tabPage3.UseVisualStyleBackColor = true;
       // 
+      // btnXoaTrungGoc
+      // 
+      this.btnXoaTrungGoc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.btnXoaTrungGoc.Location = new System.Drawing.Point(750, 90);
+      this.btnXoaTrungGoc.Name = "btnXoaTrungGoc";
+      this.btnXoaTrungGoc.Size = new System.Drawing.Size(70, 23);
+      this.btnXoaTrungGoc.TabIndex = 12;
+      this.btnXoaTrungGoc.Text = "Xoá Gốc";
+      this.btnXoaTrungGoc.UseVisualStyleBackColor = true;
+      // 
+      // button8
+      // 
+      this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.button8.Location = new System.Drawing.Point(592, 90);
+      this.button8.Name = "button8";
+      this.button8.Size = new System.Drawing.Size(75, 23);
+      this.button8.TabIndex = 11;
+      this.button8.Text = "Xuất file";
+      this.button8.UseVisualStyleBackColor = true;
+      // 
+      // button4
+      // 
+      this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.button4.Location = new System.Drawing.Point(671, 90);
+      this.button4.Name = "button4";
+      this.button4.Size = new System.Drawing.Size(75, 23);
+      this.button4.TabIndex = 10;
+      this.button4.Text = "Cập Nhật";
+      this.button4.UseVisualStyleBackColor = true;
+      // 
       // dataGridView_tontai
       // 
       this.dataGridView_tontai.AllowUserToAddRows = false;
@@ -320,6 +350,42 @@
       this.tabPage4.TabIndex = 1;
       this.tabPage4.Text = "Khách Hàng Chưa Tồn Tại Ở File Gốc";
       this.tabPage4.UseVisualStyleBackColor = true;
+      // 
+      // button7
+      // 
+      this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.button7.Location = new System.Drawing.Point(744, 90);
+      this.button7.Name = "button7";
+      this.button7.Size = new System.Drawing.Size(75, 23);
+      this.button7.TabIndex = 9;
+      this.button7.Text = "Xuất file";
+      this.button7.UseVisualStyleBackColor = true;
+      // 
+      // button5
+      // 
+      this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.button5.Location = new System.Drawing.Point(668, 90);
+      this.button5.Name = "button5";
+      this.button5.Size = new System.Drawing.Size(75, 23);
+      this.button5.TabIndex = 8;
+      this.button5.Text = "Thêm vào dữ liệu gốc";
+      this.button5.UseVisualStyleBackColor = true;
+      // 
+      // dataGrid_ListTelNumberNew
+      // 
+      this.dataGrid_ListTelNumberNew.AllowUserToAddRows = false;
+      this.dataGrid_ListTelNumberNew.AllowUserToDeleteRows = false;
+      this.dataGrid_ListTelNumberNew.AllowUserToResizeColumns = false;
+      this.dataGrid_ListTelNumberNew.AllowUserToResizeRows = false;
+      this.dataGrid_ListTelNumberNew.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+      this.dataGrid_ListTelNumberNew.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+      this.dataGrid_ListTelNumberNew.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.dataGrid_ListTelNumberNew.Location = new System.Drawing.Point(3, 3);
+      this.dataGrid_ListTelNumberNew.Name = "dataGrid_ListTelNumberNew";
+      this.dataGrid_ListTelNumberNew.RowHeadersVisible = false;
+      this.dataGrid_ListTelNumberNew.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+      this.dataGrid_ListTelNumberNew.Size = new System.Drawing.Size(819, 113);
+      this.dataGrid_ListTelNumberNew.TabIndex = 1;
       // 
       // panel4
       // 
@@ -503,72 +569,6 @@
       this.label3.TabIndex = 3;
       this.label3.Text = "Tập Tin:";
       // 
-      // dataGrid_ListTelNumberNew
-      // 
-      this.dataGrid_ListTelNumberNew.AllowUserToAddRows = false;
-      this.dataGrid_ListTelNumberNew.AllowUserToDeleteRows = false;
-      this.dataGrid_ListTelNumberNew.AllowUserToResizeColumns = false;
-      this.dataGrid_ListTelNumberNew.AllowUserToResizeRows = false;
-      this.dataGrid_ListTelNumberNew.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-      this.dataGrid_ListTelNumberNew.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-      this.dataGrid_ListTelNumberNew.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.dataGrid_ListTelNumberNew.Location = new System.Drawing.Point(3, 3);
-      this.dataGrid_ListTelNumberNew.Name = "dataGrid_ListTelNumberNew";
-      this.dataGrid_ListTelNumberNew.RowHeadersVisible = false;
-      this.dataGrid_ListTelNumberNew.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-      this.dataGrid_ListTelNumberNew.Size = new System.Drawing.Size(819, 113);
-      this.dataGrid_ListTelNumberNew.TabIndex = 1;
-      // 
-      // btnXoaTrungGoc
-      // 
-      this.btnXoaTrungGoc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnXoaTrungGoc.Location = new System.Drawing.Point(750, 90);
-      this.btnXoaTrungGoc.Name = "btnXoaTrungGoc";
-      this.btnXoaTrungGoc.Size = new System.Drawing.Size(70, 23);
-      this.btnXoaTrungGoc.TabIndex = 12;
-      this.btnXoaTrungGoc.Text = "Xoá Gốc";
-      this.btnXoaTrungGoc.UseVisualStyleBackColor = true;
-      // 
-      // button8
-      // 
-      this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.button8.Location = new System.Drawing.Point(592, 90);
-      this.button8.Name = "button8";
-      this.button8.Size = new System.Drawing.Size(75, 23);
-      this.button8.TabIndex = 11;
-      this.button8.Text = "Xuất file";
-      this.button8.UseVisualStyleBackColor = true;
-      // 
-      // button4
-      // 
-      this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.button4.Location = new System.Drawing.Point(671, 90);
-      this.button4.Name = "button4";
-      this.button4.Size = new System.Drawing.Size(75, 23);
-      this.button4.TabIndex = 10;
-      this.button4.Text = "Cập Nhật";
-      this.button4.UseVisualStyleBackColor = true;
-      // 
-      // button7
-      // 
-      this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.button7.Location = new System.Drawing.Point(744, 90);
-      this.button7.Name = "button7";
-      this.button7.Size = new System.Drawing.Size(75, 23);
-      this.button7.TabIndex = 9;
-      this.button7.Text = "Xuất file";
-      this.button7.UseVisualStyleBackColor = true;
-      // 
-      // button5
-      // 
-      this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.button5.Location = new System.Drawing.Point(668, 90);
-      this.button5.Name = "button5";
-      this.button5.Size = new System.Drawing.Size(75, 23);
-      this.button5.TabIndex = 8;
-      this.button5.Text = "Thêm vào dữ liệu gốc";
-      this.button5.UseVisualStyleBackColor = true;
-      // 
       // frmMain
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -597,6 +597,7 @@
       this.tabPage3.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.dataGridView_tontai)).EndInit();
       this.tabPage4.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.dataGrid_ListTelNumberNew)).EndInit();
       this.panel4.ResumeLayout(false);
       this.panel8.ResumeLayout(false);
       this.panel7.ResumeLayout(false);
@@ -604,7 +605,6 @@
       this.groupBox2.ResumeLayout(false);
       this.groupBox3.ResumeLayout(false);
       this.groupBox3.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.dataGrid_ListTelNumberNew)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
