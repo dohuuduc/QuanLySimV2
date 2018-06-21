@@ -406,7 +406,8 @@ namespace QuanLyData {
       com.DropDownStyle = ComboBoxStyle.DropDownList;
       return com;
     }
-
+    //http://blog.appconus.com/2017/04/01/net-async-dung-co-tuong-bo-async-la-no-asynchronous-nha/
+    //https://stackoverflow.com/questions/44959735/is-it-possible-to-cancel-a-sqlbulkcopy-writetoserver-c
     private async void btn_Import_Click(object sender, EventArgs e) {
       var text = await AnMethodAsync();
     }
@@ -414,8 +415,11 @@ namespace QuanLyData {
 
     private Task<string> AnMethodAsync() {
       //Do somethine async
-      ProcessImport();
-      return Task.FromResult("AppConus");
+      return Task.Run(() =>
+      {
+        ProcessImport();
+        return "my data";
+      });
     }
 
     public void ProcessImport() {
@@ -425,10 +429,14 @@ namespace QuanLyData {
 
         List<string> model = new List<string>();
         Dictionary<string, string> dict = new Dictionary<string, string>();
-        foreach (var item in combox) {
-          if (item.SelectedIndex != 0) model.Add(item.Text);
-          dict.Add(item.Name, item.SelectedIndex == 0 ? "" : item.Text);
-        }
+        
+          foreach (var item in combox) {
+          item.Invoke((Action)delegate {
+            if (item.SelectedIndex != 0) model.Add(item.Text);
+            dict.Add(item.Name, item.SelectedIndex == 0 ? "" : item.Text);
+          });
+          }
+       
         Dictionary<string, string> mode = new Dictionary<string, string>();
         /***********text*****************/
         /*
@@ -441,13 +449,25 @@ namespace QuanLyData {
         dt.TableName = "Data";
         dap.Fill(dt);
         */
-        string tableName = cbb_TypeDataSource.SelectedIndex==0 ? System.IO.Path.GetFileName(txt_FileName.Text) :_strTable2;
+        int TypeDataSource = 0;
+        cbb_TypeDataSource.Invoke((Action)delegate {
+          TypeDataSource = cbb_TypeDataSource.SelectedIndex;
+        });
+
+        string strFileName = "";
+        txt_FileName.Invoke((Action)delegate {
+          strFileName = System.IO.Path.GetFileName(txt_FileName.Text);
+        });
+
+        string tableName = TypeDataSource == 0 ? strFileName : _strTable2;
 
         reader = SQLDatabase.ExcOleReaderDataSource(connectionString, tableName, model.ToArray());
 
         //----- Get Data from Source 
-        progressBar1.Maximum = _nTongRowsText;
-        progressBar1.Minimum = 0%;
+        progressBar1.Invoke((Action)delegate {
+          progressBar1.Maximum = _nTongRowsText;
+          progressBar1.Minimum = 0;
+        });
 
 
         // Set up the bulk copy object.
@@ -457,10 +477,15 @@ namespace QuanLyData {
           bulkCopy.BatchSize = 10000;
           bulkCopy.SqlRowsCopied += (sender, e) =>
           {
-            progressBar1.Value = ConvertType.ToInt(e.RowsCopied);
-            progressBar1.Update();
-            lblmessage.Text =string.Format("{0}%", (ConvertType.ToInt((e.RowsCopied * 100)) / _nTongRowsText).ToString()); 
-            lblmessage.Update();
+            progressBar1.Invoke((Action)delegate {
+              progressBar1.Value = ConvertType.ToInt(e.RowsCopied);
+              progressBar1.Update();
+            });
+
+            lblmessage.Invoke((Action)delegate {
+              lblmessage.Text = string.Format("{0}%", (ConvertType.ToInt((e.RowsCopied * 100)) / _nTongRowsText).ToString());
+              lblmessage.Update();
+            });
             Thread.Sleep(0);
           };
 
@@ -479,9 +504,16 @@ namespace QuanLyData {
             Console.WriteLine(ex.Message);
           }
           finally {
-            progressBar1.Value = _nTongRowsText;
-            progressBar1.Update();
-            lblmessage.Text = "100%";
+            progressBar1.Invoke((Action)delegate {
+              progressBar1.Value = _nTongRowsText;
+              progressBar1.Update();
+            });
+
+            lblmessage.Invoke((Action)delegate {
+              lblmessage.Text = "100%";
+              lblmessage.Update();
+            });
+
             Thread.Sleep(0);
 
             reader.Close();
