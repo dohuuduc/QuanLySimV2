@@ -30,6 +30,7 @@ namespace QuanLyData {
     private string _strDatabase;
     private string _strDatabase2;
     private string _strTable2;
+    private bool _cancelImport;
     public frmMain() {
 
       InitializeComponent();
@@ -409,7 +410,25 @@ namespace QuanLyData {
     //http://blog.appconus.com/2017/04/01/net-async-dung-co-tuong-bo-async-la-no-asynchronous-nha/
     //https://stackoverflow.com/questions/44959735/is-it-possible-to-cancel-a-sqlbulkcopy-writetoserver-c
     private async void btn_Import_Click(object sender, EventArgs e) {
-      var text = await AnMethodAsync();
+      //
+      try {
+        if (btn_Import.Text.Equals("Import")) {
+          _cancelImport = false;
+          btn_Import.Text = "Stop";
+         
+          progressBar1.Visible = true;
+          lblmessage.Visible = true;
+          var text = await AnMethodAsync();
+        }
+        else {
+          _cancelImport = true;
+          btn_Import.Text = "Import";
+        }
+      }
+      catch (Exception ex) {
+
+        MessageBox.Show(ex.Message, "btn_Import_Click");
+      }
     }
 
 
@@ -482,6 +501,9 @@ namespace QuanLyData {
               progressBar1.Update();
             });
 
+            if(_cancelImport)
+              e.Abort = true;
+
             lblmessage.Invoke((Action)delegate {
               lblmessage.Text = string.Format("{0}%", (ConvertType.ToInt((e.RowsCopied * 100)) / _nTongRowsText).ToString());
               lblmessage.Update();
@@ -517,7 +539,20 @@ namespace QuanLyData {
             Thread.Sleep(0);
 
             reader.Close();
-            MessageBox.Show("Hoàn tất import dữ liệu", "Thông Báo");
+            MessageBox.Show(string.Format("Hoàn tất import dữ liệu\n {0}",_cancelImport ? "Người dùng đã tạm dừng":"", "Thông Báo"));
+            progressBar1.Invoke((Action)delegate {
+              progressBar1.Visible = false;
+              progressBar1.Update();
+            });
+            lblmessage.Invoke((Action)delegate {
+              lblmessage.Visible = false;
+              lblmessage.Update();
+            });
+            btn_Import.Invoke((Action)delegate {
+              btn_Import.Text = "Import";
+              btn_Import.Update();
+            });
+            _cancelImport = false;
           }
         }
       }
