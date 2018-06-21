@@ -60,8 +60,6 @@ namespace QuanLyData {
 
     private void cấuHìnhToolStripMenuItem1_Click(object sender, EventArgs e) {
       try {
-        //frmSystem frm = new frmSystem();
-        //frm.Show();
         frmSystem frm = new frmSystem();
         frm.strDatabase = _strDatabase;
         if (frm.ShowDialog() == DialogResult.OK) {
@@ -447,6 +445,10 @@ namespace QuanLyData {
 
         reader = SQLDatabase.ExcOleReaderDataSource(connectionString, tableName, model.ToArray());
 
+        //----- Get Data from Source 
+        progressBar1.Maximum = _nTongRowsText;
+        progressBar1.Minimum = 0%;
+
 
         // Set up the bulk copy object.
         using (SqlBulkCopy bulkCopy = new SqlBulkCopy(SQLDatabase.ConnectionString)) {
@@ -457,7 +459,8 @@ namespace QuanLyData {
           {
             progressBar1.Value = ConvertType.ToInt(e.RowsCopied);
             progressBar1.Update();
-            lblmessage.Text = (ConvertType.ToInt((e.RowsCopied * 100)) / _nTongRowsText).ToString(); //string.Format("Insert số liệu vào database. ->{0}/{1}", e.RowsCopied.ToString("N0"), ConvertType.ToInt(totalRow).ToString("N0"));
+            lblmessage.Text =string.Format("{0}%", (ConvertType.ToInt((e.RowsCopied * 100)) / _nTongRowsText).ToString()); 
+            lblmessage.Update();
             Thread.Sleep(0);
           };
 
@@ -476,9 +479,9 @@ namespace QuanLyData {
             Console.WriteLine(ex.Message);
           }
           finally {
-            progressBar1.Value = 100;
+            progressBar1.Value = _nTongRowsText;
             progressBar1.Update();
-            lblmessage.Text = "100 %";
+            lblmessage.Text = "100%";
             Thread.Sleep(0);
 
             reader.Close();

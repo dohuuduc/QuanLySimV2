@@ -427,10 +427,10 @@
       // 
       this.lblmessage.AutoSize = true;
       this.lblmessage.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.lblmessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+      this.lblmessage.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
       this.lblmessage.Location = new System.Drawing.Point(0, 0);
       this.lblmessage.Name = "lblmessage";
-      this.lblmessage.Size = new System.Drawing.Size(54, 20);
+      this.lblmessage.Size = new System.Drawing.Size(49, 18);
       this.lblmessage.TabIndex = 0;
       this.lblmessage.Text = "100%";
       // 
