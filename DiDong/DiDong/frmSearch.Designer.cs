@@ -25,116 +25,123 @@
     private void InitializeComponent() {
       this.panel1 = new System.Windows.Forms.Panel();
       this.panel3 = new System.Windows.Forms.Panel();
-      this.groupBox2 = new System.Windows.Forms.GroupBox();
       this.panel2 = new System.Windows.Forms.Panel();
-      this.groupBox1 = new System.Windows.Forms.GroupBox();
-      this.btnTim = new System.Windows.Forms.Button();
-      this.radioButton2 = new System.Windows.Forms.RadioButton();
-      this.radioButton1 = new System.Windows.Forms.RadioButton();
-      this.panelTim = new System.Windows.Forms.Panel();
+      this.groupBox2 = new System.Windows.Forms.GroupBox();
+      this.grp_header = new System.Windows.Forms.GroupBox();
+      this.label3 = new System.Windows.Forms.Label();
+      this.label2 = new System.Windows.Forms.Label();
+      this.label1 = new System.Windows.Forms.Label();
+      this.tableLayoutPanelMain = new System.Windows.Forms.TableLayoutPanel();
       this.panel1.SuspendLayout();
       this.panel3.SuspendLayout();
       this.groupBox2.SuspendLayout();
-      this.panel2.SuspendLayout();
-      this.groupBox1.SuspendLayout();
+      this.grp_header.SuspendLayout();
       this.SuspendLayout();
       // 
       // panel1
       // 
       this.panel1.Controls.Add(this.panel3);
-      this.panel1.Controls.Add(this.panel2);
       this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.panel1.Location = new System.Drawing.Point(0, 0);
       this.panel1.Name = "panel1";
-      this.panel1.Size = new System.Drawing.Size(448, 520);
+      this.panel1.Size = new System.Drawing.Size(539, 520);
       this.panel1.TabIndex = 0;
       // 
       // panel3
       // 
+      this.panel3.Controls.Add(this.panel2);
       this.panel3.Controls.Add(this.groupBox2);
       this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.panel3.Location = new System.Drawing.Point(0, 43);
+      this.panel3.Location = new System.Drawing.Point(0, 0);
       this.panel3.Name = "panel3";
-      this.panel3.Size = new System.Drawing.Size(448, 477);
+      this.panel3.Size = new System.Drawing.Size(539, 520);
       this.panel3.TabIndex = 1;
+      // 
+      // panel2
+      // 
+      this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+      this.panel2.Location = new System.Drawing.Point(0, 483);
+      this.panel2.Name = "panel2";
+      this.panel2.Size = new System.Drawing.Size(539, 37);
+      this.panel2.TabIndex = 1;
       // 
       // groupBox2
       // 
-      this.groupBox2.Controls.Add(this.panelTim);
+      this.groupBox2.Controls.Add(this.grp_header);
+      this.groupBox2.Controls.Add(this.tableLayoutPanelMain);
       this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
       this.groupBox2.Location = new System.Drawing.Point(0, 0);
       this.groupBox2.Name = "groupBox2";
-      this.groupBox2.Size = new System.Drawing.Size(448, 477);
+      this.groupBox2.Size = new System.Drawing.Size(539, 520);
       this.groupBox2.TabIndex = 0;
       this.groupBox2.TabStop = false;
       this.groupBox2.Text = "Các Cột Tìm Kiếm";
       // 
-      // panel2
+      // grp_header
       // 
-      this.panel2.Controls.Add(this.groupBox1);
-      this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-      this.panel2.Location = new System.Drawing.Point(0, 0);
-      this.panel2.Name = "panel2";
-      this.panel2.Size = new System.Drawing.Size(448, 43);
-      this.panel2.TabIndex = 0;
+      this.grp_header.Controls.Add(this.label3);
+      this.grp_header.Controls.Add(this.label2);
+      this.grp_header.Controls.Add(this.label1);
+      this.grp_header.Location = new System.Drawing.Point(6, 19);
+      this.grp_header.Name = "grp_header";
+      this.grp_header.Size = new System.Drawing.Size(529, 39);
+      this.grp_header.TabIndex = 1;
+      this.grp_header.TabStop = false;
       // 
-      // groupBox1
+      // label3
       // 
-      this.groupBox1.Controls.Add(this.btnTim);
-      this.groupBox1.Controls.Add(this.radioButton2);
-      this.groupBox1.Controls.Add(this.radioButton1);
-      this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.groupBox1.Location = new System.Drawing.Point(0, 0);
-      this.groupBox1.Name = "groupBox1";
-      this.groupBox1.Size = new System.Drawing.Size(448, 43);
-      this.groupBox1.TabIndex = 0;
-      this.groupBox1.TabStop = false;
+      this.label3.AutoSize = true;
+      this.label3.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.label3.Location = new System.Drawing.Point(436, 16);
+      this.label3.Name = "label3";
+      this.label3.Size = new System.Drawing.Size(80, 18);
+      this.label3.TabIndex = 2;
+      this.label3.Text = "Điều Kiện";
       // 
-      // btnTim
+      // label2
       // 
-      this.btnTim.Location = new System.Drawing.Point(367, 12);
-      this.btnTim.Name = "btnTim";
-      this.btnTim.Size = new System.Drawing.Size(75, 21);
-      this.btnTim.TabIndex = 2;
-      this.btnTim.Text = "Tìm";
-      this.btnTim.UseVisualStyleBackColor = true;
+      this.label2.AutoSize = true;
+      this.label2.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.label2.Location = new System.Drawing.Point(132, 16);
+      this.label2.Name = "label2";
+      this.label2.Size = new System.Drawing.Size(76, 18);
+      this.label2.TabIndex = 1;
+      this.label2.Text = "Nội Dung";
       // 
-      // radioButton2
+      // label1
       // 
-      this.radioButton2.AutoSize = true;
-      this.radioButton2.Location = new System.Drawing.Point(62, 16);
-      this.radioButton2.Name = "radioButton2";
-      this.radioButton2.Size = new System.Drawing.Size(36, 17);
-      this.radioButton2.TabIndex = 1;
-      this.radioButton2.Text = "Or";
-      this.radioButton2.UseVisualStyleBackColor = true;
+      this.label1.AutoSize = true;
+      this.label1.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+      this.label1.Location = new System.Drawing.Point(6, 16);
+      this.label1.Name = "label1";
+      this.label1.Size = new System.Drawing.Size(33, 18);
+      this.label1.TabIndex = 0;
+      this.label1.Text = "Cột";
       // 
-      // radioButton1
+      // tableLayoutPanelMain
       // 
-      this.radioButton1.AutoSize = true;
-      this.radioButton1.Checked = true;
-      this.radioButton1.Location = new System.Drawing.Point(12, 16);
-      this.radioButton1.Name = "radioButton1";
-      this.radioButton1.Size = new System.Drawing.Size(44, 17);
-      this.radioButton1.TabIndex = 0;
-      this.radioButton1.TabStop = true;
-      this.radioButton1.Text = "And";
-      this.radioButton1.UseVisualStyleBackColor = true;
-      // 
-      // panelTim
-      // 
-      this.panelTim.AutoScroll = true;
-      this.panelTim.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.panelTim.Location = new System.Drawing.Point(3, 16);
-      this.panelTim.Name = "panelTim";
-      this.panelTim.Size = new System.Drawing.Size(442, 458);
-      this.panelTim.TabIndex = 0;
+      this.tableLayoutPanelMain.ColumnCount = 1;
+      this.tableLayoutPanelMain.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+      this.tableLayoutPanelMain.Location = new System.Drawing.Point(6, 59);
+      this.tableLayoutPanelMain.Name = "tableLayoutPanelMain";
+      this.tableLayoutPanelMain.RowCount = 9;
+      this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tableLayoutPanelMain.RowStyles.Add(new System.Windows.Forms.RowStyle());
+      this.tableLayoutPanelMain.Size = new System.Drawing.Size(529, 396);
+      this.tableLayoutPanelMain.TabIndex = 0;
       // 
       // frmSearch
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(448, 520);
+      this.ClientSize = new System.Drawing.Size(539, 520);
       this.Controls.Add(this.panel1);
       this.MaximizeBox = false;
       this.MinimizeBox = false;
@@ -145,9 +152,8 @@
       this.panel1.ResumeLayout(false);
       this.panel3.ResumeLayout(false);
       this.groupBox2.ResumeLayout(false);
-      this.panel2.ResumeLayout(false);
-      this.groupBox1.ResumeLayout(false);
-      this.groupBox1.PerformLayout();
+      this.grp_header.ResumeLayout(false);
+      this.grp_header.PerformLayout();
       this.ResumeLayout(false);
 
     }
@@ -158,10 +164,10 @@
     private System.Windows.Forms.Panel panel3;
     private System.Windows.Forms.GroupBox groupBox2;
     private System.Windows.Forms.Panel panel2;
-    private System.Windows.Forms.GroupBox groupBox1;
-    private System.Windows.Forms.Button btnTim;
-    private System.Windows.Forms.RadioButton radioButton2;
-    private System.Windows.Forms.RadioButton radioButton1;
-    private System.Windows.Forms.Panel panelTim;
+    private System.Windows.Forms.TableLayoutPanel tableLayoutPanelMain;
+    private System.Windows.Forms.GroupBox grp_header;
+    private System.Windows.Forms.Label label3;
+    private System.Windows.Forms.Label label2;
+    private System.Windows.Forms.Label label1;
   }
 }

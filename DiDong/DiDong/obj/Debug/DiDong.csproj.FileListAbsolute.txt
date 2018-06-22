@@ -71,3 +71,4 @@ C:\Users\luulong\Documents\GitHub\QuanLySimV2\DiDong\DiDong\obj\Debug\DiDong.exe
 C:\Users\luulong\Documents\GitHub\QuanLySimV2\DiDong\DiDong\obj\Debug\DiDong.pdb
 C:\Users\luulong\Documents\GitHub\QuanLySimV2\DiDong\DiDong\obj\Debug\DiDong.frmSQLServer.resources
 D:\GitHubDesktop\QuanLySimV2\DiDong\DiDong\obj\Debug\DiDong.frmSQLServer.resources
+C:\Users\luulong\Documents\GitHub\QuanLySimV2\DiDong\DiDong\bin\Debug\SchemaSpec.pdb
