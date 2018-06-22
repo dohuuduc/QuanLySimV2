@@ -677,5 +677,17 @@ namespace QuanLyData {
         MessageBox.Show(ex.Message, "button9_Click");
       }
     }
+
+    private void button4_Click(object sender, EventArgs e) {
+      try {
+        frmColUpdate frm = new frmColUpdate();
+        if (frm.ShowDialog() == DialogResult.OK) {
+         
+        }
+      }
+      catch (Exception ex) {
+        MessageBox.Show(ex.Message, "");
+      }
+    }
   }
 }

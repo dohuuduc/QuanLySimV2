@@ -166,7 +166,7 @@ namespace DiDong {
       return System.Text.Encoding.UTF8.GetString(decbuff);
     }
     public static string FormatNumber(string value) {
-      return String.Format(CultureInfo.InvariantCulture,"{0:#,##0,,}", value);
+      return Convert.ToDecimal(value).ToString("#,##0.00"); //String.Format(CultureInfo.InvariantCulture,"{0:#,##0,,}", value);
     }
     public static string getTime120(System.DateTime dt) {
       int dd = dt.Day;

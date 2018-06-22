@@ -72,3 +72,4 @@ C:\Users\luulong\Documents\GitHub\QuanLySimV2\DiDong\DiDong\obj\Debug\DiDong.frm
 D:\GitHubDesktop\QuanLySimV2\DiDong\DiDong\obj\Debug\DiDong.frmSQLServer.resources
 C:\Users\luulong\Documents\GitHub\QuanLySimV2\DiDong\DiDong\bin\Debug\SchemaSpec.pdb
 D:\GitHubDesktop\QuanLySimV2\DiDong\DiDong\obj\Debug\DiDong.csprojResolveAssemblyReference.cache
+D:\GitHubDesktop\QuanLySimV2\DiDong\DiDong\obj\Debug\DiDong.frmColUpdate.resources
