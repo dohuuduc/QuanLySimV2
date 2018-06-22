@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -164,6 +165,9 @@ namespace DiDong {
       byte[] decbuff = Convert.FromBase64String(str.ToString());
       return System.Text.Encoding.UTF8.GetString(decbuff);
     }
+    public static string FormatNumber(string value) {
+      return String.Format(CultureInfo.InvariantCulture,"{0:#,##0,,}", value);
+    }
     public static string getTime120(System.DateTime dt) {
       int dd = dt.Day;
       int mm = dt.Month;
@@ -283,7 +287,7 @@ namespace DiDong {
         sqlCommand = commandToGetData;
         sqlCommand += " RowNumber Between " + minIndex.ToString() + " and ";
         sqlCommand += maxIndex.ToString();
-        sqlCommand += string.Format(" order by {0} ASC", Utilities.OrderColumn());
+        sqlCommand += string.Format(" order by RowNumber ASC");
 
 
 

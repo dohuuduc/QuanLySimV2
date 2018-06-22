@@ -54,7 +54,6 @@ D:\GitHubDesktop\QuanLySimV2\DiDong\DiDong\obj\Debug\DiDong.csproj.CoreCompileIn
 D:\GitHubDesktop\QuanLySimV2\DiDong\DiDong\obj\Debug\DiDong.csproj.CopyComplete
 D:\GitHubDesktop\QuanLySimV2\DiDong\DiDong\obj\Debug\DiDong.exe
 D:\GitHubDesktop\QuanLySimV2\DiDong\DiDong\obj\Debug\DiDong.pdb
-D:\GitHubDesktop\QuanLySimV2\DiDong\DiDong\obj\Debug\DiDong.csprojResolveAssemblyReference.cache
 C:\Users\luulong\Documents\GitHub\QuanLySimV2\DiDong\DiDong\bin\Debug\DiDong.exe.config
 C:\Users\luulong\Documents\GitHub\QuanLySimV2\DiDong\DiDong\bin\Debug\DiDong.exe
 C:\Users\luulong\Documents\GitHub\QuanLySimV2\DiDong\DiDong\bin\Debug\DiDong.pdb
@@ -72,3 +71,4 @@ C:\Users\luulong\Documents\GitHub\QuanLySimV2\DiDong\DiDong\obj\Debug\DiDong.pdb
 C:\Users\luulong\Documents\GitHub\QuanLySimV2\DiDong\DiDong\obj\Debug\DiDong.frmSQLServer.resources
 D:\GitHubDesktop\QuanLySimV2\DiDong\DiDong\obj\Debug\DiDong.frmSQLServer.resources
 C:\Users\luulong\Documents\GitHub\QuanLySimV2\DiDong\DiDong\bin\Debug\SchemaSpec.pdb
+D:\GitHubDesktop\QuanLySimV2\DiDong\DiDong\obj\Debug\DiDong.csprojResolveAssemblyReference.cache

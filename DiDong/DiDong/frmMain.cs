@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -31,6 +32,8 @@ namespace QuanLyData {
     private string _strDatabase2;
     private string _strTable2;
     private bool _cancelImport;
+    private string _strDieuKien;
+
     public frmMain() {
 
       InitializeComponent();
@@ -64,7 +67,8 @@ namespace QuanLyData {
         frmSystem frm = new frmSystem();
         frm.strDatabase = _strDatabase;
         if (frm.ShowDialog() == DialogResult.OK) {
-         
+          Dm_Batdongbo = SQLDatabase.Loaddm_batdongbo(string.Format("select * from dm_batdongbo where isAct=1")).FirstOrDefault();
+          _cauhinh = SQLDatabase.Loadcau_hinh("select * from cau_hinh").FirstOrDefault();
         }
       }
       catch (Exception ex) {
@@ -82,7 +86,10 @@ namespace QuanLyData {
 
     private void button1_Click(object sender, EventArgs e) {
       frmSearch frm = new frmSearch();
-      frm.Show();
+      if (frm.ShowDialog() == DialogResult.OK) {
+        _strDieuKien = frm.strWhere;
+        LoadBindRoot();
+      }
     }
 
     private void Radio_Click(object sender, EventArgs e) {
@@ -377,12 +384,18 @@ namespace QuanLyData {
 
     private void CreateColumnGridView(DataGridView dataGridView) {
       try {
-        List<dm_column> model = SQLDatabase.Loaddm_column("select * from dm_column order by OrderId");
+        List<dm_column> model = new List<dm_column>();
+        model.Add(new dm_column() { ma = "RowNumber", name = "STT" });
+        foreach (var item in SQLDatabase.Loaddm_column("select * from dm_column order by OrderId")) {
+          model.Add(item);
+        } 
+
         DataGridViewTextBoxColumn[] columns = new DataGridViewTextBoxColumn[model.Count()];
         for (int i = 0; i < model.Count(); i++) {
           columns[i] = new DataGridViewTextBoxColumn();
         }
         DataGridViewColumn[] aa = new DataGridViewColumn[model.Count()];
+
         for (int i = 0; i < model.Count(); i++) {
           aa[i] = new DataGridViewTextBoxColumn();
           aa[i] = columns[i];
@@ -393,6 +406,7 @@ namespace QuanLyData {
           columns[i].HeaderText = model[i].name;
           columns[i].Name = model[i].ma;
           columns[i].Width=180;
+          columns[i].ReadOnly = true;
         }
       }
       catch (Exception ex) {
@@ -561,9 +575,8 @@ namespace QuanLyData {
       }
     }
 
-    private  void BindingGridViewMain() {
+    private  void BindInfoRoot(string strChuoiDieuKien) {
       try {
-       
         groupMain.Invoke((Action)delegate
         {
           groupMain.Text = "Xem Tất Cả Khách Hàng";
@@ -580,15 +593,20 @@ namespace QuanLyData {
         string CommandToGetData = "";
 
         
-        CommandToGetCount = string.Format("Select COUNT(*) As TotalRow From dbo.root where valueskeySearch like '%{0}%' ", ConvertType.convertToUnSign3(txtTim.Text));
-        CommandToGetCount = string.Format("with roots as (select ROW_NUMBER() Over (Order By creatdate asc) As RowNumber, {0} " +
-                                         " from dbo.root {1} {2}", Utilities.SelectColumn(), txtTim.Text.Trim() == "" ? "" : string.Format("where valueskeySearch like ''%{0}%''", ConvertType.convertToUnSign3(txtTim.Text.Trim())), Dm_Batdongbo.ma.Trim());
+        CommandToGetCount = string.Format("Select COUNT(*) As TotalRow From dbo.root {0} {1}", strChuoiDieuKien, Dm_Batdongbo.ma.Trim());
+        CommandToGetData = string.Format(" with Tel as (select ROW_NUMBER() Over (Order By {3} asc) As RowNumber, {0} " +
+                                         " from dbo.root {1} {2}) Select * From Tel where ", Utilities.SelectColumn(), 
+                                                                                      strChuoiDieuKien, 
+                                                                                      Dm_Batdongbo.ma.Trim(),
+                                                                                      Utilities.OrderColumn());
         
         cachedData.CommandToGetCount = CommandToGetCount;
         cachedData.CommandToGetData = CommandToGetData;
 
         cachedData.UpdateCachedData(0);
-        GridViewMain.RowCount = (int)cachedData.TotalRowCount;
+        GridViewMain.Invoke((Action)delegate {
+          GridViewMain.RowCount = (int)cachedData.TotalRowCount;
+        });
         ////----- value textbox
         //GetValueTextbox();
         ////----- Enabled button Edit,Delete
@@ -597,7 +615,7 @@ namespace QuanLyData {
         String tongcongGoc = cachedData.TotalRowCount.ToString();
         
         groupMain.Invoke((Action)delegate {
-          groupMain.Text = string.Format("Xem Tất Cả Khách Hàng :{0}", tongcongGoc);
+          groupMain.Text = string.Format("Xem Tất Cả Khách Hàng :{0}", ConvertType.FormatNumber(tongcongGoc));
         });
 
       }
@@ -622,13 +640,42 @@ namespace QuanLyData {
     }
 
     private void btntim_Click(object sender, EventArgs e) {
-      new Waiting(() => {
-        BindingGridViewMain();
-      }).ShowDialog();
+      _strDieuKien = string.Format(" where valueskeySearch like '%{0}%' ",ConvertType.convertToUnSign3(txtTim.Text.Trim()));
+      LoadBindRoot();
     }
 
+    private void LoadBindRoot() {
+      new Waiting(() => {
+        BindInfoRoot(_strDieuKien);
+      }).ShowDialog();
+    }
     private void btn_View_Click(object sender, EventArgs e) {
 
+    }
+
+    private void button9_Click(object sender, EventArgs e) {
+      cau_hinh cau_Hinh = SQLDatabase.Loadcau_hinh("SELECT * FROM cau_hinh").FirstOrDefault();
+      try {
+        SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+        saveFileDialog1.Filter = !cau_Hinh.IsExportTxt ? "Excel 97-2003 WorkBook|*.xls" : "text|*.txt";
+        saveFileDialog1.Title = !cau_Hinh.IsExportTxt ? "Xuất file Excel" : "Xuất file text";
+        if (saveFileDialog1.ShowDialog() == DialogResult.OK) {
+          if (saveFileDialog1.FileName == "") {
+            MessageBox.Show("Vui lòng nhập tên file", "Thông Báo");
+            return;
+          }
+          new Waiting(() => {
+            string command = string.Format("exec [spExport] 'SET DATEFORMAT DMY {0}','{1}'", "", saveFileDialog1.FileName);
+            if (SQLDatabase.ExcNonQuery(command)) {
+
+            }
+          });
+          MessageBox.Show("Đã xuất thành công file.", "Thông Báo");
+        }
+      }
+      catch (Exception ex) {
+        MessageBox.Show(ex.Message, "button9_Click");
+      }
     }
   }
 }

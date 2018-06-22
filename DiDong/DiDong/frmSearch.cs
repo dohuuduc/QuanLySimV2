@@ -10,19 +10,25 @@ using System.Windows.Forms;
 
 namespace QuanLyData {
   public partial class frmSearch : Form {
-    private List<TableLayoutPanel> groupbox = null;
-    private TableLayoutPanel tableLayoutPanel = null;
+    private Dictionary<int,TableLayoutPanel> groupbox = null;
+    private string _strwhere = "";
     private int _index = 0;
     public frmSearch() {
       InitializeComponent();
     }
+
+    public String strWhere {
+      get { return _strwhere; }
+      set { _strwhere = value; }
+    }
+
     private void frmSearch_Load(object sender, EventArgs e) {
-      groupbox = new List<TableLayoutPanel>();
+      groupbox = new Dictionary<int,TableLayoutPanel>();
       AddController(_index);
     }
 
     private void AddController(int index) {
-      tableLayoutPanel = new TableLayoutPanel();
+      TableLayoutPanel tableLayoutPanel = new TableLayoutPanel();
       tableLayoutPanel = CreateTableLayoutPanel(index);
 
       ComboBox comboBox = new ComboBox();
@@ -37,11 +43,12 @@ namespace QuanLyData {
       tableLayoutPanel.Controls.Add(comboBox);
       tableLayoutPanel.Controls.Add(textBox);
       tableLayoutPanel.Controls.Add(comboBoxAndOr);
-
+     
+      groupbox.Add(index,tableLayoutPanel);
       tableLayoutPanelMain.Controls.Add(tableLayoutPanel);
     }
-    private void RemoveController(int Array_Tag) {
-      tableLayoutPanelMain.Controls.Remove(groupbox[Array_Tag]);
+    private void RemoveController(int tab)  {
+      tableLayoutPanelMain.Controls.Remove(groupbox.Where(p=>p.Key==tab).FirstOrDefault().Value);
     }
 
     private TableLayoutPanel CreateTableLayoutPanel(int index) {
@@ -104,15 +111,40 @@ namespace QuanLyData {
         int Array_Tag = (int)((System.Windows.Forms.ComboBox)sender).Tag;
         string strDK = ((System.Windows.Forms.ComboBox)sender).SelectedValue.ToString();
         if (strDK.Equals("And") || strDK.Equals("Or")) {
-          AddController(_index++);
+          AddController(++_index);
         }
-        else if(strDK.Equals("Remover")){
+        else if(strDK.Equals("Remover") && Array_Tag !=0) {
           RemoveController(Array_Tag);
         }
       }
       catch (Exception ex) {
 
         MessageBox.Show(ex.Message, "Com_SelectedIndexChanged");
+      }
+    }
+
+    private void button1_Click(object sender, EventArgs e) {
+      try {
+        string strCommand = "";
+        int i = 1;
+        foreach (var item in groupbox) {
+          TableLayoutPanel layoutPanel =(TableLayoutPanel)item.Value.Controls.Container;
+          ComboBox comboxCol = (ComboBox)layoutPanel.GetControlFromPosition(0, 0);
+          TextBox textBox = (TextBox)layoutPanel.GetControlFromPosition(1, 0);
+          ComboBox comboxAndOr = (ComboBox)layoutPanel.GetControlFromPosition(2, 0);
+          if (i != groupbox.Count) {
+            strCommand += string.Format(" {0} like N'%{1}%' {2} ", comboxCol.SelectedValue, textBox.Text, comboxAndOr.SelectedValue);
+          }
+          else {
+            strCommand += string.Format(" {0} like N'%{1}%' ", comboxCol.SelectedValue, textBox.Text);
+          }
+        }
+        strWhere =string.Format(" where {0}", strCommand);
+        this.DialogResult = DialogResult.OK;
+        this.Close();
+      }
+      catch (Exception ex) {
+        MessageBox.Show(ex.Message, "button1_Click");
       }
     }
   }

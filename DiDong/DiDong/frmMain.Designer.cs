@@ -66,6 +66,7 @@
       this.txt_FileName = new System.Windows.Forms.TextBox();
       this.btn_Import = new System.Windows.Forms.Button();
       this.label3 = new System.Windows.Forms.Label();
+      this.button9 = new System.Windows.Forms.Button();
       this.menuStrip1.SuspendLayout();
       this.tabControl1.SuspendLayout();
       this.tabPage1.SuspendLayout();
@@ -167,6 +168,7 @@
       // 
       // groupBox1
       // 
+      this.groupBox1.Controls.Add(this.button9);
       this.groupBox1.Controls.Add(this.button1);
       this.groupBox1.Controls.Add(this.btntim);
       this.groupBox1.Controls.Add(this.txtTim);
@@ -181,7 +183,7 @@
       // button1
       // 
       this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.button1.Location = new System.Drawing.Point(723, 16);
+      this.button1.Location = new System.Drawing.Point(647, 17);
       this.button1.Name = "button1";
       this.button1.Size = new System.Drawing.Size(104, 23);
       this.button1.TabIndex = 3;
@@ -192,7 +194,7 @@
       // btntim
       // 
       this.btntim.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.btntim.Location = new System.Drawing.Point(642, 17);
+      this.btntim.Location = new System.Drawing.Point(566, 17);
       this.btntim.Name = "btntim";
       this.btntim.Size = new System.Drawing.Size(75, 23);
       this.btntim.TabIndex = 2;
@@ -206,7 +208,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
       this.txtTim.Location = new System.Drawing.Point(6, 19);
       this.txtTim.Name = "txtTim";
-      this.txtTim.Size = new System.Drawing.Size(630, 20);
+      this.txtTim.Size = new System.Drawing.Size(554, 20);
       this.txtTim.TabIndex = 1;
       // 
       // tabPage2
@@ -569,6 +571,17 @@
       this.label3.TabIndex = 3;
       this.label3.Text = "Tập Tin:";
       // 
+      // button9
+      // 
+      this.button9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.button9.Location = new System.Drawing.Point(753, 16);
+      this.button9.Name = "button9";
+      this.button9.Size = new System.Drawing.Size(75, 23);
+      this.button9.TabIndex = 4;
+      this.button9.Text = "Xuất File";
+      this.button9.UseVisualStyleBackColor = true;
+      this.button9.Click += new System.EventHandler(this.button9_Click);
+      // 
       // frmMain
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -655,6 +668,7 @@
     private System.Windows.Forms.Button button4;
     private System.Windows.Forms.Button button7;
     private System.Windows.Forms.Button button5;
+    private System.Windows.Forms.Button button9;
   }
 }
 
