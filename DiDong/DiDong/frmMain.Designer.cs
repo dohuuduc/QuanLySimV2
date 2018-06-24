@@ -31,6 +31,7 @@
       this.groupMain = new System.Windows.Forms.GroupBox();
       this.GridViewMain = new System.Windows.Forms.DataGridView();
       this.groupBox1 = new System.Windows.Forms.GroupBox();
+      this.button9 = new System.Windows.Forms.Button();
       this.button1 = new System.Windows.Forms.Button();
       this.btntim = new System.Windows.Forms.Button();
       this.txtTim = new System.Windows.Forms.TextBox();
@@ -42,14 +43,18 @@
       this.panel6 = new System.Windows.Forms.Panel();
       this.tabControl2 = new System.Windows.Forms.TabControl();
       this.tabPage3 = new System.Windows.Forms.TabPage();
-      this.btnXoaTrungGoc = new System.Windows.Forms.Button();
-      this.button8 = new System.Windows.Forms.Button();
-      this.button4 = new System.Windows.Forms.Button();
+      this.lblDatontai = new System.Windows.Forms.Label();
+      this.picDaTonTai = new System.Windows.Forms.PictureBox();
+      this.btnDatonXoaGoc = new System.Windows.Forms.Button();
+      this.btnDatonXuatFile = new System.Windows.Forms.Button();
+      this.btnDatonCapNhat = new System.Windows.Forms.Button();
       this.dataGridView_tontai = new System.Windows.Forms.DataGridView();
       this.tabPage4 = new System.Windows.Forms.TabPage();
-      this.button7 = new System.Windows.Forms.Button();
-      this.button5 = new System.Windows.Forms.Button();
-      this.dataGrid_ListTelNumberNew = new System.Windows.Forms.DataGridView();
+      this.lblChuaTonTai = new System.Windows.Forms.Label();
+      this.picChuaTonTai = new System.Windows.Forms.PictureBox();
+      this.btnChuatontaiXuatfile = new System.Windows.Forms.Button();
+      this.btnChuaTonTaiAdd = new System.Windows.Forms.Button();
+      this.dataGridView_chuatontai = new System.Windows.Forms.DataGridView();
       this.panel4 = new System.Windows.Forms.Panel();
       this.panel8 = new System.Windows.Forms.Panel();
       this.progressBar1 = new System.Windows.Forms.ProgressBar();
@@ -66,7 +71,6 @@
       this.txt_FileName = new System.Windows.Forms.TextBox();
       this.btn_Import = new System.Windows.Forms.Button();
       this.label3 = new System.Windows.Forms.Label();
-      this.button9 = new System.Windows.Forms.Button();
       this.menuStrip1.SuspendLayout();
       this.tabControl1.SuspendLayout();
       this.tabPage1.SuspendLayout();
@@ -81,9 +85,11 @@
       this.panel6.SuspendLayout();
       this.tabControl2.SuspendLayout();
       this.tabPage3.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.picDaTonTai)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridView_tontai)).BeginInit();
       this.tabPage4.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.dataGrid_ListTelNumberNew)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.picChuaTonTai)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.dataGridView_chuatontai)).BeginInit();
       this.panel4.SuspendLayout();
       this.panel8.SuspendLayout();
       this.panel7.SuspendLayout();
@@ -179,6 +185,17 @@
       this.groupBox1.TabIndex = 0;
       this.groupBox1.TabStop = false;
       this.groupBox1.Text = "Tìm Kiếm";
+      // 
+      // button9
+      // 
+      this.button9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.button9.Location = new System.Drawing.Point(753, 16);
+      this.button9.Name = "button9";
+      this.button9.Size = new System.Drawing.Size(75, 23);
+      this.button9.TabIndex = 4;
+      this.button9.Text = "Xuất File";
+      this.button9.UseVisualStyleBackColor = true;
+      this.button9.Click += new System.EventHandler(this.button9_Click);
       // 
       // button1
       // 
@@ -283,9 +300,11 @@
       // 
       // tabPage3
       // 
-      this.tabPage3.Controls.Add(this.btnXoaTrungGoc);
-      this.tabPage3.Controls.Add(this.button8);
-      this.tabPage3.Controls.Add(this.button4);
+      this.tabPage3.Controls.Add(this.lblDatontai);
+      this.tabPage3.Controls.Add(this.picDaTonTai);
+      this.tabPage3.Controls.Add(this.btnDatonXoaGoc);
+      this.tabPage3.Controls.Add(this.btnDatonXuatFile);
+      this.tabPage3.Controls.Add(this.btnDatonCapNhat);
       this.tabPage3.Controls.Add(this.dataGridView_tontai);
       this.tabPage3.Location = new System.Drawing.Point(4, 22);
       this.tabPage3.Name = "tabPage3";
@@ -295,43 +314,70 @@
       this.tabPage3.Text = "Khách Hàng Đã Tồn Tại Ở File Gốc";
       this.tabPage3.UseVisualStyleBackColor = true;
       // 
-      // btnXoaTrungGoc
+      // lblDatontai
       // 
-      this.btnXoaTrungGoc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnXoaTrungGoc.Location = new System.Drawing.Point(750, 90);
-      this.btnXoaTrungGoc.Name = "btnXoaTrungGoc";
-      this.btnXoaTrungGoc.Size = new System.Drawing.Size(70, 23);
-      this.btnXoaTrungGoc.TabIndex = 12;
-      this.btnXoaTrungGoc.Text = "Xoá Gốc";
-      this.btnXoaTrungGoc.UseVisualStyleBackColor = true;
+      this.lblDatontai.Anchor = System.Windows.Forms.AnchorStyles.None;
+      this.lblDatontai.AutoSize = true;
+      this.lblDatontai.BackColor = System.Drawing.SystemColors.Control;
+      this.lblDatontai.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+      this.lblDatontai.Location = new System.Drawing.Point(354, 78);
+      this.lblDatontai.Name = "lblDatontai";
+      this.lblDatontai.Size = new System.Drawing.Size(117, 13);
+      this.lblDatontai.TabIndex = 14;
+      this.lblDatontai.Text = "Đang Load Dữ Liệu";
+      this.lblDatontai.Visible = false;
       // 
-      // button8
+      // picDaTonTai
       // 
-      this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.button8.Location = new System.Drawing.Point(592, 90);
-      this.button8.Name = "button8";
-      this.button8.Size = new System.Drawing.Size(75, 23);
-      this.button8.TabIndex = 11;
-      this.button8.Text = "Xuất file";
-      this.button8.UseVisualStyleBackColor = true;
+      this.picDaTonTai.Anchor = System.Windows.Forms.AnchorStyles.None;
+      this.picDaTonTai.BackColor = System.Drawing.Color.Transparent;
+      this.picDaTonTai.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+      this.picDaTonTai.Image = global::DiDong.Properties.Resources.ajax_loader;
+      this.picDaTonTai.Location = new System.Drawing.Point(386, 27);
+      this.picDaTonTai.Name = "picDaTonTai";
+      this.picDaTonTai.Size = new System.Drawing.Size(50, 50);
+      this.picDaTonTai.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+      this.picDaTonTai.TabIndex = 13;
+      this.picDaTonTai.TabStop = false;
+      this.picDaTonTai.Visible = false;
       // 
-      // button4
+      // btnDatonXoaGoc
       // 
-      this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.button4.Location = new System.Drawing.Point(671, 90);
-      this.button4.Name = "button4";
-      this.button4.Size = new System.Drawing.Size(75, 23);
-      this.button4.TabIndex = 10;
-      this.button4.Text = "Cập Nhật";
-      this.button4.UseVisualStyleBackColor = true;
-      this.button4.Click += new System.EventHandler(this.button4_Click);
+      this.btnDatonXoaGoc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.btnDatonXoaGoc.Location = new System.Drawing.Point(750, 90);
+      this.btnDatonXoaGoc.Name = "btnDatonXoaGoc";
+      this.btnDatonXoaGoc.Size = new System.Drawing.Size(70, 23);
+      this.btnDatonXoaGoc.TabIndex = 12;
+      this.btnDatonXoaGoc.Text = "Xoá Gốc";
+      this.btnDatonXoaGoc.UseVisualStyleBackColor = true;
+      // 
+      // btnDatonXuatFile
+      // 
+      this.btnDatonXuatFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.btnDatonXuatFile.Location = new System.Drawing.Point(592, 90);
+      this.btnDatonXuatFile.Name = "btnDatonXuatFile";
+      this.btnDatonXuatFile.Size = new System.Drawing.Size(75, 23);
+      this.btnDatonXuatFile.TabIndex = 11;
+      this.btnDatonXuatFile.Text = "Xuất file";
+      this.btnDatonXuatFile.UseVisualStyleBackColor = true;
+      // 
+      // btnDatonCapNhat
+      // 
+      this.btnDatonCapNhat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.btnDatonCapNhat.Location = new System.Drawing.Point(671, 90);
+      this.btnDatonCapNhat.Name = "btnDatonCapNhat";
+      this.btnDatonCapNhat.Size = new System.Drawing.Size(75, 23);
+      this.btnDatonCapNhat.TabIndex = 10;
+      this.btnDatonCapNhat.Text = "Cập Nhật";
+      this.btnDatonCapNhat.UseVisualStyleBackColor = true;
+      this.btnDatonCapNhat.Click += new System.EventHandler(this.button4_Click);
       // 
       // dataGridView_tontai
       // 
       this.dataGridView_tontai.AllowUserToAddRows = false;
       this.dataGridView_tontai.AllowUserToDeleteRows = false;
       this.dataGridView_tontai.AllowUserToOrderColumns = true;
-      this.dataGridView_tontai.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+      this.dataGridView_tontai.BackgroundColor = System.Drawing.SystemColors.Control;
       this.dataGridView_tontai.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
       this.dataGridView_tontai.Dock = System.Windows.Forms.DockStyle.Fill;
       this.dataGridView_tontai.Location = new System.Drawing.Point(3, 3);
@@ -343,9 +389,11 @@
       // 
       // tabPage4
       // 
-      this.tabPage4.Controls.Add(this.button7);
-      this.tabPage4.Controls.Add(this.button5);
-      this.tabPage4.Controls.Add(this.dataGrid_ListTelNumberNew);
+      this.tabPage4.Controls.Add(this.lblChuaTonTai);
+      this.tabPage4.Controls.Add(this.picChuaTonTai);
+      this.tabPage4.Controls.Add(this.btnChuatontaiXuatfile);
+      this.tabPage4.Controls.Add(this.btnChuaTonTaiAdd);
+      this.tabPage4.Controls.Add(this.dataGridView_chuatontai);
       this.tabPage4.Location = new System.Drawing.Point(4, 22);
       this.tabPage4.Name = "tabPage4";
       this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
@@ -354,41 +402,69 @@
       this.tabPage4.Text = "Khách Hàng Chưa Tồn Tại Ở File Gốc";
       this.tabPage4.UseVisualStyleBackColor = true;
       // 
-      // button7
+      // lblChuaTonTai
       // 
-      this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.button7.Location = new System.Drawing.Point(744, 90);
-      this.button7.Name = "button7";
-      this.button7.Size = new System.Drawing.Size(75, 23);
-      this.button7.TabIndex = 9;
-      this.button7.Text = "Xuất file";
-      this.button7.UseVisualStyleBackColor = true;
+      this.lblChuaTonTai.Anchor = System.Windows.Forms.AnchorStyles.None;
+      this.lblChuaTonTai.AutoSize = true;
+      this.lblChuaTonTai.BackColor = System.Drawing.SystemColors.Control;
+      this.lblChuaTonTai.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+      this.lblChuaTonTai.Location = new System.Drawing.Point(367, 100);
+      this.lblChuaTonTai.Name = "lblChuaTonTai";
+      this.lblChuaTonTai.Size = new System.Drawing.Size(117, 13);
+      this.lblChuaTonTai.TabIndex = 11;
+      this.lblChuaTonTai.Text = "Đang Load Dữ Liệu";
+      this.lblChuaTonTai.Visible = false;
       // 
-      // button5
+      // picChuaTonTai
       // 
-      this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.button5.Location = new System.Drawing.Point(668, 90);
-      this.button5.Name = "button5";
-      this.button5.Size = new System.Drawing.Size(75, 23);
-      this.button5.TabIndex = 8;
-      this.button5.Text = "Thêm vào dữ liệu gốc";
-      this.button5.UseVisualStyleBackColor = true;
+      this.picChuaTonTai.Anchor = System.Windows.Forms.AnchorStyles.None;
+      this.picChuaTonTai.BackColor = System.Drawing.Color.Transparent;
+      this.picChuaTonTai.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+      this.picChuaTonTai.Image = global::DiDong.Properties.Resources.ajax_loader;
+      this.picChuaTonTai.Location = new System.Drawing.Point(399, 49);
+      this.picChuaTonTai.Name = "picChuaTonTai";
+      this.picChuaTonTai.Size = new System.Drawing.Size(50, 50);
+      this.picChuaTonTai.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+      this.picChuaTonTai.TabIndex = 10;
+      this.picChuaTonTai.TabStop = false;
+      this.picChuaTonTai.Visible = false;
       // 
-      // dataGrid_ListTelNumberNew
+      // btnChuatontaiXuatfile
       // 
-      this.dataGrid_ListTelNumberNew.AllowUserToAddRows = false;
-      this.dataGrid_ListTelNumberNew.AllowUserToDeleteRows = false;
-      this.dataGrid_ListTelNumberNew.AllowUserToResizeColumns = false;
-      this.dataGrid_ListTelNumberNew.AllowUserToResizeRows = false;
-      this.dataGrid_ListTelNumberNew.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-      this.dataGrid_ListTelNumberNew.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-      this.dataGrid_ListTelNumberNew.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.dataGrid_ListTelNumberNew.Location = new System.Drawing.Point(3, 3);
-      this.dataGrid_ListTelNumberNew.Name = "dataGrid_ListTelNumberNew";
-      this.dataGrid_ListTelNumberNew.RowHeadersVisible = false;
-      this.dataGrid_ListTelNumberNew.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-      this.dataGrid_ListTelNumberNew.Size = new System.Drawing.Size(819, 113);
-      this.dataGrid_ListTelNumberNew.TabIndex = 1;
+      this.btnChuatontaiXuatfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.btnChuatontaiXuatfile.Location = new System.Drawing.Point(744, 90);
+      this.btnChuatontaiXuatfile.Name = "btnChuatontaiXuatfile";
+      this.btnChuatontaiXuatfile.Size = new System.Drawing.Size(75, 23);
+      this.btnChuatontaiXuatfile.TabIndex = 9;
+      this.btnChuatontaiXuatfile.Text = "Xuất file";
+      this.btnChuatontaiXuatfile.UseVisualStyleBackColor = true;
+      // 
+      // btnChuaTonTaiAdd
+      // 
+      this.btnChuaTonTaiAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.btnChuaTonTaiAdd.Location = new System.Drawing.Point(668, 90);
+      this.btnChuaTonTaiAdd.Name = "btnChuaTonTaiAdd";
+      this.btnChuaTonTaiAdd.Size = new System.Drawing.Size(75, 23);
+      this.btnChuaTonTaiAdd.TabIndex = 8;
+      this.btnChuaTonTaiAdd.Text = "Thêm vào dữ liệu gốc";
+      this.btnChuaTonTaiAdd.UseVisualStyleBackColor = true;
+      this.btnChuaTonTaiAdd.Click += new System.EventHandler(this.button5_Click);
+      // 
+      // dataGridView_chuatontai
+      // 
+      this.dataGridView_chuatontai.AllowUserToAddRows = false;
+      this.dataGridView_chuatontai.AllowUserToDeleteRows = false;
+      this.dataGridView_chuatontai.AllowUserToResizeColumns = false;
+      this.dataGridView_chuatontai.AllowUserToResizeRows = false;
+      this.dataGridView_chuatontai.BackgroundColor = System.Drawing.SystemColors.Control;
+      this.dataGridView_chuatontai.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+      this.dataGridView_chuatontai.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.dataGridView_chuatontai.Location = new System.Drawing.Point(3, 3);
+      this.dataGridView_chuatontai.Name = "dataGridView_chuatontai";
+      this.dataGridView_chuatontai.RowHeadersVisible = false;
+      this.dataGridView_chuatontai.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+      this.dataGridView_chuatontai.Size = new System.Drawing.Size(819, 113);
+      this.dataGridView_chuatontai.TabIndex = 1;
       // 
       // panel4
       // 
@@ -542,6 +618,7 @@
       this.button6.TabIndex = 6;
       this.button6.Text = "Làm Tươi";
       this.button6.UseVisualStyleBackColor = true;
+      this.button6.Click += new System.EventHandler(this.button6_Click);
       // 
       // txt_FileName
       // 
@@ -572,17 +649,6 @@
       this.label3.TabIndex = 3;
       this.label3.Text = "Tập Tin:";
       // 
-      // button9
-      // 
-      this.button9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.button9.Location = new System.Drawing.Point(753, 16);
-      this.button9.Name = "button9";
-      this.button9.Size = new System.Drawing.Size(75, 23);
-      this.button9.TabIndex = 4;
-      this.button9.Text = "Xuất File";
-      this.button9.UseVisualStyleBackColor = true;
-      this.button9.Click += new System.EventHandler(this.button9_Click);
-      // 
       // frmMain
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -609,9 +675,13 @@
       this.panel6.ResumeLayout(false);
       this.tabControl2.ResumeLayout(false);
       this.tabPage3.ResumeLayout(false);
+      this.tabPage3.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.picDaTonTai)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridView_tontai)).EndInit();
       this.tabPage4.ResumeLayout(false);
-      ((System.ComponentModel.ISupportInitialize)(this.dataGrid_ListTelNumberNew)).EndInit();
+      this.tabPage4.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.picChuaTonTai)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.dataGridView_chuatontai)).EndInit();
       this.panel4.ResumeLayout(false);
       this.panel8.ResumeLayout(false);
       this.panel7.ResumeLayout(false);
@@ -663,13 +733,17 @@
     private System.Windows.Forms.ProgressBar progressBar1;
     private System.Windows.Forms.Panel panel7;
     private System.Windows.Forms.Label lblmessage;
-    private System.Windows.Forms.DataGridView dataGrid_ListTelNumberNew;
-    private System.Windows.Forms.Button btnXoaTrungGoc;
-    private System.Windows.Forms.Button button8;
-    private System.Windows.Forms.Button button4;
-    private System.Windows.Forms.Button button7;
-    private System.Windows.Forms.Button button5;
+    private System.Windows.Forms.DataGridView dataGridView_chuatontai;
+    private System.Windows.Forms.Button btnDatonXoaGoc;
+    private System.Windows.Forms.Button btnDatonXuatFile;
+    private System.Windows.Forms.Button btnDatonCapNhat;
+    private System.Windows.Forms.Button btnChuatontaiXuatfile;
+    private System.Windows.Forms.Button btnChuaTonTaiAdd;
     private System.Windows.Forms.Button button9;
+    private System.Windows.Forms.PictureBox picChuaTonTai;
+    private System.Windows.Forms.Label lblChuaTonTai;
+    private System.Windows.Forms.Label lblDatontai;
+    private System.Windows.Forms.PictureBox picDaTonTai;
   }
 }
 

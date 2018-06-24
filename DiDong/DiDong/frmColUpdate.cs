@@ -35,9 +35,9 @@ namespace DiDong {
     }
     private string setColUp() {
       string XX = "SET ";
-      foreach (dm_column item in (List<dm_column>)checkedListBox1.CheckedItems) {
-        XX += string.Format("{0} = COALESCE(t.{0}, s.{0}),",item.ToString());
-      }
+      //foreach (dm_column item in (List<dm_column>)checkedListBox1.CheckedItems) {
+      //  XX += string.Format("{0} = COALESCE(t.{0}, s.{0}),",item.ToString());
+      //}
       return XX.Substring(0, XX.Length - 1);
     }
     private string setColUp2() {

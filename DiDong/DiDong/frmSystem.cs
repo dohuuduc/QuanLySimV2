@@ -29,6 +29,7 @@ namespace QuanLyData {
         BindColumn();
         BindCharacter();
         BindSQLBatdongbo();
+        Bindparallelism();
       }).ShowDialog();
 
       if (cau_Hinh.MaxTop == -1) {
@@ -55,6 +56,21 @@ namespace QuanLyData {
         MessageBox.Show(ex.Message, "BindGrid");
       }
     }
+
+    void Bindparallelism() {
+      try {
+        string str = string.Format("sp_configure 'max degree of parallelism'");
+        DataTable tb = SQLDatabase.ExcDataTable(str);
+        dataGridView1.Invoke((Action)delegate {
+          dataGridView1.DataSource = tb;
+        });
+
+      }
+      catch (Exception ex) {
+        MessageBox.Show(ex.Message, "BindGrid");
+      }
+    }
+
     void BindCharacter() {
       try {
         string str = string.Format("select * from dm_Character order by OrderId");
@@ -318,11 +334,11 @@ namespace QuanLyData {
           DialogResult dialogResult = MessageBox.Show("Bạn có muốn chuẩn hoá dữ liệu tìm kiếm lại từ đầu tất cả dữ liệu không?\n 1-Yes:Chuẩn hoá lại từ đầu. \n 2-No: Chỉ những thông tin chưa được chuẩn hoá", "Some Title", MessageBoxButtons.YesNo);
           if (dialogResult == DialogResult.Yes) {
             dm_batdongbo model = SQLDatabase.Loaddm_batdongbo("select * from dm_batdongbo where isAct=1").FirstOrDefault();
-            SQLDatabase.ExcNonQuery(String.Format("update root set isSearch = 0 {0}", model.ma));
+            SQLDatabase.ExcNonQuery(String.Format("update root WITH(TABLOCK) set isSearch = 0 {0}", model.ma));
           }
 
           List<dm_column> dm_Columns = SQLDatabase.Loaddm_column("select * from dm_column where isSearch=1  order by orderid ");
-          string strcommand = "update root set valueskeySearch=";
+          string strcommand = "update root WITH(TABLOCK) set valueskeySearch=";
           foreach (dm_column item in dm_Columns) {
             strcommand += string.Format("isnull(dbo.GetUnsignString({0}), '') ", item.ma) + "+";
           }
@@ -455,6 +471,25 @@ namespace QuanLyData {
       catch (Exception ex) {
         MessageBox.Show("Unable to save the record. There might be a blank cell. ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
       }
+    }
+
+    private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e) {
+      try {
+        if (e.RowIndex != -1) {
+          int value = ConvertType.ToInt(dataGridView1.Rows[e.RowIndex].Cells["run_value"].Value);
+          SQLDatabase.ExcNonQuery(string.Format(" EXEC sp_configure 'show advanced options', 1;"));
+          SQLDatabase.ExcNonQuery(string.Format(" RECONFIGURE WITH OVERRIDE;"));
+          SQLDatabase.ExcNonQuery(string.Format(" EXEC sp_configure 'max degree of parallelism', {0};", value));
+          SQLDatabase.ExcNonQuery("RECONFIGURE WITH OVERRIDE;");
+        }
+      }
+      catch (Exception ex) {
+        MessageBox.Show("Unable to save the record. There might be a blank cell. ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+      }
+    }
+
+    private void lToolStripMenuItem_Click(object sender, EventArgs e) {
+      Bindparallelism();
     }
   }
 }

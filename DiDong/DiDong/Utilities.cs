@@ -11,12 +11,12 @@ using System.Windows.Forms;
 
 namespace DiDong {
   public class Utilities {
-    public static string SelectColumn() {
+    public static string SelectColumn(string x) {
       try {
         string strSelect = "";
-        List<dm_column> dm_Columns = SQLDatabase.Loaddm_column("select* from dm_column where isAct=1 order by orderid asc");
+        List<dm_column> dm_Columns = SQLDatabase.Loaddm_column("select * from dm_column where isAct=1 order by orderid asc");
         foreach (var item in dm_Columns) {
-          strSelect += string.Format("{0},", item.ma);
+          strSelect += string.Format("{0}{1},",x==""?"": string.Format("{0}.",x), item.ma);
         }
         return strSelect.Substring(0,strSelect.Length-1);
       }
@@ -24,13 +24,13 @@ namespace DiDong {
         return "";
       }
     }
-    public static string OrderColumn() {
+    public static string OrderColumn(string x) {
       try {
         string strSelect = "";
         List<dm_column> dm_Columns = SQLDatabase.Loaddm_column("select* from dm_column where isorder=1 order by orderid asc");
         if (dm_Columns.Count() == 0) return "create_date";
         foreach (var item in dm_Columns) {
-          strSelect += string.Format("{0},", item.ma);
+          strSelect += string.Format("{0}{1},", x == "" ? "" : string.Format("{0}.", x), item.ma);
         }
         return strSelect.Substring(0, strSelect.Length - 1);
       }

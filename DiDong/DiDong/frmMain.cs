@@ -27,7 +27,7 @@ namespace QuanLyData {
     private List<string> dscot;
     private string connectionString = "";
     private cau_hinh _cauhinh = null;
-    private dm_batdongbo Dm_Batdongbo=null;
+    private dm_batdongbo _dm_Batdongbo=null;
     private string _strDatabase;
     private string _strDatabase2;
     private string _strTable2;
@@ -37,9 +37,10 @@ namespace QuanLyData {
     public frmMain() {
 
       InitializeComponent();
+
       CreateColumnGridView(GridViewMain);
       CreateColumnGridView(dataGridView_tontai);
-      CreateColumnGridView(dataGrid_ListTelNumberNew);
+      CreateColumnGridView(dataGridView_chuatontai);
       
 
       _Columns = SQLDatabase.Loaddm_column("select * from dm_column order by orderid");
@@ -67,7 +68,7 @@ namespace QuanLyData {
         frmSystem frm = new frmSystem();
         frm.strDatabase = _strDatabase;
         if (frm.ShowDialog() == DialogResult.OK) {
-          Dm_Batdongbo = SQLDatabase.Loaddm_batdongbo(string.Format("select * from dm_batdongbo where isAct=1")).FirstOrDefault();
+          _dm_Batdongbo = SQLDatabase.Loaddm_batdongbo(string.Format("select * from dm_batdongbo where isAct=1")).FirstOrDefault();
           _cauhinh = SQLDatabase.Loadcau_hinh("select * from cau_hinh").FirstOrDefault();
         }
       }
@@ -78,12 +79,237 @@ namespace QuanLyData {
 
     private void frmMain_Load(object sender, EventArgs e) {
       _cauhinh = SQLDatabase.Loadcau_hinh("select * from cau_hinh").FirstOrDefault();
-      Dm_Batdongbo = SQLDatabase.Loaddm_batdongbo(string.Format("select * from dm_batdongbo where isAct=1")).FirstOrDefault();
+      _dm_Batdongbo = SQLDatabase.Loaddm_batdongbo(string.Format("select * from dm_batdongbo where isAct=1")).FirstOrDefault();
+
       cbb_TypeDataSource.SelectedIndex = 0;
       dm_Character dm_Character = SQLDatabase.Loaddm_Character("select * from dm_Character where isAct=1").FirstOrDefault();
       groupBox3.Text = string.Format("Dữ Liệu Nguồn (TXT: {0})", dm_Character.name);
+
+     // BindImport();
+      //BindingImportChuaTonTai1();
     }
 
+    private async void BindImport() {
+      try {
+        picChuaTonTai.Invoke((Action)delegate {
+            picChuaTonTai.Visible = true;
+          });
+        lblChuaTonTai.Invoke((Action)delegate {
+          lblChuaTonTai.Visible = true;
+        });
+
+        picDaTonTai.Invoke((Action)delegate {
+          picDaTonTai.Visible = true;
+        });
+        lblDatontai.Invoke((Action)delegate {
+          lblDatontai.Visible = true;
+        });
+        button2.Invoke((Action)delegate {
+          button2.Enabled = false;
+        });
+        button3.Invoke((Action)delegate {
+          button3.Enabled = false;
+        });
+        btn_Import.Invoke((Action)delegate {
+          btn_Import.Enabled = false;
+        });
+
+
+        Task<string> task1 = BindingImportChuaTonTai();
+        Task<string> task2 = BindingImportDaTonTai();
+
+
+        await Task.WhenAny(task1,task2);
+        string x = task1.Result;
+        // await Task.WhenAll(BindingImportDaTonTai());
+
+        // await Task.WhenAll(strings.Select(s => Task.Run(() => DoSomething(s)));
+      //  await BindingImportChuaTonTai();
+
+        picChuaTonTai.Invoke((Action)delegate {
+          picChuaTonTai.Visible = false;
+        });
+        lblChuaTonTai.Invoke((Action)delegate {
+          lblChuaTonTai.Visible = false;
+        });
+
+        picDaTonTai.Invoke((Action)delegate {
+          picDaTonTai.Visible = false;
+        });
+        lblDatontai.Invoke((Action)delegate {
+          lblDatontai.Visible = false;
+        });
+
+        button2.Invoke((Action)delegate {
+          button2.Enabled = true;
+        });
+        button3.Invoke((Action)delegate {
+          button3.Enabled = true;
+        });
+        btn_Import.Invoke((Action)delegate {
+          btn_Import.Enabled = true;
+        });
+      }
+      catch (Exception) {
+        throw;
+      }
+    }
+
+    private async void button6_Click(object sender, EventArgs e) {
+      picChuaTonTai.Invoke((Action)delegate {
+        picChuaTonTai.Visible = true;
+      });
+      lblChuaTonTai.Invoke((Action)delegate {
+        lblChuaTonTai.Visible = true;
+      });
+
+      picDaTonTai.Invoke((Action)delegate {
+        picDaTonTai.Visible = true;
+      });
+      lblDatontai.Invoke((Action)delegate {
+        lblDatontai.Visible = true;
+      });
+      button2.Invoke((Action)delegate {
+        button2.Enabled = false;
+      });
+      button3.Invoke((Action)delegate {
+        button3.Enabled = false;
+      });
+      btn_Import.Invoke((Action)delegate {
+        btn_Import.Enabled = false;
+      });
+
+      await BindingImportChuaTonTai() ;
+      await BindingImportDaTonTai();
+
+      picChuaTonTai.Invoke((Action)delegate {
+        picChuaTonTai.Visible = false;
+      });
+      lblChuaTonTai.Invoke((Action)delegate {
+        lblChuaTonTai.Visible = false;
+      });
+
+      picDaTonTai.Invoke((Action)delegate {
+        picDaTonTai.Visible = false;
+      });
+      lblDatontai.Invoke((Action)delegate {
+        lblDatontai.Visible = false;
+      });
+
+      button2.Invoke((Action)delegate {
+        button2.Enabled = true;
+      });
+      button3.Invoke((Action)delegate {
+        button3.Enabled = true;
+      });
+      btn_Import.Invoke((Action)delegate {
+        btn_Import.Enabled = true;
+      });
+    }
+    private Task<string> BindingImportChuaTonTai() {
+        return Task.Run(() =>
+        {
+          string strcommand = string.Format("select {0} ROW_NUMBER() Over (Order By {4} asc) As RowNumber,{1} from dbo.import a left join dbo.root b on a.{2}=b.{2} where b.{2} is null {3}", 
+                                          _cauhinh.MaxTop.ToString() =="-1" ? "": string.Format("top {0}",_cauhinh.MaxTop)
+                                          , Utilities.SelectColumn("a"),
+                                          //_Columns.Where(p => p.isKey == true).FirstOrDefault().ma, 
+                                          radioButtons.Where(p => p.Checked).FirstOrDefault().Tag,
+                                          _dm_Batdongbo.ma,
+                                          Utilities.OrderColumn("a"));
+          long totalRowCount = 0;
+          DataTable tb = SQLDatabase.ExcDataTable(strcommand);
+          dataGridView_chuatontai.Invoke((Action)delegate {
+            dataGridView_chuatontai.DataSource = tb;
+          });
+          totalRowCount = tb.Rows.Count;
+          Thread.Sleep(0);
+          if (totalRowCount > 0) {
+            tabPage4.Invoke((Action)delegate {
+              tabPage4.Text = string.Format("Khách Hàng Chưa Tồn Tại Ở File Gốc: {0}", totalRowCount);
+              tabPage4.Update();
+            });
+            btnDatonXuatFile.Invoke((Action)delegate {
+              btnDatonXuatFile.Enabled = true;
+            });
+            btnDatonCapNhat.Invoke((Action)delegate {
+              btnDatonCapNhat.Enabled = true;
+            });
+            btnDatonXoaGoc.Invoke((Action)delegate {
+              btnDatonXoaGoc.Enabled = true;
+            });
+            picChuaTonTai.Invoke((Action)delegate {
+              picChuaTonTai.Visible = false;
+            });
+            lblChuaTonTai.Invoke((Action)delegate {
+              lblChuaTonTai.Visible = false;
+            });
+          }
+          else {
+            totalRowCount = 0;
+
+            tabControl2.Invoke((Action)delegate {
+              tabControl2.TabPages[1].Text = string.Format("Khách Hàng Chưa Tồn Tại Ở File Gốc");
+            });
+            btnDatonXuatFile.Invoke((Action)delegate {
+              btnDatonXuatFile.Enabled = false;
+            });
+            btnDatonCapNhat.Invoke((Action)delegate {
+              btnDatonCapNhat.Enabled = false;
+            });
+            btnDatonXoaGoc.Invoke((Action)delegate {
+              btnDatonXoaGoc.Enabled = false;
+            });
+           
+          }
+        
+          return "my data";
+        });
+    }
+    private Task<string> BindingImportDaTonTai() {
+        return Task.Run(() => {
+         
+          string strcommand = string.Format("select {0} ROW_NUMBER() Over (Order By {4} asc) As RowNumber,{1} from dbo.import a inner join dbo.root b on a.{2}=b.{2} {3}",
+                                        _cauhinh.MaxTop.ToString() == "-1" ? "" : string.Format("top {0}", _cauhinh.MaxTop)
+                                        , Utilities.SelectColumn("a"),
+                                        //_Columns.Where(p => p.isKey == true).FirstOrDefault().ma,
+                                        radioButtons.Where(p=>p.Checked).FirstOrDefault().Tag,
+                                        _dm_Batdongbo.ma,
+                                        Utilities.OrderColumn("a"));
+
+          long totalRowCount = 0;
+          DataTable dataTable = SQLDatabase.ExcDataTable(strcommand);
+          dataGridView_tontai.Invoke((Action)delegate {
+            dataGridView_tontai.DataSource = dataTable;
+          });
+          totalRowCount = dataTable.Rows.Count;
+          if (totalRowCount > 0) {
+            tabPage4.Invoke((Action)delegate {
+              tabPage4.Text = string.Format("Khách Hàng Đã Tồn Tại Ở File Gốc: {0}", totalRowCount);
+              tabPage4.Update();
+            });
+            btnChuaTonTaiAdd.Invoke((Action)delegate {
+              btnChuaTonTaiAdd.Enabled = true;
+            });
+            btnChuatontaiXuatfile.Invoke((Action)delegate {
+              btnChuatontaiXuatfile.Enabled = true;
+            });
+          }
+          else {
+            totalRowCount = 0;
+            tabControl2.Invoke((Action)delegate {
+              tabControl2.TabPages[1].Text = string.Format("Khách Hàng Đã Tồn Tại Ở File Gốc");
+            });
+            btnChuaTonTaiAdd.Invoke((Action)delegate {
+              btnChuaTonTaiAdd.Enabled = false;
+            });
+            btnChuatontaiXuatfile.Invoke((Action)delegate {
+              btnChuatontaiXuatfile.Enabled = false;
+            });
+
+          }
+          return "my data";
+        });
+      }
     private void button1_Click(object sender, EventArgs e) {
       frmSearch frm = new frmSearch();
       if (frm.ShowDialog() == DialogResult.OK) {
@@ -377,6 +603,7 @@ namespace QuanLyData {
       radio.Location = new Point(index, 50);
       radio.Name = string.Format(string.Format("rad_{0}", model.ma));
       radio.Text = string.Format("{0}_{1}", model.name,index);
+      radio.Tag = model.ma;
       radio.Checked = model.isKey;
       radio.Click += Radio_Click;
       return radio;
@@ -593,12 +820,12 @@ namespace QuanLyData {
         string CommandToGetData = "";
 
         
-        CommandToGetCount = string.Format("Select COUNT(*) As TotalRow From dbo.root {0} {1}", strChuoiDieuKien, Dm_Batdongbo.ma.Trim());
+        CommandToGetCount = string.Format("Select COUNT(*) As TotalRow From dbo.root {0} {1}", strChuoiDieuKien, _dm_Batdongbo.ma.Trim());
         CommandToGetData = string.Format(" with Tel as (select ROW_NUMBER() Over (Order By {3} asc) As RowNumber, {0} " +
-                                         " from dbo.root {1} {2}) Select * From Tel where ", Utilities.SelectColumn(), 
+                                         " from dbo.root {1} {2}) Select * From Tel where ", Utilities.SelectColumn(""), 
                                                                                       strChuoiDieuKien, 
-                                                                                      Dm_Batdongbo.ma.Trim(),
-                                                                                      Utilities.OrderColumn());
+                                                                                      _dm_Batdongbo.ma.Trim(),
+                                                                                      Utilities.OrderColumn(""));
         
         cachedData.CommandToGetCount = CommandToGetCount;
         cachedData.CommandToGetData = CommandToGetData;
@@ -689,5 +916,11 @@ namespace QuanLyData {
         MessageBox.Show(ex.Message, "");
       }
     }
+
+    private void button5_Click(object sender, EventArgs e) {
+
+    }
+
+    
   }
 }

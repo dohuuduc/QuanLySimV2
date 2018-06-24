@@ -49,11 +49,18 @@ namespace DiDong {
       });
     }
     private void Waiting_Load(object sender, EventArgs e) {
-      new Thread(() =>
-      {
-        method.Invoke();
-        InvokeAction(this, Dispose);
-      }).Start();
+      try {
+        new Thread(() =>
+        {
+          method.Invoke();
+          InvokeAction(this, Dispose);
+        }).Start();
+      }
+      catch (Exception ex) {
+
+        throw;
+      }
+      
 
 
     }
