@@ -972,6 +972,7 @@ namespace QuanLyData {
             return;
           }
           new Waiting(() => {
+           // string strsql = string.Format("select {0}");
             string command = string.Format("exec [spExport] 'SET DATEFORMAT DMY {0}','{1}'", "", saveFileDialog1.FileName);
             if (SQLDatabase.ExcNonQuery(command)) {
 
@@ -1014,22 +1015,6 @@ namespace QuanLyData {
     }
 
     private void button5_Click(object sender, EventArgs e) {
-      //try {
-      //string strcommand = string.Format(" insert into dbo.root  WITH(TABLOCK) ({0}) ", Utilities.SelectColumn("")) +
-      //                    string.Format(" select {0} ", Utilities.SelectColumn("a")) +
-      //                    string.Format(" FROM dbo.import a left join dbo.root b on a.{0}=b.{0}", radioButtons.Where(p => p.Checked == true).FirstOrDefault().Tag.ToString()) +
-      //                    string.Format(" where b.{0} is null {1}", radioButtons.Where(p => p.Checked == true).FirstOrDefault().Tag.ToString(),_dm_Batdongbo.ma);
-
-      //new Waiting(() => {
-      //  SQLDatabase.ExcDataTable(strcommand);
-      //}).ShowDialog();
-      //button6_Click(null,null);
-      //  MessageBox.Show("Hoàn thành thêm dữ liệu từ bảng tạm sang bản chính thức", "Thông báo");
-      //}
-      //catch (Exception ex) {
-      //  MessageBox.Show(ex.Message, "button5_Click");
-      //}
-
       try {
         frmColUpdate frm = new frmColUpdate();
         string macol = radioButtons.Where(p => p.Checked == true).FirstOrDefault().Tag.ToString();
@@ -1046,7 +1031,7 @@ namespace QuanLyData {
             isTrue = SQLDatabase.ExcNonQuery(frm.strSQL);
           }).ShowDialog();
           if (isTrue) {
-            MessageBox.Show("Insert thành công", "Thông báo");
+            MessageBox.Show("Insert thành công \n Hệ thống sẽ làm tươi lại dữ liệu", "Thông báo");
             button6_Click(null, null);
           }
           else
@@ -1059,6 +1044,22 @@ namespace QuanLyData {
 
     }
 
-    
+    private void btnDatonXoaGoc_Click(object sender, EventArgs e) {
+      try {
+        if (MessageBox.Show("Bạn có chắc muốn xoá dữ liệu gốc trùng với dữ liệu tạm ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
+          bool isTrue = false;
+          new Waiting(() => {
+            isTrue= SQLDatabase.ExcNonQuery(string.Format("Delete a from dbo.root a inner join dbo.import b on a.{0}=b.{0}", radioButtons.Where(p => p.Checked).FirstOrDefault().Tag)
+          });
+          if (isTrue) {
+            MessageBox.Show("Xoá xong dữ liệu gốc trùng dữ liệu nguồn \n Hệ thống sẽ làm tươi lại dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            button6_Click(null, null);
+            }
+          }
+        }
+      catch (Exception ex) {
+        MessageBox.Show(ex.Message, "btnDatonXoaGoc_Click");
+      }
+    }
   }
 }

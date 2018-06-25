@@ -44,11 +44,13 @@
       this.tabControl2 = new System.Windows.Forms.TabControl();
       this.tabPage3 = new System.Windows.Forms.TabPage();
       this.lblDatontai = new System.Windows.Forms.Label();
+      this.picDaTonTai = new System.Windows.Forms.PictureBox();
       this.btnDatonXoaGoc = new System.Windows.Forms.Button();
       this.btnDatonXuatFile = new System.Windows.Forms.Button();
       this.btnDatonCapNhat = new System.Windows.Forms.Button();
       this.dataGridView_tontai = new System.Windows.Forms.DataGridView();
       this.tabPage4 = new System.Windows.Forms.TabPage();
+      this.picChuaTonTai = new System.Windows.Forms.PictureBox();
       this.lblChuaTonTai = new System.Windows.Forms.Label();
       this.btnChuatontaiXuatfile = new System.Windows.Forms.Button();
       this.btnChuaTonTaiAdd = new System.Windows.Forms.Button();
@@ -69,8 +71,6 @@
       this.txt_FileName = new System.Windows.Forms.TextBox();
       this.btn_Import = new System.Windows.Forms.Button();
       this.label3 = new System.Windows.Forms.Label();
-      this.picDaTonTai = new System.Windows.Forms.PictureBox();
-      this.picChuaTonTai = new System.Windows.Forms.PictureBox();
       this.menuStrip1.SuspendLayout();
       this.tabControl1.SuspendLayout();
       this.tabPage1.SuspendLayout();
@@ -85,16 +85,16 @@
       this.panel6.SuspendLayout();
       this.tabControl2.SuspendLayout();
       this.tabPage3.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.picDaTonTai)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridView_tontai)).BeginInit();
       this.tabPage4.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.picChuaTonTai)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridView_chuatontai)).BeginInit();
       this.panel4.SuspendLayout();
       this.panel8.SuspendLayout();
       this.panel7.SuspendLayout();
       this.groupBox2.SuspendLayout();
       this.groupBox3.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.picDaTonTai)).BeginInit();
-      ((System.ComponentModel.ISupportInitialize)(this.picChuaTonTai)).BeginInit();
       this.SuspendLayout();
       // 
       // menuStrip1
@@ -327,6 +327,20 @@
       this.lblDatontai.Text = "Đang Load Dữ Liệu";
       this.lblDatontai.Visible = false;
       // 
+      // picDaTonTai
+      // 
+      this.picDaTonTai.Anchor = System.Windows.Forms.AnchorStyles.None;
+      this.picDaTonTai.BackColor = System.Drawing.Color.Transparent;
+      this.picDaTonTai.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+      this.picDaTonTai.Image = global::DiDong.Properties.Resources.ajax_loader;
+      this.picDaTonTai.Location = new System.Drawing.Point(386, 49);
+      this.picDaTonTai.Name = "picDaTonTai";
+      this.picDaTonTai.Size = new System.Drawing.Size(50, 50);
+      this.picDaTonTai.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+      this.picDaTonTai.TabIndex = 13;
+      this.picDaTonTai.TabStop = false;
+      this.picDaTonTai.Visible = false;
+      // 
       // btnDatonXoaGoc
       // 
       this.btnDatonXoaGoc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -337,6 +351,7 @@
       this.btnDatonXoaGoc.TabIndex = 12;
       this.btnDatonXoaGoc.Text = "Xoá Gốc";
       this.btnDatonXoaGoc.UseVisualStyleBackColor = true;
+      this.btnDatonXoaGoc.Click += new System.EventHandler(this.btnDatonXoaGoc_Click);
       // 
       // btnDatonXuatFile
       // 
@@ -390,6 +405,20 @@
       this.tabPage4.TabIndex = 1;
       this.tabPage4.Text = "Khách Hàng Chưa Tồn Tại Ở File Gốc";
       this.tabPage4.UseVisualStyleBackColor = true;
+      // 
+      // picChuaTonTai
+      // 
+      this.picChuaTonTai.Anchor = System.Windows.Forms.AnchorStyles.None;
+      this.picChuaTonTai.BackColor = System.Drawing.Color.Transparent;
+      this.picChuaTonTai.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+      this.picChuaTonTai.Image = global::DiDong.Properties.Resources.ajax_loader;
+      this.picChuaTonTai.Location = new System.Drawing.Point(384, 47);
+      this.picChuaTonTai.Name = "picChuaTonTai";
+      this.picChuaTonTai.Size = new System.Drawing.Size(50, 50);
+      this.picChuaTonTai.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+      this.picChuaTonTai.TabIndex = 12;
+      this.picChuaTonTai.TabStop = false;
+      this.picChuaTonTai.Visible = false;
       // 
       // lblChuaTonTai
       // 
@@ -626,34 +655,6 @@
       this.label3.TabIndex = 3;
       this.label3.Text = "Tập Tin:";
       // 
-      // picDaTonTai
-      // 
-      this.picDaTonTai.Anchor = System.Windows.Forms.AnchorStyles.None;
-      this.picDaTonTai.BackColor = System.Drawing.Color.Transparent;
-      this.picDaTonTai.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-      this.picDaTonTai.Image = global::DiDong.Properties.Resources.ajax_loader;
-      this.picDaTonTai.Location = new System.Drawing.Point(386, 49);
-      this.picDaTonTai.Name = "picDaTonTai";
-      this.picDaTonTai.Size = new System.Drawing.Size(50, 50);
-      this.picDaTonTai.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-      this.picDaTonTai.TabIndex = 13;
-      this.picDaTonTai.TabStop = false;
-      this.picDaTonTai.Visible = false;
-      // 
-      // picChuaTonTai
-      // 
-      this.picChuaTonTai.Anchor = System.Windows.Forms.AnchorStyles.None;
-      this.picChuaTonTai.BackColor = System.Drawing.Color.Transparent;
-      this.picChuaTonTai.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-      this.picChuaTonTai.Image = global::DiDong.Properties.Resources.ajax_loader;
-      this.picChuaTonTai.Location = new System.Drawing.Point(384, 47);
-      this.picChuaTonTai.Name = "picChuaTonTai";
-      this.picChuaTonTai.Size = new System.Drawing.Size(50, 50);
-      this.picChuaTonTai.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-      this.picChuaTonTai.TabIndex = 12;
-      this.picChuaTonTai.TabStop = false;
-      this.picChuaTonTai.Visible = false;
-      // 
       // frmMain
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -681,9 +682,11 @@
       this.tabControl2.ResumeLayout(false);
       this.tabPage3.ResumeLayout(false);
       this.tabPage3.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.picDaTonTai)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridView_tontai)).EndInit();
       this.tabPage4.ResumeLayout(false);
       this.tabPage4.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.picChuaTonTai)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridView_chuatontai)).EndInit();
       this.panel4.ResumeLayout(false);
       this.panel8.ResumeLayout(false);
@@ -692,8 +695,6 @@
       this.groupBox2.ResumeLayout(false);
       this.groupBox3.ResumeLayout(false);
       this.groupBox3.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.picDaTonTai)).EndInit();
-      ((System.ComponentModel.ISupportInitialize)(this.picChuaTonTai)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
