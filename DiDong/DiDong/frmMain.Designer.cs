@@ -44,14 +44,12 @@
       this.tabControl2 = new System.Windows.Forms.TabControl();
       this.tabPage3 = new System.Windows.Forms.TabPage();
       this.lblDatontai = new System.Windows.Forms.Label();
-      this.picDaTonTai = new System.Windows.Forms.PictureBox();
       this.btnDatonXoaGoc = new System.Windows.Forms.Button();
       this.btnDatonXuatFile = new System.Windows.Forms.Button();
       this.btnDatonCapNhat = new System.Windows.Forms.Button();
       this.dataGridView_tontai = new System.Windows.Forms.DataGridView();
       this.tabPage4 = new System.Windows.Forms.TabPage();
       this.lblChuaTonTai = new System.Windows.Forms.Label();
-      this.picChuaTonTai = new System.Windows.Forms.PictureBox();
       this.btnChuatontaiXuatfile = new System.Windows.Forms.Button();
       this.btnChuaTonTaiAdd = new System.Windows.Forms.Button();
       this.dataGridView_chuatontai = new System.Windows.Forms.DataGridView();
@@ -63,14 +61,16 @@
       this.groupBox2 = new System.Windows.Forms.GroupBox();
       this.palSIPLogs = new System.Windows.Forms.TableLayoutPanel();
       this.groupBox3 = new System.Windows.Forms.GroupBox();
+      this.button6 = new System.Windows.Forms.Button();
       this.cbb_TypeDataSource = new System.Windows.Forms.ComboBox();
       this.button3 = new System.Windows.Forms.Button();
       this.btn_View = new System.Windows.Forms.Button();
       this.button2 = new System.Windows.Forms.Button();
-      this.button6 = new System.Windows.Forms.Button();
       this.txt_FileName = new System.Windows.Forms.TextBox();
       this.btn_Import = new System.Windows.Forms.Button();
       this.label3 = new System.Windows.Forms.Label();
+      this.picDaTonTai = new System.Windows.Forms.PictureBox();
+      this.picChuaTonTai = new System.Windows.Forms.PictureBox();
       this.menuStrip1.SuspendLayout();
       this.tabControl1.SuspendLayout();
       this.tabPage1.SuspendLayout();
@@ -85,16 +85,16 @@
       this.panel6.SuspendLayout();
       this.tabControl2.SuspendLayout();
       this.tabPage3.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.picDaTonTai)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridView_tontai)).BeginInit();
       this.tabPage4.SuspendLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.picChuaTonTai)).BeginInit();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridView_chuatontai)).BeginInit();
       this.panel4.SuspendLayout();
       this.panel8.SuspendLayout();
       this.panel7.SuspendLayout();
       this.groupBox2.SuspendLayout();
       this.groupBox3.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.picDaTonTai)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.picChuaTonTai)).BeginInit();
       this.SuspendLayout();
       // 
       // menuStrip1
@@ -320,30 +320,17 @@
       this.lblDatontai.AutoSize = true;
       this.lblDatontai.BackColor = System.Drawing.SystemColors.Control;
       this.lblDatontai.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-      this.lblDatontai.Location = new System.Drawing.Point(354, 78);
+      this.lblDatontai.Location = new System.Drawing.Point(354, 100);
       this.lblDatontai.Name = "lblDatontai";
       this.lblDatontai.Size = new System.Drawing.Size(117, 13);
       this.lblDatontai.TabIndex = 14;
       this.lblDatontai.Text = "Đang Load Dữ Liệu";
       this.lblDatontai.Visible = false;
       // 
-      // picDaTonTai
-      // 
-      this.picDaTonTai.Anchor = System.Windows.Forms.AnchorStyles.None;
-      this.picDaTonTai.BackColor = System.Drawing.Color.Transparent;
-      this.picDaTonTai.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-      this.picDaTonTai.Image = global::DiDong.Properties.Resources.ajax_loader;
-      this.picDaTonTai.Location = new System.Drawing.Point(386, 27);
-      this.picDaTonTai.Name = "picDaTonTai";
-      this.picDaTonTai.Size = new System.Drawing.Size(50, 50);
-      this.picDaTonTai.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-      this.picDaTonTai.TabIndex = 13;
-      this.picDaTonTai.TabStop = false;
-      this.picDaTonTai.Visible = false;
-      // 
       // btnDatonXoaGoc
       // 
       this.btnDatonXoaGoc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.btnDatonXoaGoc.Enabled = false;
       this.btnDatonXoaGoc.Location = new System.Drawing.Point(750, 90);
       this.btnDatonXoaGoc.Name = "btnDatonXoaGoc";
       this.btnDatonXoaGoc.Size = new System.Drawing.Size(70, 23);
@@ -354,6 +341,7 @@
       // btnDatonXuatFile
       // 
       this.btnDatonXuatFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.btnDatonXuatFile.Enabled = false;
       this.btnDatonXuatFile.Location = new System.Drawing.Point(592, 90);
       this.btnDatonXuatFile.Name = "btnDatonXuatFile";
       this.btnDatonXuatFile.Size = new System.Drawing.Size(75, 23);
@@ -364,6 +352,7 @@
       // btnDatonCapNhat
       // 
       this.btnDatonCapNhat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.btnDatonCapNhat.Enabled = false;
       this.btnDatonCapNhat.Location = new System.Drawing.Point(671, 90);
       this.btnDatonCapNhat.Name = "btnDatonCapNhat";
       this.btnDatonCapNhat.Size = new System.Drawing.Size(75, 23);
@@ -389,8 +378,8 @@
       // 
       // tabPage4
       // 
-      this.tabPage4.Controls.Add(this.lblChuaTonTai);
       this.tabPage4.Controls.Add(this.picChuaTonTai);
+      this.tabPage4.Controls.Add(this.lblChuaTonTai);
       this.tabPage4.Controls.Add(this.btnChuatontaiXuatfile);
       this.tabPage4.Controls.Add(this.btnChuaTonTaiAdd);
       this.tabPage4.Controls.Add(this.dataGridView_chuatontai);
@@ -408,30 +397,17 @@
       this.lblChuaTonTai.AutoSize = true;
       this.lblChuaTonTai.BackColor = System.Drawing.SystemColors.Control;
       this.lblChuaTonTai.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-      this.lblChuaTonTai.Location = new System.Drawing.Point(367, 100);
+      this.lblChuaTonTai.Location = new System.Drawing.Point(356, 100);
       this.lblChuaTonTai.Name = "lblChuaTonTai";
       this.lblChuaTonTai.Size = new System.Drawing.Size(117, 13);
       this.lblChuaTonTai.TabIndex = 11;
       this.lblChuaTonTai.Text = "Đang Load Dữ Liệu";
       this.lblChuaTonTai.Visible = false;
       // 
-      // picChuaTonTai
-      // 
-      this.picChuaTonTai.Anchor = System.Windows.Forms.AnchorStyles.None;
-      this.picChuaTonTai.BackColor = System.Drawing.Color.Transparent;
-      this.picChuaTonTai.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-      this.picChuaTonTai.Image = global::DiDong.Properties.Resources.ajax_loader;
-      this.picChuaTonTai.Location = new System.Drawing.Point(399, 49);
-      this.picChuaTonTai.Name = "picChuaTonTai";
-      this.picChuaTonTai.Size = new System.Drawing.Size(50, 50);
-      this.picChuaTonTai.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-      this.picChuaTonTai.TabIndex = 10;
-      this.picChuaTonTai.TabStop = false;
-      this.picChuaTonTai.Visible = false;
-      // 
       // btnChuatontaiXuatfile
       // 
       this.btnChuatontaiXuatfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+      this.btnChuatontaiXuatfile.Enabled = false;
       this.btnChuatontaiXuatfile.Location = new System.Drawing.Point(744, 90);
       this.btnChuatontaiXuatfile.Name = "btnChuatontaiXuatfile";
       this.btnChuatontaiXuatfile.Size = new System.Drawing.Size(75, 23);
@@ -442,7 +418,8 @@
       // btnChuaTonTaiAdd
       // 
       this.btnChuaTonTaiAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-      this.btnChuaTonTaiAdd.Location = new System.Drawing.Point(668, 90);
+      this.btnChuaTonTaiAdd.Enabled = false;
+      this.btnChuaTonTaiAdd.Location = new System.Drawing.Point(663, 90);
       this.btnChuaTonTaiAdd.Name = "btnChuaTonTaiAdd";
       this.btnChuaTonTaiAdd.Size = new System.Drawing.Size(75, 23);
       this.btnChuaTonTaiAdd.TabIndex = 8;
@@ -548,11 +525,11 @@
       // 
       // groupBox3
       // 
+      this.groupBox3.Controls.Add(this.button6);
       this.groupBox3.Controls.Add(this.cbb_TypeDataSource);
       this.groupBox3.Controls.Add(this.button3);
       this.groupBox3.Controls.Add(this.btn_View);
       this.groupBox3.Controls.Add(this.button2);
-      this.groupBox3.Controls.Add(this.button6);
       this.groupBox3.Controls.Add(this.txt_FileName);
       this.groupBox3.Controls.Add(this.btn_Import);
       this.groupBox3.Controls.Add(this.label3);
@@ -563,6 +540,17 @@
       this.groupBox3.TabIndex = 3;
       this.groupBox3.TabStop = false;
       this.groupBox3.Text = "Dữ Liệu Nguồn (TXT: UTF-16)";
+      // 
+      // button6
+      // 
+      this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.button6.Location = new System.Drawing.Point(443, 14);
+      this.button6.Name = "button6";
+      this.button6.Size = new System.Drawing.Size(76, 23);
+      this.button6.TabIndex = 6;
+      this.button6.Text = "Làm Tươi";
+      this.button6.UseVisualStyleBackColor = true;
+      this.button6.Click += new System.EventHandler(this.button6_Click);
       // 
       // cbb_TypeDataSource
       // 
@@ -609,17 +597,6 @@
       this.button2.UseVisualStyleBackColor = true;
       this.button2.Click += new System.EventHandler(this.button2_Click);
       // 
-      // button6
-      // 
-      this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.button6.Location = new System.Drawing.Point(443, 14);
-      this.button6.Name = "button6";
-      this.button6.Size = new System.Drawing.Size(76, 23);
-      this.button6.TabIndex = 6;
-      this.button6.Text = "Làm Tươi";
-      this.button6.UseVisualStyleBackColor = true;
-      this.button6.Click += new System.EventHandler(this.button6_Click);
-      // 
       // txt_FileName
       // 
       this.txt_FileName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -649,6 +626,34 @@
       this.label3.TabIndex = 3;
       this.label3.Text = "Tập Tin:";
       // 
+      // picDaTonTai
+      // 
+      this.picDaTonTai.Anchor = System.Windows.Forms.AnchorStyles.None;
+      this.picDaTonTai.BackColor = System.Drawing.Color.Transparent;
+      this.picDaTonTai.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+      this.picDaTonTai.Image = global::DiDong.Properties.Resources.ajax_loader;
+      this.picDaTonTai.Location = new System.Drawing.Point(386, 49);
+      this.picDaTonTai.Name = "picDaTonTai";
+      this.picDaTonTai.Size = new System.Drawing.Size(50, 50);
+      this.picDaTonTai.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+      this.picDaTonTai.TabIndex = 13;
+      this.picDaTonTai.TabStop = false;
+      this.picDaTonTai.Visible = false;
+      // 
+      // picChuaTonTai
+      // 
+      this.picChuaTonTai.Anchor = System.Windows.Forms.AnchorStyles.None;
+      this.picChuaTonTai.BackColor = System.Drawing.Color.Transparent;
+      this.picChuaTonTai.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+      this.picChuaTonTai.Image = global::DiDong.Properties.Resources.ajax_loader;
+      this.picChuaTonTai.Location = new System.Drawing.Point(384, 47);
+      this.picChuaTonTai.Name = "picChuaTonTai";
+      this.picChuaTonTai.Size = new System.Drawing.Size(50, 50);
+      this.picChuaTonTai.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+      this.picChuaTonTai.TabIndex = 12;
+      this.picChuaTonTai.TabStop = false;
+      this.picChuaTonTai.Visible = false;
+      // 
       // frmMain
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -676,11 +681,9 @@
       this.tabControl2.ResumeLayout(false);
       this.tabPage3.ResumeLayout(false);
       this.tabPage3.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.picDaTonTai)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridView_tontai)).EndInit();
       this.tabPage4.ResumeLayout(false);
       this.tabPage4.PerformLayout();
-      ((System.ComponentModel.ISupportInitialize)(this.picChuaTonTai)).EndInit();
       ((System.ComponentModel.ISupportInitialize)(this.dataGridView_chuatontai)).EndInit();
       this.panel4.ResumeLayout(false);
       this.panel8.ResumeLayout(false);
@@ -689,6 +692,8 @@
       this.groupBox2.ResumeLayout(false);
       this.groupBox3.ResumeLayout(false);
       this.groupBox3.PerformLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.picDaTonTai)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.picChuaTonTai)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -740,10 +745,10 @@
     private System.Windows.Forms.Button btnChuatontaiXuatfile;
     private System.Windows.Forms.Button btnChuaTonTaiAdd;
     private System.Windows.Forms.Button button9;
-    private System.Windows.Forms.PictureBox picChuaTonTai;
     private System.Windows.Forms.Label lblChuaTonTai;
     private System.Windows.Forms.Label lblDatontai;
     private System.Windows.Forms.PictureBox picDaTonTai;
+    private System.Windows.Forms.PictureBox picChuaTonTai;
   }
 }
 

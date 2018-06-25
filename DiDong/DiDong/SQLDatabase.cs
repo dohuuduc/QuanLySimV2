@@ -670,6 +670,33 @@ namespace QuanLyData {
       }
     }
 
+    public static DataTable ExcDataTable(string sqlcommand,string ConnectionString2) {
+      SqlConnection connection = null;
+      SqlCommand command = null;
+      SqlDataAdapter adp = null;
+      DataTable table = null;
+
+      try {
+        connection = new SqlConnection();
+        connection.ConnectionString = ConnectionString2;
+        connection.Open();
+        command = new SqlCommand(sqlcommand, connection);
+        command.CommandTimeout = 72000;
+        table = new DataTable();
+        adp = new SqlDataAdapter(command);
+        adp.Fill(table);
+        return table;
+      }
+      catch (Exception ex) {
+        //MessageBox.Show(ex.Message, "ExcDataTable");
+        return null;
+      }
+      finally {
+        if (connection != null)
+          connection.Close();
+      }
+    }
+
     public static bool CheckExist(string sqlcommand) {
       SqlConnection connection = null;
       SqlCommand command = null;

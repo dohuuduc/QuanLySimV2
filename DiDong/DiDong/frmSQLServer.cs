@@ -52,7 +52,7 @@ namespace DiDong {
                                    " FROM {0}.INFORMATION_SCHEMA.COLUMNS t2 " +
                                    " where t2.TABLE_NAME = t1.TABLE_NAME " +
                                    " FOR XML PATH('')),1,1,'') as Listcolumn,So_Luong_Column = (select COUNT(*) FROM {0}.INFORMATION_SCHEMA.COLUMNS t2 where t2.TABLE_NAME = t1.TABLE_NAME), t1.TABLE_CATALOG " +
-                                   " FROM AppSearch.INFORMATION_SCHEMA.TABLES t1",xx);
+                                   " FROM {0}.INFORMATION_SCHEMA.TABLES t1",xx);
         DataTable tb = SQLDatabase.ExcDataTable(str);
         dataGridView1.Invoke((Action)delegate {
           dataGridView1.DataSource = tb;

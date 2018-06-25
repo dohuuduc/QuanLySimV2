@@ -580,7 +580,7 @@
             0,
             0});
       this.numericUpDown1.Minimum = new decimal(new int[] {
-            20,
+            1,
             0,
             0,
             0});
