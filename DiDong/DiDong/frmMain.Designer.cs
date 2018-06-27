@@ -363,6 +363,7 @@
       this.btnDatonXuatFile.TabIndex = 11;
       this.btnDatonXuatFile.Text = "Xuất file";
       this.btnDatonXuatFile.UseVisualStyleBackColor = true;
+      this.btnDatonXuatFile.Click += new System.EventHandler(this.btnDatonXuatFile_Click);
       // 
       // btnDatonCapNhat
       // 
@@ -443,6 +444,7 @@
       this.btnChuatontaiXuatfile.TabIndex = 9;
       this.btnChuatontaiXuatfile.Text = "Xuất file";
       this.btnChuatontaiXuatfile.UseVisualStyleBackColor = true;
+      this.btnChuatontaiXuatfile.Click += new System.EventHandler(this.btnChuatontaiXuatfile_Click);
       // 
       // btnChuaTonTaiAdd
       // 

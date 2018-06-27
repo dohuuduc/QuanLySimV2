@@ -24,19 +24,13 @@
     /// </summary>
     private void InitializeComponent() {
       this.components = new System.ComponentModel.Container();
-      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
       this.tabControl1 = new System.Windows.Forms.TabControl();
       this.tabPage2 = new System.Windows.Forms.TabPage();
       this.panel2 = new System.Windows.Forms.Panel();
       this.groupBox5 = new System.Windows.Forms.GroupBox();
       this.panel4 = new System.Windows.Forms.Panel();
       this.gridviewSQLDaluong = new System.Windows.Forms.DataGridView();
-      this.idSQLBatdongbo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.maSQLBatdongbo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.nameSQLBatdongbo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.orderidSQLBatdongbo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.isActSQLBatdongbo = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-      this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
       this.contextMenuStrip3 = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.lamTươiToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
       this.xoaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -93,6 +87,12 @@
       this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.làmTươiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.cậpNhậtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.idSQLBatdongbo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
+      this.orderidSQLBatdongbo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.isActSQLBatdongbo = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+      this.nameSQLBatdongbo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.maSQLBatdongbo = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.tabControl1.SuspendLayout();
       this.tabPage2.SuspendLayout();
       this.panel2.SuspendLayout();
@@ -180,11 +180,11 @@
       this.gridviewSQLDaluong.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
       this.gridviewSQLDaluong.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.idSQLBatdongbo,
-            this.maSQLBatdongbo,
-            this.nameSQLBatdongbo,
+            this.dataGridViewImageColumn1,
             this.orderidSQLBatdongbo,
             this.isActSQLBatdongbo,
-            this.dataGridViewImageColumn1});
+            this.nameSQLBatdongbo,
+            this.maSQLBatdongbo});
       this.gridviewSQLDaluong.ContextMenuStrip = this.contextMenuStrip3;
       this.gridviewSQLDaluong.Dock = System.Windows.Forms.DockStyle.Fill;
       this.gridviewSQLDaluong.Location = new System.Drawing.Point(0, 0);
@@ -197,50 +197,6 @@
       this.gridviewSQLDaluong.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridviewSQLDaluong_CellContentClick);
       this.gridviewSQLDaluong.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.gridviewSQLDaluong_CellPainting);
       this.gridviewSQLDaluong.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridviewSQLDaluong_CellValueChanged);
-      // 
-      // idSQLBatdongbo
-      // 
-      this.idSQLBatdongbo.DataPropertyName = "id";
-      this.idSQLBatdongbo.HeaderText = "id";
-      this.idSQLBatdongbo.Name = "idSQLBatdongbo";
-      this.idSQLBatdongbo.Visible = false;
-      this.idSQLBatdongbo.Width = 80;
-      // 
-      // maSQLBatdongbo
-      // 
-      this.maSQLBatdongbo.DataPropertyName = "ma";
-      this.maSQLBatdongbo.HeaderText = "Mã";
-      this.maSQLBatdongbo.Name = "maSQLBatdongbo";
-      this.maSQLBatdongbo.Width = 300;
-      // 
-      // nameSQLBatdongbo
-      // 
-      this.nameSQLBatdongbo.DataPropertyName = "name";
-      this.nameSQLBatdongbo.HeaderText = "Tên";
-      this.nameSQLBatdongbo.Name = "nameSQLBatdongbo";
-      this.nameSQLBatdongbo.Width = 120;
-      // 
-      // orderidSQLBatdongbo
-      // 
-      this.orderidSQLBatdongbo.DataPropertyName = "orderid";
-      this.orderidSQLBatdongbo.HeaderText = "V.Trí";
-      this.orderidSQLBatdongbo.Name = "orderidSQLBatdongbo";
-      this.orderidSQLBatdongbo.Width = 50;
-      // 
-      // isActSQLBatdongbo
-      // 
-      this.isActSQLBatdongbo.DataPropertyName = "isAct";
-      this.isActSQLBatdongbo.HeaderText = "Act";
-      this.isActSQLBatdongbo.Name = "isActSQLBatdongbo";
-      this.isActSQLBatdongbo.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-      this.isActSQLBatdongbo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-      this.isActSQLBatdongbo.Width = 30;
-      // 
-      // dataGridViewImageColumn1
-      // 
-      this.dataGridViewImageColumn1.HeaderText = "Xoá";
-      this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
-      this.dataGridViewImageColumn1.Width = 30;
       // 
       // contextMenuStrip3
       // 
@@ -579,11 +535,6 @@
             0,
             0,
             0});
-      this.numericUpDown1.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
       this.numericUpDown1.Name = "numericUpDown1";
       this.numericUpDown1.Size = new System.Drawing.Size(75, 20);
       this.numericUpDown1.TabIndex = 5;
@@ -764,8 +715,8 @@
       // orderid
       // 
       this.orderid.DataPropertyName = "orderid";
-      dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-      this.orderid.DefaultCellStyle = dataGridViewCellStyle1;
+      dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+      this.orderid.DefaultCellStyle = dataGridViewCellStyle2;
       this.orderid.HeaderText = "Vị trí";
       this.orderid.Name = "orderid";
       this.orderid.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -793,6 +744,50 @@
       this.cậpNhậtToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
       this.cậpNhậtToolStripMenuItem.Text = "Cập nhật";
       this.cậpNhậtToolStripMenuItem.Click += new System.EventHandler(this.cậpNhậtToolStripMenuItem_Click);
+      // 
+      // idSQLBatdongbo
+      // 
+      this.idSQLBatdongbo.DataPropertyName = "id";
+      this.idSQLBatdongbo.HeaderText = "id";
+      this.idSQLBatdongbo.Name = "idSQLBatdongbo";
+      this.idSQLBatdongbo.Visible = false;
+      this.idSQLBatdongbo.Width = 80;
+      // 
+      // dataGridViewImageColumn1
+      // 
+      this.dataGridViewImageColumn1.HeaderText = "Xoá";
+      this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
+      this.dataGridViewImageColumn1.Width = 30;
+      // 
+      // orderidSQLBatdongbo
+      // 
+      this.orderidSQLBatdongbo.DataPropertyName = "orderid";
+      this.orderidSQLBatdongbo.HeaderText = "V.Trí";
+      this.orderidSQLBatdongbo.Name = "orderidSQLBatdongbo";
+      this.orderidSQLBatdongbo.Width = 50;
+      // 
+      // isActSQLBatdongbo
+      // 
+      this.isActSQLBatdongbo.DataPropertyName = "isAct";
+      this.isActSQLBatdongbo.HeaderText = "Act";
+      this.isActSQLBatdongbo.Name = "isActSQLBatdongbo";
+      this.isActSQLBatdongbo.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+      this.isActSQLBatdongbo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+      this.isActSQLBatdongbo.Width = 30;
+      // 
+      // nameSQLBatdongbo
+      // 
+      this.nameSQLBatdongbo.DataPropertyName = "name";
+      this.nameSQLBatdongbo.HeaderText = "Tên";
+      this.nameSQLBatdongbo.Name = "nameSQLBatdongbo";
+      this.nameSQLBatdongbo.Width = 120;
+      // 
+      // maSQLBatdongbo
+      // 
+      this.maSQLBatdongbo.DataPropertyName = "ma";
+      this.maSQLBatdongbo.HeaderText = "Mã";
+      this.maSQLBatdongbo.Name = "maSQLBatdongbo";
+      this.maSQLBatdongbo.Width = 450;
       // 
       // frmSystem
       // 
@@ -881,12 +876,6 @@
     private System.Windows.Forms.ContextMenuStrip contextMenuStrip3;
     private System.Windows.Forms.ToolStripMenuItem lamTươiToolStripMenuItem1;
     private System.Windows.Forms.ToolStripMenuItem xoaToolStripMenuItem1;
-    private System.Windows.Forms.DataGridViewTextBoxColumn idSQLBatdongbo;
-    private System.Windows.Forms.DataGridViewTextBoxColumn maSQLBatdongbo;
-    private System.Windows.Forms.DataGridViewTextBoxColumn nameSQLBatdongbo;
-    private System.Windows.Forms.DataGridViewTextBoxColumn orderidSQLBatdongbo;
-    private System.Windows.Forms.DataGridViewCheckBoxColumn isActSQLBatdongbo;
-    private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn1;
     private System.Windows.Forms.DataGridViewTextBoxColumn idCharacter;
     private System.Windows.Forms.DataGridViewTextBoxColumn maCharacter;
     private System.Windows.Forms.DataGridViewTextBoxColumn nameCharacter;
@@ -903,5 +892,11 @@
     private System.Windows.Forms.DataGridViewTextBoxColumn maximum;
     private System.Windows.Forms.DataGridViewTextBoxColumn config_value;
     private System.Windows.Forms.DataGridViewTextBoxColumn run_value;
+    private System.Windows.Forms.DataGridViewTextBoxColumn idSQLBatdongbo;
+    private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn1;
+    private System.Windows.Forms.DataGridViewTextBoxColumn orderidSQLBatdongbo;
+    private System.Windows.Forms.DataGridViewCheckBoxColumn isActSQLBatdongbo;
+    private System.Windows.Forms.DataGridViewTextBoxColumn nameSQLBatdongbo;
+    private System.Windows.Forms.DataGridViewTextBoxColumn maSQLBatdongbo;
   }
 }

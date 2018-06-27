@@ -330,24 +330,33 @@ namespace QuanLyData {
 
     private void button3_Click(object sender, EventArgs e) {
       try {
+        dm_batdongbo model = SQLDatabase.Loaddm_batdongbo("select * from dm_batdongbo where isAct=1").FirstOrDefault();
         if (ckhvalueskeySearch.Checked) {
           DialogResult dialogResult = MessageBox.Show("Bạn có muốn chuẩn hoá dữ liệu tìm kiếm lại từ đầu tất cả dữ liệu không?\n 1-Yes:Chuẩn hoá lại từ đầu. \n 2-No: Chỉ những thông tin chưa được chuẩn hoá", "Some Title", MessageBoxButtons.YesNo);
+          bool isUpdateAll = false;
+
           if (dialogResult == DialogResult.Yes) {
-            dm_batdongbo model = SQLDatabase.Loaddm_batdongbo("select * from dm_batdongbo where isAct=1").FirstOrDefault();
-            SQLDatabase.ExcNonQuery(String.Format("update root WITH(TABLOCK) set isSearch = 0 {0}", model.ma));
+            isUpdateAll = true;
           }
+          new Waiting(() => {
+            if(isUpdateAll)
+              SQLDatabase.ExcNonQuery(String.Format("update root WITH(TABLOCK) set isSearch = 0 {0}", model.ma));
 
-          List<dm_column> dm_Columns = SQLDatabase.Loaddm_column("select * from dm_column where isSearch=1  order by orderid ");
-          string strcommand = "update root WITH(TABLOCK) set valueskeySearch=";
-          foreach (dm_column item in dm_Columns) {
-            strcommand += string.Format("isnull(dbo.GetUnsignString({0}), '') ", item.ma) + "+";
-          }
-          strcommand = strcommand.Substring(0, strcommand.Length - 1);
-          strcommand += ", isSearch=1 where isSearch=0";
-          SQLDatabase.ExcNonQuery(strcommand);
-          MessageBox.Show("Chuẩn hoá thông tin tìm kiếm thành công", "Thông Báo");
+            List<dm_column> dm_Columns = SQLDatabase.Loaddm_column("select * from dm_column where isSearch=1  order by orderid ");
+            string strcommand = "update root WITH(TABLOCK) set valueskeySearch=";
+            string dscot = "";
+            foreach (dm_column item in dm_Columns) {
+              dscot += string.Format("isnull({0},'') +",item.ma);
+            }
+            dscot = dscot.Substring(0, dscot.Length - 1);
+            strcommand += string.Format(" dbo.GetUnsignString({0}) ", dscot);
+            strcommand += ", isSearch=1 where isSearch=0 ";
+            strcommand += string.Format(" {0} ", model.ma);
+            if (SQLDatabase.ExcNonQuery(strcommand)) {
+              MessageBox.Show("Chuẩn hoá thông tin tìm kiếm thành công", "Thông Báo");
+            }
+          });
         }
-
       }
       catch (Exception ex) {
         MessageBox.Show(ex.Message, "button3_Click");

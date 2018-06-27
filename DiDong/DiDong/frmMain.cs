@@ -28,7 +28,7 @@ namespace QuanLyData {
     private string connectionString = "";
     private cau_hinh _cauhinh = null;
     private dm_batdongbo _dm_Batdongbo=null;
-    private string _strDatabase;
+    private string _strDB_NameDatabase;
     private string _strDatabase2;
     private string _strTable2;
     private bool _cancelImport;
@@ -44,7 +44,7 @@ namespace QuanLyData {
       
 
       _Columns = SQLDatabase.Loaddm_column("select * from dm_column order by orderid");
-      _strDatabase = SQLDatabase.ExcDataTable(string.Format("SELECT DB_NAME(0)AS [DatabaseName]; ")).Rows[0]["DatabaseName"].ToString();
+      _strDB_NameDatabase = SQLDatabase.ExcDataTable(string.Format("SELECT DB_NAME(0)AS [DatabaseName]; ")).Rows[0]["DatabaseName"].ToString();
 
       this.groupbox = new TableLayoutPanel[_Columns.Count()];
       this.radioButtons = new RadioButton[_Columns.Count()];
@@ -66,11 +66,10 @@ namespace QuanLyData {
     private void cấuHìnhToolStripMenuItem1_Click(object sender, EventArgs e) {
       try {
         frmSystem frm = new frmSystem();
-        frm.strDatabase = _strDatabase;
-        if (frm.ShowDialog() == DialogResult.OK) {
-          _dm_Batdongbo = SQLDatabase.Loaddm_batdongbo(string.Format("select * from dm_batdongbo where isAct=1")).FirstOrDefault();
-          _cauhinh = SQLDatabase.Loadcau_hinh("select * from cau_hinh").FirstOrDefault();
-        }
+        frm.strDatabase = _strDB_NameDatabase;
+        frm.ShowDialog();
+        _dm_Batdongbo = SQLDatabase.Loaddm_batdongbo(string.Format("select * from dm_batdongbo where isAct=1")).FirstOrDefault();
+        _cauhinh = SQLDatabase.Loadcau_hinh("select * from cau_hinh").FirstOrDefault();
       }
       catch (Exception ex) {
         MessageBox.Show(ex.Message, "");
@@ -207,21 +206,24 @@ namespace QuanLyData {
     private Task<string> BindingImportChuaTonTai() {
         return Task.Run(() =>
         {
-          string strcommandTop = string.Format("select COUNT_BIG(*) from dbo.import where {0} not in(select {0} from root) {1}",
+          string strcommandTop = string.Format("select COUNT_BIG(*) from dbo.import a left join dbo.root b on a.{0}=b.{0} where b.{0} is null {1}",
                                          radioButtons.Where(p => p.Checked).FirstOrDefault().Tag,
                                          _dm_Batdongbo.ma);
-
-          string strcommand = string.Format("select {0} {1} from dbo.import where {2} not in (select {2} from dbo.root) order by {3} {4}", _cauhinh.MaxTop.ToString() == "-1" ? "" : string.Format("top {0}", _cauhinh.MaxTop),
-                                                                                                                         Utilities.SelectColumn(""),
-                                                                                                                          radioButtons.Where(p => p.Checked).FirstOrDefault().Tag,
-                                                                                                                          Utilities.OrderColumn(""),
-                                                                                                                          _dm_Batdongbo.ma);
-
           object totalRowCount = SQLDatabase.ExcScalar(strcommandTop);
-          DataTable tb = SQLDatabase.ExcDataTable(strcommand);
-          dataGridView_chuatontai.Invoke((Action)delegate {
-            dataGridView_chuatontai.DataSource = tb;
-          });
+
+          if (_cauhinh.MaxTop != 0) {
+            string strcommand = string.Format("select {0} {1} from dbo.import a left join dbo.root b on a.{2}=b.{2} where b.{2} is null order by {3} {4}",
+                                      _cauhinh.MaxTop.ToString() == "-1" ? "" : string.Format("top {0}", _cauhinh.MaxTop),
+                                      Utilities.SelectColumn("a"),
+                                      radioButtons.Where(p => p.Checked).FirstOrDefault().Tag,
+                                      Utilities.OrderColumn(""),
+                                      _dm_Batdongbo.ma);
+
+            DataTable tb = SQLDatabase.ExcDataTable(strcommand);
+            dataGridView_chuatontai.Invoke((Action)delegate {
+              dataGridView_chuatontai.DataSource = tb;
+            });
+          }
           if (ConvertType.ToDouble(totalRowCount) > 0) {
             tabPage4.Invoke((Action)delegate {
               tabPage4.Text = string.Format("Khách Hàng Chưa Tồn Tại Ở File Gốc: {0}", ConvertType.FormatNumber(totalRowCount.ToString()));
@@ -254,21 +256,23 @@ namespace QuanLyData {
     }
     private Task<string> BindingImportDaTonTai() {
         return Task.Run(() => {
-          string strcommandTop = string.Format("select COUNT_BIG(*) from dbo.import where {0} in(select {0} from root) {1}",
+          string strcommandTop = string.Format("select COUNT_BIG(*) from dbo.import a inner join dbo.root b on a.{0}=b.{0} {1}",
                                         radioButtons.Where(p => p.Checked).FirstOrDefault().Tag,
                                         _dm_Batdongbo.ma);
 
-          string strcommand = string.Format("select {0} {1} from dbo.import where {2} in (select {2} from dbo.root) order by {3} {4}", _cauhinh.MaxTop.ToString() == "-1" ? "" : string.Format("top {0}", _cauhinh.MaxTop),
-                                                                                                                         Utilities.SelectColumn(""),
-                                                                                                                          radioButtons.Where(p => p.Checked).FirstOrDefault().Tag,
-                                                                                                                          Utilities.OrderColumn(""),
-                                                                                                                          _dm_Batdongbo.ma);
-
+          if (_cauhinh.MaxTop != 0) {
+            string strcommand = string.Format("select {0} {1} from dbo.import a inner join dbo.root b on a.{2}=b.{2}  order by {3} {4}",
+                                    _cauhinh.MaxTop.ToString() == "-1" ? "" : string.Format("top {0}", _cauhinh.MaxTop),
+                                    Utilities.SelectColumn("a"),
+                                    radioButtons.Where(p => p.Checked).FirstOrDefault().Tag,
+                                    Utilities.OrderColumn(""),
+                                    _dm_Batdongbo.ma);
+            DataTable dataTable = SQLDatabase.ExcDataTable(strcommand);
+            dataGridView_tontai.Invoke((Action)delegate {
+              dataGridView_tontai.DataSource = dataTable;
+            });
+          }
           object totalRowCount = SQLDatabase.ExcScalar(strcommandTop);
-          DataTable dataTable = SQLDatabase.ExcDataTable(strcommand);
-          dataGridView_tontai.Invoke((Action)delegate {
-            dataGridView_tontai.DataSource = dataTable;
-          });
           if (ConvertType.ToDouble(totalRowCount) > 0) {
             tabPage3.Invoke((Action)delegate {
               tabPage3.Text = string.Format("Khách Hàng Đã Tồn Tại Ở File Gốc: {0}",ConvertType.FormatNumber(totalRowCount.ToString()));
@@ -971,14 +975,13 @@ namespace QuanLyData {
             MessageBox.Show("Vui lòng nhập tên file", "Thông Báo");
             return;
           }
+          string strsql = string.Format("select {0}  from {1}.dbo.root  where {2} {3}", Utilities.SelectColumn(""), _strDB_NameDatabase, _strDieuKien, _dm_Batdongbo.ma);
           new Waiting(() => {
-           // string strsql = string.Format("select {0}");
-            string command = string.Format("exec [spExport] 'SET DATEFORMAT DMY {0}','{1}'", "", saveFileDialog1.FileName);
+            string command = string.Format("exec [spExport] 'SET DATEFORMAT DMY {0}','{1}'", strsql , saveFileDialog1.FileName);
             if (SQLDatabase.ExcNonQuery(command)) {
-
+              MessageBox.Show("Xuất file thành công", "Thông Báo");
             }
           });
-          MessageBox.Show("Đã xuất thành công file.", "Thông Báo");
         }
       }
       catch (Exception ex) {
@@ -1049,7 +1052,7 @@ namespace QuanLyData {
         if (MessageBox.Show("Bạn có chắc muốn xoá dữ liệu gốc trùng với dữ liệu tạm ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
           bool isTrue = false;
           new Waiting(() => {
-            isTrue= SQLDatabase.ExcNonQuery(string.Format("Delete a from dbo.root a inner join dbo.import b on a.{0}=b.{0}", radioButtons.Where(p => p.Checked).FirstOrDefault().Tag)
+            isTrue = SQLDatabase.ExcNonQuery(string.Format("Delete a from dbo.root a inner join dbo.import b on a.{0}=b.{0}", radioButtons.Where(p => p.Checked).FirstOrDefault().Tag));
           });
           if (isTrue) {
             MessageBox.Show("Xoá xong dữ liệu gốc trùng dữ liệu nguồn \n Hệ thống sẽ làm tươi lại dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -1059,6 +1062,71 @@ namespace QuanLyData {
         }
       catch (Exception ex) {
         MessageBox.Show(ex.Message, "btnDatonXoaGoc_Click");
+      }
+    }
+
+    private void btnDatonXuatFile_Click(object sender, EventArgs e) {
+      try {
+        string folderpath = "";
+        FolderBrowserDialog fbd = new FolderBrowserDialog();
+        DialogResult dr = fbd.ShowDialog();
+        string fileName = "";
+        if (dr == DialogResult.OK) {
+          folderpath = fbd.SelectedPath;
+        }
+
+        string filePath = folderpath == "" ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop) : folderpath;
+        fileName = string.Format("chuatontai_{0}", _cauhinh.IsExportTxt ? ".txt" : ".xls");
+
+        new Waiting((MethodInvoker)delegate {
+
+          string strcommand = string.Format(@"select {0} from {4}.dbo.import a inner join {4}.dbo.root b on a.{1}=b.{1} order by {2} {3}", Utilities.SelectColumn("a"),
+                                                                                                                                   radioButtons.Where(p => p.Checked).FirstOrDefault().Tag.ToString().Replace("'", "''"),
+                                                                                                                                   Utilities.OrderColumn(""),
+                                                                                                                                   _dm_Batdongbo.ma.Replace("'", "''"),
+                                                                                                                                   _strDB_NameDatabase
+                                                                                                                                    );
+
+          SQLDatabase.ExcNonQuery(string.Format("[spExport] '{0}','{1}'", strcommand, filePath + "\\" + fileName));
+        }, "Vui Lòng Chờ").ShowDialog();
+
+        MessageBox.Show("Đã hoàn thành xuất file đã tồn tại", "Thông Báo");
+      }
+      catch (Exception ex) {
+        MessageBox.Show(ex.Message, "btnDatonXuatFile_Click");
+      }
+    }
+
+    private void btnChuatontaiXuatfile_Click(object sender, EventArgs e) {
+      try {
+        string folderpath = "";
+        FolderBrowserDialog fbd = new FolderBrowserDialog();
+        DialogResult dr = fbd.ShowDialog();
+        string fileName = "";
+        if (dr == DialogResult.OK) {
+          folderpath = fbd.SelectedPath;
+        }
+
+        string filePath = folderpath == "" ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop) : folderpath;
+               fileName =string.Format("chuatontai_{0}",_cauhinh.IsExportTxt ? ".txt" : ".xls");
+
+        new Waiting((MethodInvoker)delegate {
+
+          string strcommand = string.Format(@"select {0} from {4}.dbo.import a left join {4}.dbo.root b on a.{1}=b.{1} where b.{1} is null order by {2} {3}", Utilities.SelectColumn("a"),
+                                                                                                                                   radioButtons.Where(p => p.Checked).FirstOrDefault().Tag.ToString().Replace("'","''"),
+                                                                                                                                   Utilities.OrderColumn(""),
+                                                                                                                                   _dm_Batdongbo.ma.Replace("'","''"),
+                                                                                                                                   _strDB_NameDatabase
+                                                                                                                                    );
+
+          SQLDatabase.ExcNonQuery(string.Format("[spExport] '{0}','{1}'", strcommand, filePath + "\\" + fileName));
+        }, "Vui Lòng Chờ").ShowDialog();
+
+        MessageBox.Show("Đã hoàn thành xuất file theo chưa tồn tại", "Thông Báo");
+      }
+      catch (Exception ex) {
+
+        MessageBox.Show(ex.Message, "uIDVàNameToolStripMenuItem_Click");
       }
     }
   }
