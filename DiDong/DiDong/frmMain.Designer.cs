@@ -63,6 +63,7 @@
       this.groupBox2 = new System.Windows.Forms.GroupBox();
       this.palSIPLogs = new System.Windows.Forms.TableLayoutPanel();
       this.groupBox3 = new System.Windows.Forms.GroupBox();
+      this.linkLabel1 = new System.Windows.Forms.LinkLabel();
       this.button6 = new System.Windows.Forms.Button();
       this.cbb_TypeDataSource = new System.Windows.Forms.ComboBox();
       this.button3 = new System.Windows.Forms.Button();
@@ -556,6 +557,7 @@
       // 
       // groupBox3
       // 
+      this.groupBox3.Controls.Add(this.linkLabel1);
       this.groupBox3.Controls.Add(this.button6);
       this.groupBox3.Controls.Add(this.cbb_TypeDataSource);
       this.groupBox3.Controls.Add(this.button3);
@@ -571,6 +573,18 @@
       this.groupBox3.TabIndex = 3;
       this.groupBox3.TabStop = false;
       this.groupBox3.Text = "Dữ Liệu Nguồn (TXT: UTF-16)";
+      // 
+      // linkLabel1
+      // 
+      this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.linkLabel1.AutoSize = true;
+      this.linkLabel1.Location = new System.Drawing.Point(754, 19);
+      this.linkLabel1.Name = "linkLabel1";
+      this.linkLabel1.Size = new System.Drawing.Size(72, 13);
+      this.linkLabel1.TabIndex = 24;
+      this.linkLabel1.TabStop = true;
+      this.linkLabel1.Text = "Xuất File Mẫu";
+      this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
       // 
       // button6
       // 
@@ -752,6 +766,7 @@
     private System.Windows.Forms.Label lblDatontai;
     private System.Windows.Forms.PictureBox picDaTonTai;
     private System.Windows.Forms.PictureBox picChuaTonTai;
+    private System.Windows.Forms.LinkLabel linkLabel1;
   }
 }
 

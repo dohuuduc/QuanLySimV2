@@ -72,6 +72,5 @@ D:\GitHubDesktop\QuanLySimV2\DiDong\DiDong\obj\Debug\DiDong.frmSQLServer.resourc
 D:\GitHubDesktop\QuanLySimV2\DiDong\DiDong\obj\Debug\DiDong.csprojResolveAssemblyReference.cache
 D:\GitHubDesktop\QuanLySimV2\DiDong\DiDong\obj\Debug\DiDong.frmColUpdate.resources
 C:\Users\luulong\Documents\GitHub\QuanLySimV2\DiDong\DiDong\obj\Debug\DiDong.frmColUpdate.resources
-C:\Users\luulong\Documents\GitHub\QuanLySimV2\DiDong\DiDong\obj\Debug\DiDong.csprojAssemblyReference.cache
 C:\Users\luulong\Documents\GitHub\QuanLySimV2\DiDong\DiDong\obj\Debug\DiDong.frmXemTruoc.resources
 D:\GitHubDesktop\QuanLySimV2\DiDong\DiDong\obj\Debug\DiDong.frmXemTruoc.resources

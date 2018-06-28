@@ -2,12 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using COMExcel = Microsoft.Office.Interop.Excel;
 
 namespace DiDong {
   public class Utilities {
@@ -197,6 +201,275 @@ namespace DiDong {
       string temp = s.Normalize(NormalizationForm.FormD);
       return regex.Replace(temp, String.Empty).Replace('\u0111', 'd').Replace('\u0110', 'D');
     }
+  }
+
+  public class ExcelAdapter {
+    protected string sFilePath;
+    public string SFilePath {
+      get { if (sFilePath == null) return ""; return sFilePath; }
+      set { sFilePath = value; }
+    }
+
+    public ExcelAdapter(string filePath) {
+      this.SFilePath = filePath;
+    }
+
+    public bool DeleteFile() {
+      if (File.Exists(this.SFilePath)) {
+        File.Delete(this.SFilePath);
+        return true;
+      }
+      else
+        return false;
+    }
+
+    public bool IsExist() {
+      return File.Exists(this.SFilePath);
+    }
+
+    public DataTable ReadFromFile(string commandText) {
+      string connectionString = @"Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + this.sFilePath + ";Extended Properties=\"Excel 8.0;HDR=YES;\"";
+
+
+
+      DbProviderFactory factory = DbProviderFactories.GetFactory("System.Data.OleDb");
+
+      DbDataAdapter adapter = factory.CreateDataAdapter();
+
+      DbCommand selectCommand = factory.CreateCommand();
+      selectCommand.CommandText = commandText;
+
+      DbConnection connection = factory.CreateConnection();
+      connection.ConnectionString = connectionString;
+
+      selectCommand.Connection = connection;
+
+      adapter.SelectCommand = selectCommand;
+
+      DataSet cities = new DataSet();
+
+      adapter.Fill(cities);
+
+      connection.Close();
+      adapter.Dispose();
+
+      return cities.Tables[0];
+    }
+
+    protected void FormatDate(COMExcel.Worksheet sheet, int rstart, int cstart, int rend, int cend) {
+      COMExcel.Range range = (COMExcel.Range)sheet.Range[sheet.Cells[rstart, cstart], sheet.Cells[rend, cend]];
+      range.NumberFormat = "DD/MM/YYYY";
+    }
+
+    protected void FormatMoney(COMExcel.Worksheet sheet, int rstart, int cstart, int rend, int cend) {
+      COMExcel.Range range = (COMExcel.Range)sheet.Range[sheet.Cells[rstart, cstart], sheet.Cells[rend, cend]];
+      range.NumberFormat = "#,##0";
+    }
+
+    protected void Format(COMExcel.Worksheet sheet, int rstart, int cstart, int rend, int cend, string type) {
+      COMExcel.Range range = (COMExcel.Range)sheet.Range[sheet.Cells[rstart, cstart], sheet.Cells[rend, cend]];
+      range.NumberFormat = type;
+    }
+
+    public string CreateAndWrite(DataTable dt, string sheetName, int noSheet) {
+      using (new ExcelUILanguageHelper()) {
+        COMExcel.Application exApp = new COMExcel.Application();
+        COMExcel.Workbook exBook = exApp.Workbooks.Add(
+                      COMExcel.XlWBATemplate.xlWBATWorksheet);
+        try {
+          // Không hiển thị chương trình excel
+          exApp.Visible = false;
+
+          // Lấy sheet 1.
+          COMExcel.Worksheet exSheet = (COMExcel.Worksheet)exBook.Worksheets[noSheet];
+          exSheet.Name = sheetName;
+
+          //////////////////////
+          int rowCount = dt.Rows.Count;
+          int colCount = dt.Columns.Count;
+
+          // insert header name             
+          for (int j = 1; j <= colCount; j++) {
+            exSheet.Cells[1, j] = dt.Columns[j - 1].Caption;
+          }
+
+          // format cho header
+          COMExcel.Range headr = (COMExcel.Range)exSheet.Range[exSheet.Cells[1, 1], exSheet.Cells[1, colCount]];
+          headr.Interior.Color = System.Drawing.Color.YellowGreen.ToArgb();
+          headr.Font.Bold = true;
+          headr.Font.Name = "Arial";
+          headr.Font.Color = System.Drawing.Color.White.ToArgb();
+          headr.Cells.RowHeight = 30;
+          headr.Cells.ColumnWidth = 20;
+          headr.HorizontalAlignment = COMExcel.Constants.xlCenter;
+
+
+          //format cho cot ngay, tien, so
+          for (int i = 1; i <= colCount; i++) {
+            if (dt.Columns[i - 1].DataType == Type.GetType("System.DateTime")) {
+              FormatDate(exSheet, 2, i, rowCount + 1, i);
+            }
+            else if (dt.Columns[i - 1].DataType == Type.GetType("System.Decimal")) {
+              Format(exSheet, 2, i, rowCount + 1, i, "##0.0");
+            }
+            else if (dt.Columns[i - 1].DataType == Type.GetType("System.Int64")) {
+              FormatMoney(exSheet, 2, i, rowCount + 1, i);
+            }
+            else if (dt.Columns[i - 1].DataType == Type.GetType("System.Int32")) {
+            }
+            else {
+              Format(exSheet, 2, i, rowCount + 1, i, "@");
+            }
+          }
+          for (int i = 1; i <= rowCount; i++) {
+            for (int j = 1; j <= colCount; j++) {
+              exSheet.Cells[i + 1, j] = dt.Rows[i - 1][j - 1].ToString();
+            }
+          }
+
+          //format cho toan bo sheet
+          COMExcel.Range Sheet = (COMExcel.Range)exSheet.Range[exSheet.Cells[1, 1], exSheet.Cells[rowCount + 1, colCount]];
+          Sheet.Borders.Color = System.Drawing.Color.Black.ToArgb();
+          Sheet.WrapText = false;
+
+          // Save file
+          exBook.SaveAs(this.SFilePath, COMExcel.XlFileFormat.xlWorkbookNormal,
+                           null, null, false, false,
+                           COMExcel.XlSaveAsAccessMode.xlExclusive,
+                           false, false, false, false, false);
+
+
+          return "Export file excel thành công.\nĐường dẫn là: " + this.sFilePath;
+        }
+        catch (Exception ex) {
+          Thread.CurrentThread.CurrentCulture.DateTimeFormat = new System.Globalization.CultureInfo("en-US").DateTimeFormat;
+          return ex.ToString();
+        }
+        finally {
+          Thread.CurrentThread.CurrentCulture.DateTimeFormat = new System.Globalization.CultureInfo("en-US").DateTimeFormat;
+          // Đóng chương trình
+          exBook.Close(false, false, false);
+          exApp.Quit();
+          System.Runtime.InteropServices.Marshal.ReleaseComObject(exBook);
+          System.Runtime.InteropServices.Marshal.ReleaseComObject(exApp);
+        }
+      }
+    }
+
+    public string CreateAndWrite(DataTable[] dtList, string[] sheetNames) {
+      using (new ExcelUILanguageHelper()) {
+        COMExcel.Application exApp = new COMExcel.Application();
+        COMExcel.Workbook exBook = exApp.Workbooks.Add(
+                      COMExcel.XlWBATemplate.xlWBATWorksheet);
+        try {
+          // Không hiển thị chương trình excel
+          exApp.Visible = false;
+
+          //List<COMExcel.Worksheet> exSheetList = new List<Microsoft.Office.Interop.Excel.Worksheet>();
+          for (int i = 1; i < dtList.Length; i++) {
+            //exSheetList.Add((COMExcel.Worksheet)exBook.Worksheets[i]);
+            exBook.Worksheets.Add(Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+          }
+          int noSheet = 1;
+          foreach (DataTable dt in dtList) {
+            COMExcel.Worksheet exSheet = (COMExcel.Worksheet)exBook.Worksheets[noSheet];
+            exSheet.Name = sheetNames[noSheet - 1];
+
+            //////////////////////
+            int rowCount = dt.Rows.Count;
+            int colCount = dt.Columns.Count;
+
+            // insert header name             
+            for (int j = 1; j <= colCount; j++) {
+              exSheet.Cells[1, j] = dt.Columns[j - 1].Caption;
+            }
+
+            // format cho header
+            COMExcel.Range headr = (COMExcel.Range)exSheet.Range[exSheet.Cells[1, 1], exSheet.Cells[1, colCount]];
+            headr.Interior.Color = System.Drawing.Color.Gray.ToArgb();
+            headr.Font.Bold = true;
+            headr.Font.Name = "Arial";
+            headr.Font.Color = System.Drawing.Color.White.ToArgb();
+            headr.Cells.RowHeight = 30;
+            headr.Cells.ColumnWidth = 20;
+            headr.HorizontalAlignment = COMExcel.Constants.xlCenter;
+
+
+            //format cho cot ngay, tien, so
+            for (int i = 1; i <= colCount; i++) {
+              if (dt.Columns[i - 1].DataType == Type.GetType("System.DateTime")) {
+                FormatDate(exSheet, 2, i, rowCount + 1, i);
+              }
+              else if (dt.Columns[i - 1].DataType == Type.GetType("System.Decimal")) {
+                Format(exSheet, 2, i, rowCount + 1, i, "##0.0");
+              }
+              else if (dt.Columns[i - 1].DataType == Type.GetType("System.Int64")) {
+                FormatMoney(exSheet, 2, i, rowCount + 1, i);
+              }
+              else if (dt.Columns[i - 1].DataType == Type.GetType("System.Int32")) {
+              }
+              else {
+                Format(exSheet, 2, i, rowCount + 1, i, "@");
+              }
+            }
+
+            for (int i = 1; i <= rowCount; i++) {
+              for (int j = 1; j <= colCount; j++) {
+                exSheet.Cells[i + 1, j] = dt.Rows[i - 1][j - 1].ToString();
+              }
+            }
+
+            //format cho toan bo sheet
+            COMExcel.Range Sheet = (COMExcel.Range)exSheet.Range[exSheet.Cells[1, 1], exSheet.Cells[rowCount + 1, colCount]];
+            Sheet.Borders.Color = System.Drawing.Color.Black.ToArgb();
+            Sheet.WrapText = true;
+
+            noSheet++;
+          }
+          // Save file
+          exBook.SaveAs(this.SFilePath, COMExcel.XlFileFormat.xlWorkbookNormal,
+                          null, null, false, false,
+                          COMExcel.XlSaveAsAccessMode.xlExclusive,
+                          false, false, false, false, false);
+
+
+          return "Export file excel thành công.\nĐường dẫn là: " + this.sFilePath;
+        }
+        catch (Exception ex) {
+          Thread.CurrentThread.CurrentCulture.DateTimeFormat = new System.Globalization.CultureInfo("en-US").DateTimeFormat;
+          return ex.ToString();
+        }
+        finally {
+          Thread.CurrentThread.CurrentCulture.DateTimeFormat = new System.Globalization.CultureInfo("en-US").DateTimeFormat;
+          // Đóng chương trình
+          exBook.Close(false, false, false);
+          exApp.Quit();
+          System.Runtime.InteropServices.Marshal.ReleaseComObject(exBook);
+          System.Runtime.InteropServices.Marshal.ReleaseComObject(exApp);
+        }
+      }
+    }
+
+    public class ExcelUILanguageHelper : IDisposable {
+      private System.Globalization.CultureInfo m_CurrentCulture;
+
+      public ExcelUILanguageHelper() {
+        // save current culture and set culture to en-US            
+        Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+        m_CurrentCulture = Thread.CurrentThread.CurrentCulture;
+        m_CurrentCulture.DateTimeFormat.ShortDatePattern = "MM/dd/yyyy";
+      }
+
+      #region IDisposable Members
+
+      public void Dispose() {
+        // return to normal culture
+        Thread.CurrentThread.CurrentCulture = m_CurrentCulture;
+      }
+
+      #endregion
+    }
+
   }
 
   public class CachedData {

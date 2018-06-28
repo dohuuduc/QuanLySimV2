@@ -923,7 +923,7 @@ namespace QuanLyData {
     }
     private void btn_View_Click(object sender, EventArgs e) {
       try {
-        if (txtTim.Text == "") {
+        if (txt_FileName.Text == "") {
           MessageBox.Show("Vui lòng tìm loại cấu hình cần import", "Thông báo");
           return;
         }
@@ -1178,6 +1178,35 @@ namespace QuanLyData {
 
         MessageBox.Show(ex.Message, "uIDVàNameToolStripMenuItem_Click");
       }
+    }
+
+    private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+      try {
+        string filePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        string fileName = "Mau_File";
+        bool temp = false;
+        new Waiting(() => temp = xuatfilemain(filePath + "\\" + fileName), "Vui Lòng Chờ").ShowDialog();
+        MessageBox.Show("Đã xuất thành công file.", "Thông Báo");
+      }
+      catch (Exception ex) {
+
+        MessageBox.Show(ex.Message, "linkLabel1_LinkClicked");
+      }
+    }
+    private bool xuatfilemain(string filePath) {
+      try {
+        DataTable table = new DataTable();
+        
+        foreach (var item in _Columns)
+          table.Columns.Add(item.name, typeof(string));
+        ExcelAdapter excel = new ExcelAdapter(filePath);
+        excel.CreateAndWrite(table, "Mau", 1);
+        return true;
+      }
+      catch (Exception ex) {
+        return false;
+      }
+
     }
   }
 }
