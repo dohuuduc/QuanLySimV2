@@ -62,12 +62,12 @@
       this.xoaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.panel1 = new System.Windows.Forms.Panel();
       this.groupBox4 = new System.Windows.Forms.GroupBox();
+      this.cmbChuanHoa = new System.Windows.Forms.ComboBox();
       this.button3 = new System.Windows.Forms.Button();
       this.groupBox3 = new System.Windows.Forms.GroupBox();
       this.button2 = new System.Windows.Forms.Button();
       this.chkDelRoot = new System.Windows.Forms.CheckBox();
       this.chkDelImport = new System.Windows.Forms.CheckBox();
-      this.linkLabel1 = new System.Windows.Forms.LinkLabel();
       this.groupBox1 = new System.Windows.Forms.GroupBox();
       this.ckhSoLuongHienThi = new System.Windows.Forms.CheckBox();
       this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
@@ -92,7 +92,12 @@
       this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.làmTươiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.cậpNhậtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.cmbChuanHoa = new System.Windows.Forms.ComboBox();
+      this.groupBox6 = new System.Windows.Forms.GroupBox();
+      this.label1 = new System.Windows.Forms.Label();
+      this.lblLogincal = new System.Windows.Forms.Label();
+      this.lblPhysical1 = new System.Windows.Forms.Label();
+      this.lblPhysical = new System.Windows.Forms.Label();
+      this.linkLabel1 = new System.Windows.Forms.LinkLabel();
       this.tabControl1.SuspendLayout();
       this.tabPage2.SuspendLayout();
       this.panel2.SuspendLayout();
@@ -114,6 +119,7 @@
       this.tabPage1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.GridViewColumn)).BeginInit();
       this.contextMenuStrip1.SuspendLayout();
+      this.groupBox6.SuspendLayout();
       this.SuspendLayout();
       // 
       // tabControl1
@@ -141,6 +147,7 @@
       // 
       // panel2
       // 
+      this.panel2.Controls.Add(this.linkLabel1);
       this.panel2.Controls.Add(this.groupBox5);
       this.panel2.Controls.Add(this.gridviewCharacter);
       this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -154,9 +161,9 @@
       this.groupBox5.Controls.Add(this.panel4);
       this.groupBox5.Controls.Add(this.panel3);
       this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.groupBox5.Location = new System.Drawing.Point(0, 189);
+      this.groupBox5.Location = new System.Drawing.Point(0, 119);
       this.groupBox5.Name = "groupBox5";
-      this.groupBox5.Size = new System.Drawing.Size(541, 229);
+      this.groupBox5.Size = new System.Drawing.Size(541, 299);
       this.groupBox5.TabIndex = 1;
       this.groupBox5.TabStop = false;
       this.groupBox5.Text = "SQL Parallel";
@@ -167,7 +174,7 @@
       this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
       this.panel4.Location = new System.Drawing.Point(3, 76);
       this.panel4.Name = "panel4";
-      this.panel4.Size = new System.Drawing.Size(535, 150);
+      this.panel4.Size = new System.Drawing.Size(535, 220);
       this.panel4.TabIndex = 4;
       // 
       // gridviewSQLDaluong
@@ -191,7 +198,7 @@
       this.gridviewSQLDaluong.Name = "gridviewSQLDaluong";
       this.gridviewSQLDaluong.RowHeadersVisible = false;
       this.gridviewSQLDaluong.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-      this.gridviewSQLDaluong.Size = new System.Drawing.Size(535, 150);
+      this.gridviewSQLDaluong.Size = new System.Drawing.Size(535, 220);
       this.gridviewSQLDaluong.TabIndex = 1;
       this.gridviewSQLDaluong.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridviewSQLDaluong_CellClick);
       this.gridviewSQLDaluong.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridviewSQLDaluong_CellContentClick);
@@ -370,7 +377,7 @@
       this.gridviewCharacter.Name = "gridviewCharacter";
       this.gridviewCharacter.RowHeadersVisible = false;
       this.gridviewCharacter.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-      this.gridviewCharacter.Size = new System.Drawing.Size(541, 189);
+      this.gridviewCharacter.Size = new System.Drawing.Size(541, 119);
       this.gridviewCharacter.TabIndex = 0;
       this.gridviewCharacter.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridviewCharacter_CellClick);
       this.gridviewCharacter.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridviewCharacter_CellContentClick);
@@ -451,9 +458,9 @@
       // 
       // panel1
       // 
+      this.panel1.Controls.Add(this.groupBox6);
       this.panel1.Controls.Add(this.groupBox4);
       this.panel1.Controls.Add(this.groupBox3);
-      this.panel1.Controls.Add(this.linkLabel1);
       this.panel1.Controls.Add(this.groupBox1);
       this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
       this.panel1.Location = new System.Drawing.Point(3, 3);
@@ -465,12 +472,24 @@
       // 
       this.groupBox4.Controls.Add(this.cmbChuanHoa);
       this.groupBox4.Controls.Add(this.button3);
-      this.groupBox4.Location = new System.Drawing.Point(3, 195);
+      this.groupBox4.Location = new System.Drawing.Point(2, 162);
       this.groupBox4.Name = "groupBox4";
       this.groupBox4.Size = new System.Drawing.Size(240, 82);
       this.groupBox4.TabIndex = 2;
       this.groupBox4.TabStop = false;
       this.groupBox4.Text = "Chuẩn Hoá";
+      // 
+      // cmbChuanHoa
+      // 
+      this.cmbChuanHoa.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+      this.cmbChuanHoa.FormattingEnabled = true;
+      this.cmbChuanHoa.Items.AddRange(new object[] {
+            "1-Chuẩn Hoá Chưa Chuẩn",
+            "2-Chuẩn Hoá Tất Cả"});
+      this.cmbChuanHoa.Location = new System.Drawing.Point(15, 19);
+      this.cmbChuanHoa.Name = "cmbChuanHoa";
+      this.cmbChuanHoa.Size = new System.Drawing.Size(210, 21);
+      this.cmbChuanHoa.TabIndex = 2;
       // 
       // button3
       // 
@@ -487,16 +506,16 @@
       this.groupBox3.Controls.Add(this.button2);
       this.groupBox3.Controls.Add(this.chkDelRoot);
       this.groupBox3.Controls.Add(this.chkDelImport);
-      this.groupBox3.Location = new System.Drawing.Point(2, 283);
+      this.groupBox3.Location = new System.Drawing.Point(2, 250);
       this.groupBox3.Name = "groupBox3";
-      this.groupBox3.Size = new System.Drawing.Size(240, 86);
+      this.groupBox3.Size = new System.Drawing.Size(240, 76);
       this.groupBox3.TabIndex = 1;
       this.groupBox3.TabStop = false;
       this.groupBox3.Text = "Dọn dẹp dữ liệu";
       // 
       // button2
       // 
-      this.button2.Location = new System.Drawing.Point(151, 54);
+      this.button2.Location = new System.Drawing.Point(151, 49);
       this.button2.Name = "button2";
       this.button2.Size = new System.Drawing.Size(75, 23);
       this.button2.TabIndex = 4;
@@ -507,7 +526,7 @@
       // chkDelRoot
       // 
       this.chkDelRoot.AutoSize = true;
-      this.chkDelRoot.Location = new System.Drawing.Point(27, 54);
+      this.chkDelRoot.Location = new System.Drawing.Point(134, 26);
       this.chkDelRoot.Name = "chkDelRoot";
       this.chkDelRoot.Size = new System.Drawing.Size(93, 17);
       this.chkDelRoot.TabIndex = 1;
@@ -524,17 +543,6 @@
       this.chkDelImport.Text = "Xoá bảng tạm";
       this.chkDelImport.UseVisualStyleBackColor = true;
       // 
-      // linkLabel1
-      // 
-      this.linkLabel1.AutoSize = true;
-      this.linkLabel1.Location = new System.Drawing.Point(3, 403);
-      this.linkLabel1.Name = "linkLabel1";
-      this.linkLabel1.Size = new System.Drawing.Size(82, 13);
-      this.linkLabel1.TabIndex = 1;
-      this.linkLabel1.TabStop = true;
-      this.linkLabel1.Text = "Tham khảo font";
-      this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
-      // 
       // groupBox1
       // 
       this.groupBox1.Controls.Add(this.ckhSoLuongHienThi);
@@ -544,7 +552,7 @@
       this.groupBox1.Controls.Add(this.ckhDelImport);
       this.groupBox1.Location = new System.Drawing.Point(3, 3);
       this.groupBox1.Name = "groupBox1";
-      this.groupBox1.Size = new System.Drawing.Size(240, 192);
+      this.groupBox1.Size = new System.Drawing.Size(240, 153);
       this.groupBox1.TabIndex = 0;
       this.groupBox1.TabStop = false;
       this.groupBox1.Text = "Import";
@@ -613,7 +621,7 @@
       // 
       // button1
       // 
-      this.button1.Location = new System.Drawing.Point(150, 163);
+      this.button1.Location = new System.Drawing.Point(150, 122);
       this.button1.Name = "button1";
       this.button1.Size = new System.Drawing.Size(75, 23);
       this.button1.TabIndex = 3;
@@ -779,17 +787,67 @@
       this.cậpNhậtToolStripMenuItem.Text = "Cập nhật";
       this.cậpNhậtToolStripMenuItem.Click += new System.EventHandler(this.cậpNhậtToolStripMenuItem_Click);
       // 
-      // cmbChuanHoa
+      // groupBox6
       // 
-      this.cmbChuanHoa.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-      this.cmbChuanHoa.FormattingEnabled = true;
-      this.cmbChuanHoa.Items.AddRange(new object[] {
-            "1-Chuẩn Hoá Chưa Chuẩn",
-            "2-Chuẩn Hoá Tất Cả"});
-      this.cmbChuanHoa.Location = new System.Drawing.Point(15, 19);
-      this.cmbChuanHoa.Name = "cmbChuanHoa";
-      this.cmbChuanHoa.Size = new System.Drawing.Size(210, 21);
-      this.cmbChuanHoa.TabIndex = 2;
+      this.groupBox6.Controls.Add(this.lblPhysical);
+      this.groupBox6.Controls.Add(this.lblPhysical1);
+      this.groupBox6.Controls.Add(this.lblLogincal);
+      this.groupBox6.Controls.Add(this.label1);
+      this.groupBox6.Location = new System.Drawing.Point(2, 332);
+      this.groupBox6.Name = "groupBox6";
+      this.groupBox6.Size = new System.Drawing.Size(240, 83);
+      this.groupBox6.TabIndex = 3;
+      this.groupBox6.TabStop = false;
+      this.groupBox6.Text = "Thông tin SQL Server";
+      // 
+      // label1
+      // 
+      this.label1.AutoSize = true;
+      this.label1.Location = new System.Drawing.Point(13, 25);
+      this.label1.Name = "label1";
+      this.label1.Size = new System.Drawing.Size(69, 13);
+      this.label1.TabIndex = 0;
+      this.label1.Text = "Logical CPU:";
+      // 
+      // lblLogincal
+      // 
+      this.lblLogincal.AutoSize = true;
+      this.lblLogincal.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+      this.lblLogincal.Location = new System.Drawing.Point(88, 25);
+      this.lblLogincal.Name = "lblLogincal";
+      this.lblLogincal.Size = new System.Drawing.Size(41, 13);
+      this.lblLogincal.TabIndex = 2;
+      this.lblLogincal.Text = "label2";
+      // 
+      // lblPhysical1
+      // 
+      this.lblPhysical1.AutoSize = true;
+      this.lblPhysical1.Location = new System.Drawing.Point(12, 54);
+      this.lblPhysical1.Name = "lblPhysical1";
+      this.lblPhysical1.Size = new System.Drawing.Size(74, 13);
+      this.lblPhysical1.TabIndex = 3;
+      this.lblPhysical1.Text = "Physical CPU:";
+      // 
+      // lblPhysical
+      // 
+      this.lblPhysical.AutoSize = true;
+      this.lblPhysical.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+      this.lblPhysical.Location = new System.Drawing.Point(88, 54);
+      this.lblPhysical.Name = "lblPhysical";
+      this.lblPhysical.Size = new System.Drawing.Size(41, 13);
+      this.lblPhysical.TabIndex = 4;
+      this.lblPhysical.Text = "label2";
+      // 
+      // linkLabel1
+      // 
+      this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.linkLabel1.AutoSize = true;
+      this.linkLabel1.Location = new System.Drawing.Point(454, 90);
+      this.linkLabel1.Name = "linkLabel1";
+      this.linkLabel1.Size = new System.Drawing.Size(82, 13);
+      this.linkLabel1.TabIndex = 2;
+      this.linkLabel1.TabStop = true;
+      this.linkLabel1.Text = "Tham khảo font";
       // 
       // frmSystem
       // 
@@ -803,6 +861,7 @@
       this.tabControl1.ResumeLayout(false);
       this.tabPage2.ResumeLayout(false);
       this.panel2.ResumeLayout(false);
+      this.panel2.PerformLayout();
       this.groupBox5.ResumeLayout(false);
       this.panel4.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.gridviewSQLDaluong)).EndInit();
@@ -813,7 +872,6 @@
       ((System.ComponentModel.ISupportInitialize)(this.gridviewCharacter)).EndInit();
       this.contextMenuStrip2.ResumeLayout(false);
       this.panel1.ResumeLayout(false);
-      this.panel1.PerformLayout();
       this.groupBox4.ResumeLayout(false);
       this.groupBox3.ResumeLayout(false);
       this.groupBox3.PerformLayout();
@@ -825,6 +883,8 @@
       this.tabPage1.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.GridViewColumn)).EndInit();
       this.contextMenuStrip1.ResumeLayout(false);
+      this.groupBox6.ResumeLayout(false);
+      this.groupBox6.PerformLayout();
       this.ResumeLayout(false);
 
     }
@@ -857,7 +917,6 @@
     private System.Windows.Forms.ToolStripMenuItem lamTươiToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem thêmToolStripMenuItem;
     private System.Windows.Forms.ToolStripMenuItem xoaToolStripMenuItem;
-    private System.Windows.Forms.LinkLabel linkLabel1;
     private System.Windows.Forms.GroupBox groupBox4;
     private System.Windows.Forms.Button button3;
     private System.Windows.Forms.DataGridViewTextBoxColumn id;
@@ -899,5 +958,11 @@
     private System.Windows.Forms.DataGridViewTextBoxColumn nameSQLBatdongbo;
     private System.Windows.Forms.DataGridViewTextBoxColumn maSQLBatdongbo;
     private System.Windows.Forms.ComboBox cmbChuanHoa;
+    private System.Windows.Forms.GroupBox groupBox6;
+    private System.Windows.Forms.Label lblLogincal;
+    private System.Windows.Forms.Label label1;
+    private System.Windows.Forms.Label lblPhysical1;
+    private System.Windows.Forms.Label lblPhysical;
+    private System.Windows.Forms.LinkLabel linkLabel1;
   }
 }

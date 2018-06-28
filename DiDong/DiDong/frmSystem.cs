@@ -43,6 +43,12 @@ namespace QuanLyData {
       radExcel.Checked = !cau_Hinh.IsExportTxt;
       ckhDelImport.Checked = cau_Hinh.DelImportTruocImport;
       cmbChuanHoa.SelectedIndex = 0;
+
+      this.Text = string.Format("{0} - {1}",this.Text,SQLDatabase.ExcDataTable("select @@VERSION").Rows[0][0].ToString());
+
+      DataTable table = SQLDatabase.ExcDataTable("SELECT cpu_count AS Logical_CPU_Count , cpu_count / hyperthread_ratio AS Physical_CPU_Count FROM sys.dm_os_sys_info ;");
+      lblLogincal.Text = table.Rows[0][0].ToString();
+      lblPhysical.Text = table.Rows[0][1].ToString();
     }
     void BindColumn() {
       try {
