@@ -31,6 +31,12 @@
       this.groupBox5 = new System.Windows.Forms.GroupBox();
       this.panel4 = new System.Windows.Forms.Panel();
       this.gridviewSQLDaluong = new System.Windows.Forms.DataGridView();
+      this.idSQLBatdongbo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
+      this.orderidSQLBatdongbo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.isActSQLBatdongbo = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+      this.nameSQLBatdongbo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.maSQLBatdongbo = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.contextMenuStrip3 = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.lamTươiToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
       this.xoaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,7 +63,6 @@
       this.panel1 = new System.Windows.Forms.Panel();
       this.groupBox4 = new System.Windows.Forms.GroupBox();
       this.button3 = new System.Windows.Forms.Button();
-      this.ckhvalueskeySearch = new System.Windows.Forms.CheckBox();
       this.groupBox3 = new System.Windows.Forms.GroupBox();
       this.button2 = new System.Windows.Forms.Button();
       this.chkDelRoot = new System.Windows.Forms.CheckBox();
@@ -87,12 +92,7 @@
       this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.làmTươiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.cậpNhậtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.idSQLBatdongbo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.dataGridViewImageColumn1 = new System.Windows.Forms.DataGridViewImageColumn();
-      this.orderidSQLBatdongbo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.isActSQLBatdongbo = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-      this.nameSQLBatdongbo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.maSQLBatdongbo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.cmbChuanHoa = new System.Windows.Forms.ComboBox();
       this.tabControl1.SuspendLayout();
       this.tabPage2.SuspendLayout();
       this.panel2.SuspendLayout();
@@ -197,6 +197,50 @@
       this.gridviewSQLDaluong.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridviewSQLDaluong_CellContentClick);
       this.gridviewSQLDaluong.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.gridviewSQLDaluong_CellPainting);
       this.gridviewSQLDaluong.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridviewSQLDaluong_CellValueChanged);
+      // 
+      // idSQLBatdongbo
+      // 
+      this.idSQLBatdongbo.DataPropertyName = "id";
+      this.idSQLBatdongbo.HeaderText = "id";
+      this.idSQLBatdongbo.Name = "idSQLBatdongbo";
+      this.idSQLBatdongbo.Visible = false;
+      this.idSQLBatdongbo.Width = 80;
+      // 
+      // dataGridViewImageColumn1
+      // 
+      this.dataGridViewImageColumn1.HeaderText = "Xoá";
+      this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
+      this.dataGridViewImageColumn1.Width = 30;
+      // 
+      // orderidSQLBatdongbo
+      // 
+      this.orderidSQLBatdongbo.DataPropertyName = "orderid";
+      this.orderidSQLBatdongbo.HeaderText = "V.Trí";
+      this.orderidSQLBatdongbo.Name = "orderidSQLBatdongbo";
+      this.orderidSQLBatdongbo.Width = 50;
+      // 
+      // isActSQLBatdongbo
+      // 
+      this.isActSQLBatdongbo.DataPropertyName = "isAct";
+      this.isActSQLBatdongbo.HeaderText = "Act";
+      this.isActSQLBatdongbo.Name = "isActSQLBatdongbo";
+      this.isActSQLBatdongbo.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+      this.isActSQLBatdongbo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+      this.isActSQLBatdongbo.Width = 30;
+      // 
+      // nameSQLBatdongbo
+      // 
+      this.nameSQLBatdongbo.DataPropertyName = "name";
+      this.nameSQLBatdongbo.HeaderText = "Tên";
+      this.nameSQLBatdongbo.Name = "nameSQLBatdongbo";
+      this.nameSQLBatdongbo.Width = 120;
+      // 
+      // maSQLBatdongbo
+      // 
+      this.maSQLBatdongbo.DataPropertyName = "ma";
+      this.maSQLBatdongbo.HeaderText = "Mã";
+      this.maSQLBatdongbo.Name = "maSQLBatdongbo";
+      this.maSQLBatdongbo.Width = 450;
       // 
       // contextMenuStrip3
       // 
@@ -419,8 +463,8 @@
       // 
       // groupBox4
       // 
+      this.groupBox4.Controls.Add(this.cmbChuanHoa);
       this.groupBox4.Controls.Add(this.button3);
-      this.groupBox4.Controls.Add(this.ckhvalueskeySearch);
       this.groupBox4.Location = new System.Drawing.Point(3, 195);
       this.groupBox4.Name = "groupBox4";
       this.groupBox4.Size = new System.Drawing.Size(240, 82);
@@ -437,16 +481,6 @@
       this.button3.Text = "Chuẩn Hoá";
       this.button3.UseVisualStyleBackColor = true;
       this.button3.Click += new System.EventHandler(this.button3_Click);
-      // 
-      // ckhvalueskeySearch
-      // 
-      this.ckhvalueskeySearch.AutoSize = true;
-      this.ckhvalueskeySearch.Location = new System.Drawing.Point(6, 19);
-      this.ckhvalueskeySearch.Name = "ckhvalueskeySearch";
-      this.ckhvalueskeySearch.Size = new System.Drawing.Size(223, 17);
-      this.ckhvalueskeySearch.TabIndex = 1;
-      this.ckhvalueskeySearch.Text = "Chuẩn hoá (cho thông tin tìm kiếm nhanh)";
-      this.ckhvalueskeySearch.UseVisualStyleBackColor = true;
       // 
       // groupBox3
       // 
@@ -745,49 +779,17 @@
       this.cậpNhậtToolStripMenuItem.Text = "Cập nhật";
       this.cậpNhậtToolStripMenuItem.Click += new System.EventHandler(this.cậpNhậtToolStripMenuItem_Click);
       // 
-      // idSQLBatdongbo
+      // cmbChuanHoa
       // 
-      this.idSQLBatdongbo.DataPropertyName = "id";
-      this.idSQLBatdongbo.HeaderText = "id";
-      this.idSQLBatdongbo.Name = "idSQLBatdongbo";
-      this.idSQLBatdongbo.Visible = false;
-      this.idSQLBatdongbo.Width = 80;
-      // 
-      // dataGridViewImageColumn1
-      // 
-      this.dataGridViewImageColumn1.HeaderText = "Xoá";
-      this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
-      this.dataGridViewImageColumn1.Width = 30;
-      // 
-      // orderidSQLBatdongbo
-      // 
-      this.orderidSQLBatdongbo.DataPropertyName = "orderid";
-      this.orderidSQLBatdongbo.HeaderText = "V.Trí";
-      this.orderidSQLBatdongbo.Name = "orderidSQLBatdongbo";
-      this.orderidSQLBatdongbo.Width = 50;
-      // 
-      // isActSQLBatdongbo
-      // 
-      this.isActSQLBatdongbo.DataPropertyName = "isAct";
-      this.isActSQLBatdongbo.HeaderText = "Act";
-      this.isActSQLBatdongbo.Name = "isActSQLBatdongbo";
-      this.isActSQLBatdongbo.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-      this.isActSQLBatdongbo.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-      this.isActSQLBatdongbo.Width = 30;
-      // 
-      // nameSQLBatdongbo
-      // 
-      this.nameSQLBatdongbo.DataPropertyName = "name";
-      this.nameSQLBatdongbo.HeaderText = "Tên";
-      this.nameSQLBatdongbo.Name = "nameSQLBatdongbo";
-      this.nameSQLBatdongbo.Width = 120;
-      // 
-      // maSQLBatdongbo
-      // 
-      this.maSQLBatdongbo.DataPropertyName = "ma";
-      this.maSQLBatdongbo.HeaderText = "Mã";
-      this.maSQLBatdongbo.Name = "maSQLBatdongbo";
-      this.maSQLBatdongbo.Width = 450;
+      this.cmbChuanHoa.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+      this.cmbChuanHoa.FormattingEnabled = true;
+      this.cmbChuanHoa.Items.AddRange(new object[] {
+            "1-Chuẩn Hoá Chưa Chuẩn",
+            "2-Chuẩn Hoá Tất Cả"});
+      this.cmbChuanHoa.Location = new System.Drawing.Point(15, 19);
+      this.cmbChuanHoa.Name = "cmbChuanHoa";
+      this.cmbChuanHoa.Size = new System.Drawing.Size(210, 21);
+      this.cmbChuanHoa.TabIndex = 2;
       // 
       // frmSystem
       // 
@@ -813,7 +815,6 @@
       this.panel1.ResumeLayout(false);
       this.panel1.PerformLayout();
       this.groupBox4.ResumeLayout(false);
-      this.groupBox4.PerformLayout();
       this.groupBox3.ResumeLayout(false);
       this.groupBox3.PerformLayout();
       this.groupBox1.ResumeLayout(false);
@@ -859,7 +860,6 @@
     private System.Windows.Forms.LinkLabel linkLabel1;
     private System.Windows.Forms.GroupBox groupBox4;
     private System.Windows.Forms.Button button3;
-    private System.Windows.Forms.CheckBox ckhvalueskeySearch;
     private System.Windows.Forms.DataGridViewTextBoxColumn id;
     private System.Windows.Forms.DataGridViewTextBoxColumn stt;
     private System.Windows.Forms.DataGridViewTextBoxColumn ma;
@@ -898,5 +898,6 @@
     private System.Windows.Forms.DataGridViewCheckBoxColumn isActSQLBatdongbo;
     private System.Windows.Forms.DataGridViewTextBoxColumn nameSQLBatdongbo;
     private System.Windows.Forms.DataGridViewTextBoxColumn maSQLBatdongbo;
+    private System.Windows.Forms.ComboBox cmbChuanHoa;
   }
 }

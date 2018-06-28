@@ -206,15 +206,20 @@ namespace QuanLyData {
     private Task<string> BindingImportChuaTonTai() {
         return Task.Run(() =>
         {
-          string strcommandTop = string.Format("select COUNT_BIG(*) from dbo.import a left join dbo.root b on a.{0}=b.{0} where b.{0} is null {1}",
-                                         radioButtons.Where(p => p.Checked).FirstOrDefault().Tag,
-                                         _dm_Batdongbo.ma);
+          string strcommandTop = string.Format(" select COUNT_BIG(*) from dbo.import a "+
+                                               " where a.{0} not in (select {0} from dbo.root where {0} is not null) AND "+
+                                               " a.{0} is not null {1}",
+                                               radioButtons.Where(p => p.Checked).FirstOrDefault().Tag,
+                                               _dm_Batdongbo.ma);
           object totalRowCount = SQLDatabase.ExcScalar(strcommandTop);
 
           if (_cauhinh.MaxTop != 0) {
-            string strcommand = string.Format("select {0} {1} from dbo.import a left join dbo.root b on a.{2}=b.{2} where b.{2} is null order by {3} {4}",
+            string strcommand = string.Format( " select {0} {1} from dbo.import a "+
+                                               " where a.{2} not in (select {2} from dbo.root where {2} is not null) AND " +
+                                               " a.{2} is not null "+
+                                               " order by {3} {4}",
                                       _cauhinh.MaxTop.ToString() == "-1" ? "" : string.Format("top {0}", _cauhinh.MaxTop),
-                                      Utilities.SelectColumn("a"),
+                                      Utilities.SelectColumn(""),
                                       radioButtons.Where(p => p.Checked).FirstOrDefault().Tag,
                                       Utilities.OrderColumn(""),
                                       _dm_Batdongbo.ma);
@@ -256,23 +261,30 @@ namespace QuanLyData {
     }
     private Task<string> BindingImportDaTonTai() {
         return Task.Run(() => {
-          string strcommandTop = string.Format("select COUNT_BIG(*) from dbo.import a inner join dbo.root b on a.{0}=b.{0} {1}",
-                                        radioButtons.Where(p => p.Checked).FirstOrDefault().Tag,
-                                        _dm_Batdongbo.ma);
+          string strcommandTop = string.Format(" select COUNT_BIG(*) from dbo.import a " +
+                                               " where a.{0} in (select {0} from dbo.root where {0} is not null) AND " +
+                                               " a.{0} is not null {1}",
+                                               radioButtons.Where(p => p.Checked).FirstOrDefault().Tag,
+                                               _dm_Batdongbo.ma);
+          object totalRowCount = SQLDatabase.ExcScalar(strcommandTop);
 
           if (_cauhinh.MaxTop != 0) {
-            string strcommand = string.Format("select {0} {1} from dbo.import a inner join dbo.root b on a.{2}=b.{2}  order by {3} {4}",
-                                    _cauhinh.MaxTop.ToString() == "-1" ? "" : string.Format("top {0}", _cauhinh.MaxTop),
-                                    Utilities.SelectColumn("a"),
-                                    radioButtons.Where(p => p.Checked).FirstOrDefault().Tag,
-                                    Utilities.OrderColumn(""),
-                                    _dm_Batdongbo.ma);
+            string strcommand = string.Format(" select {0} {1} from dbo.import a " +
+                                               " where a.{2} in (select {2} from dbo.root where {2} is not null) AND " +
+                                               " a.{2} is not null " +
+                                               " order by {3} {4}",
+                                      _cauhinh.MaxTop.ToString() == "-1" ? "" : string.Format("top {0}", _cauhinh.MaxTop),
+                                      Utilities.SelectColumn(""),
+                                      radioButtons.Where(p => p.Checked).FirstOrDefault().Tag,
+                                      Utilities.OrderColumn(""),
+                                      _dm_Batdongbo.ma);
+
             DataTable dataTable = SQLDatabase.ExcDataTable(strcommand);
             dataGridView_tontai.Invoke((Action)delegate {
               dataGridView_tontai.DataSource = dataTable;
             });
           }
-          object totalRowCount = SQLDatabase.ExcScalar(strcommandTop);
+          //object totalRowCount = SQLDatabase.ExcScalar(strcommandTop);
           if (ConvertType.ToDouble(totalRowCount) > 0) {
             tabPage3.Invoke((Action)delegate {
               tabPage3.Text = string.Format("Khách Hàng Đã Tồn Tại Ở File Gốc: {0}",ConvertType.FormatNumber(totalRowCount.ToString()));
@@ -366,6 +378,9 @@ namespace QuanLyData {
           return;
         }
         else {
+          for (int i = 0; i < combox.Count(); i++) {
+            combox[i].Items.Clear();
+          }
           if (cbb_TypeDataSource.SelectedIndex == 0) {
             fileInfo = new FileInfo(txt_FileName.Text);
             if (fileInfo.Exists == false) {
@@ -482,7 +497,7 @@ namespace QuanLyData {
             for (int x = 0; x < combox.Count(); x++) {
               combox[x].Items.Add("----Chọn----");
             }
-            DataTable tb = SQLDatabase.ExcDataTable(string.Format(" select *  from {0}.INFORMATION_SCHEMA.COLUMNS", _strDatabase2));
+            DataTable tb = SQLDatabase.ExcDataTable(string.Format(" select *  from {0}.INFORMATION_SCHEMA.COLUMNS where TABLE_NAME='{1}'", _strDatabase2,_strTable2));
             for (int x = 0; x < combox.Count(); x++) {
               foreach (DataRow item in tb.Rows) {
                 combox[x].Items.Add(item["COLUMN_NAME"].ToString());
@@ -656,6 +671,7 @@ namespace QuanLyData {
           progressBar1.Visible = true;
           lblmessage.Visible = true;
           var text = await AnMethodAsync();
+          button6_Click(null, null);
         }
         else {
           _cancelImport = true;
@@ -667,7 +683,37 @@ namespace QuanLyData {
         MessageBox.Show(ex.Message, "btn_Import_Click");
       }
     }
-
+    
+    private void ControlSetEnabled(bool enabled) {
+      try {
+        foreach (var item in groupbox) {
+          item.Invoke((Action)delegate {
+            item.Enabled = enabled;
+          });
+        }
+        tabControl2.Invoke((Action)delegate {
+          tabControl2.Enabled = enabled;
+        });
+        button6.Invoke((Action)delegate {
+          button6.Enabled = enabled;
+        });
+        btn_View.Invoke((Action)delegate {
+          btn_View.Enabled = enabled;
+        });
+        button3.Invoke((Action)delegate {
+          button3.Enabled = enabled;
+        });
+        button2.Invoke((Action)delegate {
+          button2.Enabled = enabled;
+        });
+        cbb_TypeDataSource.Invoke((Action)delegate {
+          cbb_TypeDataSource.Enabled = enabled;
+        });
+      }
+      catch (Exception ex) {
+        throw;
+      }
+    }
 
     private Task<string> AnMethodAsync() {
       //Do somethine async
@@ -681,6 +727,7 @@ namespace QuanLyData {
     public void ProcessImport() {
       OleDbDataReader reader = null;
       try {
+        ControlSetEnabled(false);
         SQLDatabase.ExcNonQuery("TRUNCATE TABLE import");
 
         List<string> model = new List<string>();
@@ -738,8 +785,10 @@ namespace QuanLyData {
               progressBar1.Update();
             });
 
-            if(_cancelImport)
+            if (_cancelImport) {
+              ControlSetEnabled(true);
               e.Abort = true;
+            }
 
             lblmessage.Invoke((Action)delegate {
               lblmessage.Text = string.Format("{0}%", (ConvertType.ToInt((e.RowsCopied * 100)) / _nTongRowsText).ToString());
@@ -772,7 +821,7 @@ namespace QuanLyData {
               lblmessage.Text = "100%";
               lblmessage.Update();
             });
-
+            ControlSetEnabled(true);
             Thread.Sleep(0);
 
             reader.Close();
@@ -1052,8 +1101,9 @@ namespace QuanLyData {
         if (MessageBox.Show("Bạn có chắc muốn xoá dữ liệu gốc trùng với dữ liệu tạm ?", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
           bool isTrue = false;
           new Waiting(() => {
-            isTrue = SQLDatabase.ExcNonQuery(string.Format("Delete a from dbo.root a inner join dbo.import b on a.{0}=b.{0}", radioButtons.Where(p => p.Checked).FirstOrDefault().Tag));
-          });
+            isTrue = SQLDatabase.ExcNonQuery(string.Format("Delete from dbo.root "+
+                                                           "where {0} in (select {0} from dbo.import where {0} is not null) and {0} is not null", radioButtons.Where(p => p.Checked).FirstOrDefault().Tag));
+          }).ShowDialog();
           if (isTrue) {
             MessageBox.Show("Xoá xong dữ liệu gốc trùng dữ liệu nguồn \n Hệ thống sẽ làm tươi lại dữ liệu", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             button6_Click(null, null);
