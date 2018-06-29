@@ -501,5 +501,45 @@ namespace QuanLyData {
     private void lToolStripMenuItem_Click(object sender, EventArgs e) {
       Bindparallelism();
     }
+
+    private void chkAllSxep_CheckedChanged(object sender, EventArgs e) {
+      try {
+        SQLDatabase.ExcNonQuery(string.Format("update dm_column set isOrder={0}", chkAllSxep.Checked ? 1:0));
+        BindColumn();
+      }
+      catch (Exception ex) {
+        MessageBox.Show(ex.Message, "chkAllSxep_CheckedChanged");
+      }
+    }
+
+    private void chkAllAct_CheckedChanged(object sender, EventArgs e) {
+      try {
+        SQLDatabase.ExcNonQuery(string.Format("update dm_column set isAct={0}", chkAllAct.Checked ? 1 : 0));
+        BindColumn();
+      }
+      catch (Exception ex) {
+        MessageBox.Show(ex.Message, "chkAllSxep_CheckedChanged");
+      }
+    }
+
+    private void chkAllBC_CheckedChanged(object sender, EventArgs e) {
+      try {
+        SQLDatabase.ExcNonQuery(string.Format("update dm_column set IsReport={0}", chkAllBC.Checked ? 1 : 0));
+        BindColumn();
+      }
+      catch (Exception ex) {
+        MessageBox.Show(ex.Message, "chkAllSxep_CheckedChanged");
+      }
+    }
+
+    private void chkAllSearch_CheckedChanged(object sender, EventArgs e) {
+      try {
+        SQLDatabase.ExcNonQuery(string.Format("update dm_column set isSearch={0}", chkAllSearch.Checked ? 1 : 0));
+        BindColumn();
+      }
+      catch (Exception ex) {
+        MessageBox.Show(ex.Message, "chkAllSxep_CheckedChanged");
+      }
+    }
   }
 }

@@ -24,10 +24,11 @@
     /// </summary>
     private void InitializeComponent() {
       this.components = new System.ComponentModel.Container();
-      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
       this.tabControl1 = new System.Windows.Forms.TabControl();
       this.tabPage2 = new System.Windows.Forms.TabPage();
       this.panel2 = new System.Windows.Forms.Panel();
+      this.linkLabel1 = new System.Windows.Forms.LinkLabel();
       this.groupBox5 = new System.Windows.Forms.GroupBox();
       this.panel4 = new System.Windows.Forms.Panel();
       this.gridviewSQLDaluong = new System.Windows.Forms.DataGridView();
@@ -61,6 +62,11 @@
       this.thêmToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.xoaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.panel1 = new System.Windows.Forms.Panel();
+      this.groupBox6 = new System.Windows.Forms.GroupBox();
+      this.lblPhysical = new System.Windows.Forms.Label();
+      this.lblPhysical1 = new System.Windows.Forms.Label();
+      this.lblLogincal = new System.Windows.Forms.Label();
+      this.label1 = new System.Windows.Forms.Label();
       this.groupBox4 = new System.Windows.Forms.GroupBox();
       this.cmbChuanHoa = new System.Windows.Forms.ComboBox();
       this.button3 = new System.Windows.Forms.Button();
@@ -92,12 +98,12 @@
       this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
       this.làmTươiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.cậpNhậtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.groupBox6 = new System.Windows.Forms.GroupBox();
-      this.label1 = new System.Windows.Forms.Label();
-      this.lblLogincal = new System.Windows.Forms.Label();
-      this.lblPhysical1 = new System.Windows.Forms.Label();
-      this.lblPhysical = new System.Windows.Forms.Label();
-      this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+      this.chkAllSxep = new System.Windows.Forms.CheckBox();
+      this.panel5 = new System.Windows.Forms.Panel();
+      this.panel6 = new System.Windows.Forms.Panel();
+      this.chkAllAct = new System.Windows.Forms.CheckBox();
+      this.chkAllBC = new System.Windows.Forms.CheckBox();
+      this.chkAllSearch = new System.Windows.Forms.CheckBox();
       this.tabControl1.SuspendLayout();
       this.tabPage2.SuspendLayout();
       this.panel2.SuspendLayout();
@@ -111,6 +117,7 @@
       ((System.ComponentModel.ISupportInitialize)(this.gridviewCharacter)).BeginInit();
       this.contextMenuStrip2.SuspendLayout();
       this.panel1.SuspendLayout();
+      this.groupBox6.SuspendLayout();
       this.groupBox4.SuspendLayout();
       this.groupBox3.SuspendLayout();
       this.groupBox1.SuspendLayout();
@@ -119,7 +126,8 @@
       this.tabPage1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.GridViewColumn)).BeginInit();
       this.contextMenuStrip1.SuspendLayout();
-      this.groupBox6.SuspendLayout();
+      this.panel5.SuspendLayout();
+      this.panel6.SuspendLayout();
       this.SuspendLayout();
       // 
       // tabControl1
@@ -155,6 +163,17 @@
       this.panel2.Name = "panel2";
       this.panel2.Size = new System.Drawing.Size(541, 418);
       this.panel2.TabIndex = 3;
+      // 
+      // linkLabel1
+      // 
+      this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+      this.linkLabel1.AutoSize = true;
+      this.linkLabel1.Location = new System.Drawing.Point(454, 90);
+      this.linkLabel1.Name = "linkLabel1";
+      this.linkLabel1.Size = new System.Drawing.Size(82, 13);
+      this.linkLabel1.TabIndex = 2;
+      this.linkLabel1.TabStop = true;
+      this.linkLabel1.Text = "Tham khảo font";
       // 
       // groupBox5
       // 
@@ -468,6 +487,57 @@
       this.panel1.Size = new System.Drawing.Size(245, 418);
       this.panel1.TabIndex = 2;
       // 
+      // groupBox6
+      // 
+      this.groupBox6.Controls.Add(this.lblPhysical);
+      this.groupBox6.Controls.Add(this.lblPhysical1);
+      this.groupBox6.Controls.Add(this.lblLogincal);
+      this.groupBox6.Controls.Add(this.label1);
+      this.groupBox6.Location = new System.Drawing.Point(2, 332);
+      this.groupBox6.Name = "groupBox6";
+      this.groupBox6.Size = new System.Drawing.Size(240, 83);
+      this.groupBox6.TabIndex = 3;
+      this.groupBox6.TabStop = false;
+      this.groupBox6.Text = "Thông tin SQL Server";
+      // 
+      // lblPhysical
+      // 
+      this.lblPhysical.AutoSize = true;
+      this.lblPhysical.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+      this.lblPhysical.Location = new System.Drawing.Point(88, 54);
+      this.lblPhysical.Name = "lblPhysical";
+      this.lblPhysical.Size = new System.Drawing.Size(41, 13);
+      this.lblPhysical.TabIndex = 4;
+      this.lblPhysical.Text = "label2";
+      // 
+      // lblPhysical1
+      // 
+      this.lblPhysical1.AutoSize = true;
+      this.lblPhysical1.Location = new System.Drawing.Point(12, 54);
+      this.lblPhysical1.Name = "lblPhysical1";
+      this.lblPhysical1.Size = new System.Drawing.Size(74, 13);
+      this.lblPhysical1.TabIndex = 3;
+      this.lblPhysical1.Text = "Physical CPU:";
+      // 
+      // lblLogincal
+      // 
+      this.lblLogincal.AutoSize = true;
+      this.lblLogincal.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
+      this.lblLogincal.Location = new System.Drawing.Point(88, 25);
+      this.lblLogincal.Name = "lblLogincal";
+      this.lblLogincal.Size = new System.Drawing.Size(41, 13);
+      this.lblLogincal.TabIndex = 2;
+      this.lblLogincal.Text = "label2";
+      // 
+      // label1
+      // 
+      this.label1.AutoSize = true;
+      this.label1.Location = new System.Drawing.Point(13, 25);
+      this.label1.Name = "label1";
+      this.label1.Size = new System.Drawing.Size(69, 13);
+      this.label1.TabIndex = 0;
+      this.label1.Text = "Logical CPU:";
+      // 
       // groupBox4
       // 
       this.groupBox4.Controls.Add(this.cmbChuanHoa);
@@ -641,7 +711,8 @@
       // 
       // tabPage1
       // 
-      this.tabPage1.Controls.Add(this.GridViewColumn);
+      this.tabPage1.Controls.Add(this.panel6);
+      this.tabPage1.Controls.Add(this.panel5);
       this.tabPage1.Location = new System.Drawing.Point(4, 22);
       this.tabPage1.Name = "tabPage1";
       this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -671,12 +742,12 @@
             this.orderid});
       this.GridViewColumn.ContextMenuStrip = this.contextMenuStrip1;
       this.GridViewColumn.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.GridViewColumn.Location = new System.Drawing.Point(3, 3);
+      this.GridViewColumn.Location = new System.Drawing.Point(0, 0);
       this.GridViewColumn.MultiSelect = false;
       this.GridViewColumn.Name = "GridViewColumn";
       this.GridViewColumn.RowHeadersVisible = false;
       this.GridViewColumn.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-      this.GridViewColumn.Size = new System.Drawing.Size(786, 418);
+      this.GridViewColumn.Size = new System.Drawing.Size(786, 393);
       this.GridViewColumn.TabIndex = 0;
       this.GridViewColumn.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridViewColumn_CellContentClick);
       this.GridViewColumn.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.GridViewColumn_CellPainting);
@@ -757,8 +828,8 @@
       // orderid
       // 
       this.orderid.DataPropertyName = "orderid";
-      dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-      this.orderid.DefaultCellStyle = dataGridViewCellStyle2;
+      dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+      this.orderid.DefaultCellStyle = dataGridViewCellStyle4;
       this.orderid.HeaderText = "Vị trí";
       this.orderid.Name = "orderid";
       this.orderid.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -787,67 +858,67 @@
       this.cậpNhậtToolStripMenuItem.Text = "Cập nhật";
       this.cậpNhậtToolStripMenuItem.Click += new System.EventHandler(this.cậpNhậtToolStripMenuItem_Click);
       // 
-      // groupBox6
+      // chkAllSxep
       // 
-      this.groupBox6.Controls.Add(this.lblPhysical);
-      this.groupBox6.Controls.Add(this.lblPhysical1);
-      this.groupBox6.Controls.Add(this.lblLogincal);
-      this.groupBox6.Controls.Add(this.label1);
-      this.groupBox6.Location = new System.Drawing.Point(2, 332);
-      this.groupBox6.Name = "groupBox6";
-      this.groupBox6.Size = new System.Drawing.Size(240, 83);
-      this.groupBox6.TabIndex = 3;
-      this.groupBox6.TabStop = false;
-      this.groupBox6.Text = "Thông tin SQL Server";
+      this.chkAllSxep.AutoSize = true;
+      this.chkAllSxep.Location = new System.Drawing.Point(515, 8);
+      this.chkAllSxep.Name = "chkAllSxep";
+      this.chkAllSxep.Size = new System.Drawing.Size(15, 14);
+      this.chkAllSxep.TabIndex = 1;
+      this.chkAllSxep.UseVisualStyleBackColor = true;
+      this.chkAllSxep.CheckedChanged += new System.EventHandler(this.chkAllSxep_CheckedChanged);
       // 
-      // label1
+      // panel5
       // 
-      this.label1.AutoSize = true;
-      this.label1.Location = new System.Drawing.Point(13, 25);
-      this.label1.Name = "label1";
-      this.label1.Size = new System.Drawing.Size(69, 13);
-      this.label1.TabIndex = 0;
-      this.label1.Text = "Logical CPU:";
+      this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+      this.panel5.Controls.Add(this.chkAllSearch);
+      this.panel5.Controls.Add(this.chkAllBC);
+      this.panel5.Controls.Add(this.chkAllAct);
+      this.panel5.Controls.Add(this.chkAllSxep);
+      this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
+      this.panel5.Location = new System.Drawing.Point(3, 3);
+      this.panel5.Name = "panel5";
+      this.panel5.Size = new System.Drawing.Size(786, 25);
+      this.panel5.TabIndex = 2;
       // 
-      // lblLogincal
+      // panel6
       // 
-      this.lblLogincal.AutoSize = true;
-      this.lblLogincal.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-      this.lblLogincal.Location = new System.Drawing.Point(88, 25);
-      this.lblLogincal.Name = "lblLogincal";
-      this.lblLogincal.Size = new System.Drawing.Size(41, 13);
-      this.lblLogincal.TabIndex = 2;
-      this.lblLogincal.Text = "label2";
+      this.panel6.Controls.Add(this.GridViewColumn);
+      this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.panel6.Location = new System.Drawing.Point(3, 28);
+      this.panel6.Name = "panel6";
+      this.panel6.Size = new System.Drawing.Size(786, 393);
+      this.panel6.TabIndex = 3;
       // 
-      // lblPhysical1
+      // chkAllAct
       // 
-      this.lblPhysical1.AutoSize = true;
-      this.lblPhysical1.Location = new System.Drawing.Point(12, 54);
-      this.lblPhysical1.Name = "lblPhysical1";
-      this.lblPhysical1.Size = new System.Drawing.Size(74, 13);
-      this.lblPhysical1.TabIndex = 3;
-      this.lblPhysical1.Text = "Physical CPU:";
+      this.chkAllAct.AutoSize = true;
+      this.chkAllAct.Location = new System.Drawing.Point(576, 8);
+      this.chkAllAct.Name = "chkAllAct";
+      this.chkAllAct.Size = new System.Drawing.Size(15, 14);
+      this.chkAllAct.TabIndex = 2;
+      this.chkAllAct.UseVisualStyleBackColor = true;
+      this.chkAllAct.CheckedChanged += new System.EventHandler(this.chkAllAct_CheckedChanged);
       // 
-      // lblPhysical
+      // chkAllBC
       // 
-      this.lblPhysical.AutoSize = true;
-      this.lblPhysical.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-      this.lblPhysical.Location = new System.Drawing.Point(88, 54);
-      this.lblPhysical.Name = "lblPhysical";
-      this.lblPhysical.Size = new System.Drawing.Size(41, 13);
-      this.lblPhysical.TabIndex = 4;
-      this.lblPhysical.Text = "label2";
+      this.chkAllBC.AutoSize = true;
+      this.chkAllBC.Location = new System.Drawing.Point(635, 8);
+      this.chkAllBC.Name = "chkAllBC";
+      this.chkAllBC.Size = new System.Drawing.Size(15, 14);
+      this.chkAllBC.TabIndex = 3;
+      this.chkAllBC.UseVisualStyleBackColor = true;
+      this.chkAllBC.CheckedChanged += new System.EventHandler(this.chkAllBC_CheckedChanged);
       // 
-      // linkLabel1
+      // chkAllSearch
       // 
-      this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-      this.linkLabel1.AutoSize = true;
-      this.linkLabel1.Location = new System.Drawing.Point(454, 90);
-      this.linkLabel1.Name = "linkLabel1";
-      this.linkLabel1.Size = new System.Drawing.Size(82, 13);
-      this.linkLabel1.TabIndex = 2;
-      this.linkLabel1.TabStop = true;
-      this.linkLabel1.Text = "Tham khảo font";
+      this.chkAllSearch.AutoSize = true;
+      this.chkAllSearch.Location = new System.Drawing.Point(691, 8);
+      this.chkAllSearch.Name = "chkAllSearch";
+      this.chkAllSearch.Size = new System.Drawing.Size(15, 14);
+      this.chkAllSearch.TabIndex = 4;
+      this.chkAllSearch.UseVisualStyleBackColor = true;
+      this.chkAllSearch.CheckedChanged += new System.EventHandler(this.chkAllSearch_CheckedChanged);
       // 
       // frmSystem
       // 
@@ -872,6 +943,8 @@
       ((System.ComponentModel.ISupportInitialize)(this.gridviewCharacter)).EndInit();
       this.contextMenuStrip2.ResumeLayout(false);
       this.panel1.ResumeLayout(false);
+      this.groupBox6.ResumeLayout(false);
+      this.groupBox6.PerformLayout();
       this.groupBox4.ResumeLayout(false);
       this.groupBox3.ResumeLayout(false);
       this.groupBox3.PerformLayout();
@@ -883,8 +956,9 @@
       this.tabPage1.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.GridViewColumn)).EndInit();
       this.contextMenuStrip1.ResumeLayout(false);
-      this.groupBox6.ResumeLayout(false);
-      this.groupBox6.PerformLayout();
+      this.panel5.ResumeLayout(false);
+      this.panel5.PerformLayout();
+      this.panel6.ResumeLayout(false);
       this.ResumeLayout(false);
 
     }
@@ -964,5 +1038,11 @@
     private System.Windows.Forms.Label lblPhysical1;
     private System.Windows.Forms.Label lblPhysical;
     private System.Windows.Forms.LinkLabel linkLabel1;
+    private System.Windows.Forms.Panel panel6;
+    private System.Windows.Forms.Panel panel5;
+    private System.Windows.Forms.CheckBox chkAllSearch;
+    private System.Windows.Forms.CheckBox chkAllBC;
+    private System.Windows.Forms.CheckBox chkAllAct;
+    private System.Windows.Forms.CheckBox chkAllSxep;
   }
 }
