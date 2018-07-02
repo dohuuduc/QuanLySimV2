@@ -71,6 +71,20 @@ namespace QuanLyData {
       }
     }
   }
+
+  public class dm_madausoquocgia {
+    public int id { get; set; }
+    public string ma { get; set; }
+    public string name { get; set; }
+  }
+  public class dm_khuvuc {
+    public int id { get; set; }
+    public int Idnhamang { get; set; }
+    public string ma { get; set; }
+    public string name { get; set; }
+    public int loai { get; set; }
+  }
+
   class SQLDatabase {
     #region Fields
     public static string ConnectionString {
@@ -594,6 +608,214 @@ namespace QuanLyData {
 
     #endregion
 
+    #region dm_madausoquocgia
+    public static List<dm_madausoquocgia> Loaddm_madausoquocgia(string sql) {
+      SqlConnection cnn = null;
+      SqlCommand cmd = null;
+      SqlDataReader reader = null;
+      dm_madausoquocgia InfoCOMMANDTABLE;
+      List<dm_madausoquocgia> InfoCOMMANDTABLEs = null;
+
+      try {
+        InfoCOMMANDTABLEs = new List<dm_madausoquocgia>();
+
+        cnn = new SqlConnection();
+        cnn.ConnectionString = ConnectionString;
+        cnn.Open();
+        cnn.FireInfoMessageEventOnUserErrors = false;
+
+        cmd = new SqlCommand();
+        cmd.CommandText = sql;
+        cmd.Connection = cnn;
+        reader = cmd.ExecuteReader();
+        while (reader.Read()) {
+          InfoCOMMANDTABLE = new dm_madausoquocgia();
+
+
+          if (!reader.IsDBNull(0))
+            InfoCOMMANDTABLE.id = reader.GetInt32(0);
+          if (!reader.IsDBNull(1))
+            InfoCOMMANDTABLE.ma = reader.GetString(1);
+          if (!reader.IsDBNull(2))
+            InfoCOMMANDTABLE.name = reader.GetString(2);
+          InfoCOMMANDTABLEs.Add(InfoCOMMANDTABLE);
+        }
+        return InfoCOMMANDTABLEs;
+      }
+      catch (Exception ex) {
+        throw ex;
+      }
+      finally {
+        if (cnn.State == ConnectionState.Open)
+          cnn.Close();
+      }
+    }
+
+    public static bool Updm_madausoquocgia(dm_madausoquocgia record) {
+      SqlConnection connection = null;
+      SqlCommand cmd = null;
+
+      try {
+        if (record == null) return false;
+
+        // Make connection to database
+        connection = new SqlConnection();
+        connection.ConnectionString = ConnectionString;
+        connection.FireInfoMessageEventOnUserErrors = false;
+        connection.Open();
+        cmd = new SqlCommand();
+        cmd.Connection = connection;
+        cmd.CommandText = "Update dm_madausoquocgia " +
+                            " Set   ma=@ma," +
+                            "       name=@name " +
+                            " where ID='" + record.id + "'";
+        cmd.CommandType = CommandType.Text;
+
+        cmd.Parameters.AddWithValue("@ma", record.ma);
+        cmd.Parameters.AddWithValue("@name", record.name);
+
+        cmd.ExecuteNonQuery();
+        return true;
+      }
+      catch (Exception ex) {
+        MessageBox.Show(ex.Message, "Updm_Character");
+        return false;
+      }
+      finally {
+        if (connection != null)
+          connection.Close();
+      }
+    }
+
+    public static bool Adddm_madausoquocgia(dm_madausoquocgia record) {
+      SqlConnection cnn = null;
+      SqlCommand cmd = null;
+      object objectID = null;
+      try {
+        if (record == null)
+          return false;
+
+        cnn = new SqlConnection();
+        cnn.ConnectionString = ConnectionString;
+        cnn.FireInfoMessageEventOnUserErrors = false;
+        cnn.Open();
+
+        cmd = new SqlCommand();
+        cmd.Connection = cnn;
+        //--- Insert Record
+        cmd.CommandText = "Insert into dm_madausoquocgia( ma, name) OUTPUT inserted.id " +
+                            "values( @ma, @name)";
+
+        cmd.Parameters.AddWithValue("@ma", record.ma);
+        cmd.Parameters.AddWithValue("@name", record.name);
+
+        objectID = cmd.ExecuteScalar();
+
+        if (objectID == null || objectID == DBNull.Value) return false;
+
+        record.id = Convert.ToInt32(objectID);
+
+        return true;
+      }
+      catch (Exception ex) {
+        return false;
+      }
+      finally {
+        if (cnn.State == ConnectionState.Open)
+          cnn.Close();
+      }
+    }
+    #endregion
+
+    #region dm_khuvuc
+    public static List<dm_khuvuc> Loaddm_khuvuc(string sql) {
+      SqlConnection cnn = null;
+      SqlCommand cmd = null;
+      SqlDataReader reader = null;
+      dm_khuvuc InfoCOMMANDTABLE;
+      List<dm_khuvuc> InfoCOMMANDTABLEs = null;
+
+      try {
+        InfoCOMMANDTABLEs = new List<dm_khuvuc>();
+
+        cnn = new SqlConnection();
+        cnn.ConnectionString = ConnectionString;
+        cnn.Open();
+        cnn.FireInfoMessageEventOnUserErrors = false;
+
+        cmd = new SqlCommand();
+        cmd.CommandText = sql;
+        cmd.Connection = cnn;
+        reader = cmd.ExecuteReader();
+        while (reader.Read()) {
+          InfoCOMMANDTABLE = new dm_khuvuc();
+
+
+          if (!reader.IsDBNull(0))
+            InfoCOMMANDTABLE.id = reader.GetInt32(0);
+          if (!reader.IsDBNull(1))
+            InfoCOMMANDTABLE.Idnhamang = reader.GetInt32(1);
+          if (!reader.IsDBNull(2))
+            InfoCOMMANDTABLE.ma = reader.GetString(2);
+          if (!reader.IsDBNull(3))
+            InfoCOMMANDTABLE.name = reader.GetString(3);
+          if (!reader.IsDBNull(4))
+            InfoCOMMANDTABLE.loai = reader.GetInt32(4);
+          InfoCOMMANDTABLEs.Add(InfoCOMMANDTABLE);
+        }
+        return InfoCOMMANDTABLEs;
+      }
+      catch (Exception ex) {
+        throw ex;
+      }
+      finally {
+        if (cnn.State == ConnectionState.Open)
+          cnn.Close();
+      }
+    }
+
+    public static bool Adddm_khuvuc(dm_khuvuc record) {
+      SqlConnection cnn = null;
+      SqlCommand cmd = null;
+      object objectID = null;
+      try {
+        if (record == null)
+          return false;
+
+        cnn = new SqlConnection();
+        cnn.ConnectionString = ConnectionString;
+        cnn.FireInfoMessageEventOnUserErrors = false;
+        cnn.Open();
+
+        cmd = new SqlCommand();
+        cmd.Connection = cnn;
+        //--- Insert Record
+        cmd.CommandText = "Insert into dm_khuvuc( [Idnhamang], [ma], [name], [loai]) OUTPUT inserted.id " +
+                            "values( @Idnhamang, @ma, @name, @loai)";
+
+        cmd.Parameters.AddWithValue("@Idnhamang", record.Idnhamang);
+        cmd.Parameters.AddWithValue("@ma", record.ma);
+        cmd.Parameters.AddWithValue("@name", record.name);
+        cmd.Parameters.AddWithValue("@loai", record.loai);
+
+        objectID = cmd.ExecuteScalar();
+
+        if (objectID == null || objectID == DBNull.Value) return false;
+
+        record.id = Convert.ToInt32(objectID);
+
+        return true;
+      }
+      catch (Exception ex) {
+        return false;
+      }
+      finally {
+        if (cnn.State == ConnectionState.Open)
+          cnn.Close();
+      }
+    }
+
+    #endregion
     #region Execute SQL
 
     public static bool ExcNonQuery(string sqlcommand) {

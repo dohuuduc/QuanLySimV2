@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,10 @@ namespace QuanLyData {
         BindCharacter();
         BindSQLBatdongbo();
         Bindparallelism();
+        Binddm_madausoquocgia();
+        BindNhamang();
+        BindChuanHoaCotDienThoai();
+        BindchkListChuanHoa();
       }).ShowDialog();
 
       if (cau_Hinh.MaxTop == -1) {
@@ -43,6 +48,8 @@ namespace QuanLyData {
       radExcel.Checked = !cau_Hinh.IsExportTxt;
       ckhDelImport.Checked = cau_Hinh.DelImportTruocImport;
       cmbChuanHoa.SelectedIndex = 0;
+      cmbTinhThanhXa.SelectedIndex = 0;
+      
 
       this.Text = string.Format("{0} - {1}",this.Text,SQLDatabase.ExcDataTable("select @@VERSION").Rows[0][0].ToString());
 
@@ -58,6 +65,70 @@ namespace QuanLyData {
           GridViewColumn.DataSource = tb;
         });
          
+      }
+      catch (Exception ex) {
+        MessageBox.Show(ex.Message, "BindGrid");
+      }
+    }
+    void BindChuanHoaCotDienThoai() {
+      try {
+        string str = string.Format("select ma,name from dm_column  order by OrderId");
+        DataTable tb = SQLDatabase.ExcDataTable(str);
+        cmbCotDienThoai.Invoke((Action)delegate {
+          cmbCotDienThoai.DataSource = tb;
+          cmbCotDienThoai.ValueMember = "ma"; // --> once hes here, he just jumps out the method
+          cmbCotDienThoai.DisplayMember = "name";
+        });
+
+      }
+      catch (Exception ex) {
+        MessageBox.Show(ex.Message, "BindGrid");
+      }
+    }
+    void BindchkListChuanHoa() {
+      try {
+        string str = string.Format("select ma,name from dm_column  order by OrderId");
+        DataTable tb = SQLDatabase.ExcDataTable(str);
+        chkListChuanHoa.Invoke((Action)delegate {
+          chkListChuanHoa.DataSource = tb;
+          chkListChuanHoa.ValueMember = "ma"; // --> once hes here, he just jumps out the method
+          chkListChuanHoa.DisplayMember = "name";
+        });
+
+      }
+      catch (Exception ex) {
+        MessageBox.Show(ex.Message, "BindGrid");
+      }
+    }
+
+    void BindNhamang() {
+      try {
+        string str = string.Format("select id,nhamang from dm_nhamang where parentId is null order by orderid");
+        DataTable tb = SQLDatabase.ExcDataTable(str);
+        cmbNhaMang.Invoke((Action)delegate {
+          cmbNhaMang.DataSource = tb;
+          cmbNhaMang.ValueMember = "id"; // --> once hes here, he just jumps out the method
+          cmbNhaMang.DisplayMember = "nhamang";
+        });
+
+      }
+      catch (Exception ex) {
+        MessageBox.Show(ex.Message, "BindGrid");
+      }
+    }
+    void BindKhuVuc() {
+      try {
+        int idNhamang =ConvertType.ToInt(cmbNhaMang.SelectedValue.ToString());
+        int idloai = cmbTinhThanhXa.SelectedIndex;
+
+        string str = string.Format("select  ROW_NUMBER() OVER(ORDER BY ma) AS stt,* from dm_khuvuc where loai={0} and Idnhamang={1} order by ma", idloai, idNhamang);
+        DataTable tb = SQLDatabase.ExcDataTable(str);
+        gridviewKhuVuc.Invoke((Action)delegate {
+          gridviewKhuVuc.DataSource = tb;
+        });
+        groupBox12.Invoke((Action)delegate {
+          groupBox12.Text = string.Format("{0} ~ {1}", cmbTinhThanhXa.Text,tb.Rows.Count);
+        });
       }
       catch (Exception ex) {
         MessageBox.Show(ex.Message, "BindGrid");
@@ -102,7 +173,21 @@ namespace QuanLyData {
         MessageBox.Show(ex.Message, "BindSQLBatdongbo");
       }
     }
-   
+
+    void Binddm_madausoquocgia() {
+       try {
+        string str = string.Format("select ROW_NUMBER() OVER(ORDER BY name) AS stt,* from [dbo].[dm_madausoquocgia]");
+        DataTable tb = SQLDatabase.ExcDataTable(str);
+        gridMaDauSoQuocgia.Invoke((Action)delegate {
+          gridMaDauSoQuocgia.DataSource = tb;
+        });
+      }
+      catch (Exception ex) {
+        MessageBox.Show(ex.Message, "BindSQLBatdongbo");
+      }
+    }
+
+
     private void cậpNhậtToolStripMenuItem_Click(object sender, EventArgs e) {
       try {
         string str = string.Format("SELECT COLUMN_NAME,CHARACTER_MAXIMUM_LENGTH FROM {0}.INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = N'Root' AND CHARACTER_MAXIMUM_LENGTH IS NOT NULL", _strDatabase);
@@ -540,6 +625,201 @@ namespace QuanLyData {
       catch (Exception ex) {
         MessageBox.Show(ex.Message, "chkAllSxep_CheckedChanged");
       }
+    }
+
+    private void làmTươiToolStripMenuItem1_Click(object sender, EventArgs e) {
+      Binddm_madausoquocgia();
+    }
+
+    private void thêmToolStripMenuItem1_Click(object sender, EventArgs e) {
+      try {
+        dm_madausoquocgia model = new dm_madausoquocgia();
+        model.ma = "";
+        model.name = "";
+        SQLDatabase.Adddm_madausoquocgia(model);
+        Binddm_madausoquocgia();
+      }
+      catch (Exception ex) {
+        MessageBox.Show(ex.Message, "thêmToolStripMenuItem_Click");
+      }
+    }
+
+    private void gridMaDauSoQuocgia_CellValueChanged(object sender, DataGridViewCellEventArgs e) {
+      try {
+
+        if (e.RowIndex != -1) {
+          string Id = gridMaDauSoQuocgia.Rows[e.RowIndex].Cells["idmadausoquocgia"].Value.ToString();
+          string ma = gridMaDauSoQuocgia.Rows[e.RowIndex].Cells["Mamadausoquocgia"].Value.ToString();
+          string name = gridMaDauSoQuocgia.Rows[e.RowIndex].Cells["Namemadausoquocgia"].Value.ToString();
+
+
+          dm_madausoquocgia madauso = SQLDatabase.Loaddm_madausoquocgia(string.Format("select * from dm_madausoquocgia where id='{0}'", Id)).FirstOrDefault();
+          madauso.ma = ma;
+          madauso.name = name;
+          SQLDatabase.Updm_madausoquocgia(madauso);
+
+          // BindColumn();
+        }
+      }
+      catch (Exception ex) {
+        MessageBox.Show("Unable to save the record. There might be a blank cell. ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+      }
+    }
+
+    private void cmbNhaMang_SelectedIndexChanged(object sender, EventArgs e) {
+      BindKhuVuc();
+    }
+
+    private void cmbTinhThanhXa_SelectedIndexChanged(object sender, EventArgs e) {
+      BindKhuVuc();
+    }
+
+    private void button4_Click(object sender, EventArgs e) {
+      OpenFileDialog ofd = new OpenFileDialog();
+      int idNhamang = ConvertType.ToInt(cmbNhaMang.SelectedValue.ToString());
+      int idloai = cmbTinhThanhXa.SelectedIndex;
+
+      if (radioButton1.Checked)
+        ofd.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+      else
+        ofd.Filter = "txt files (*.xls)|*.xls|All files (*.*)|*.*";
+
+      ofd.FilterIndex = 1;
+      ofd.RestoreDirectory = true;
+
+      string path = ofd.ShowDialog() == DialogResult.OK ? ofd.FileName : "";
+      if (path == "") return;
+      bool temp = false;
+      SQLDatabase.ExcNonQuery(string.Format("delete from dm_khuvuc where Idnhamang='{0}' and loai='{1}'", idNhamang, idloai));
+      if (radioButton2.Checked)
+        (new Waiting(() => temp = importfileexcel(path,idNhamang,idloai))).ShowDialog();
+      else
+        (new Waiting(() => temp = importTxt(path, idNhamang, idloai))).ShowDialog();
+      if (temp)
+        BindKhuVuc();
+      else
+        MessageBox.Show("Import file thất bại", "Lỗi");
+    }
+
+    private bool importfileexcel(string path,int idNhamang, int idloai) {
+      try {
+      
+
+        ExcelAdapter excel = new ExcelAdapter(path);
+        DataTable tb = excel.ReadFromFile("SELECT * FROM [Sheet1$]");
+       
+
+        foreach (DataRow item in tb.Rows) {
+          dm_khuvuc model = new dm_khuvuc();
+          model.Idnhamang = idNhamang;
+          model.loai = idloai;
+          model.ma = item[0].ToString();
+          model.name = item[1].ToString();
+          SQLDatabase.Adddm_khuvuc(model);
+        }
+        return true;
+      }
+      catch (Exception ex) {
+        return false;
+      }
+    }
+    private bool importTxt(string path, int idNhamang, int idloai) {
+      try {
+        DataTable table = new DataTable();
+        string[] fileNames, lineParts;
+
+        string line;
+
+        fileNames = path.Split('.');
+
+        StreamReader sReader = new StreamReader(path);
+        int SoCot = 999;
+        char kytu = '\t';
+        /*lay so cot*/
+        while ((line = sReader.ReadLine()) != null) {
+
+          lineParts = line.Split(new char[] { kytu });
+          if (lineParts.Count() != 0) {
+            SoCot = lineParts.Count() <= SoCot ? lineParts.Count() : SoCot;
+          }
+        }
+        /*tao table*/
+
+
+        for (int i = 0; i < SoCot; i++) {
+          table.Columns.Add(string.Format("[{0}]", i.ToString()), typeof(string));
+        }
+        sReader.DiscardBufferedData();
+        sReader.BaseStream.Seek(0, SeekOrigin.Begin);
+        sReader.BaseStream.Position = 0;
+
+        while ((line = sReader.ReadLine()) != null) {
+          lineParts = line.Split(new char[] { kytu });
+          DataRow rows = table.NewRow();
+          for (int i = 0; i < SoCot; i++) {
+            rows[string.Format("[{0}]", i)] = lineParts[i];
+          }
+          table.Rows.Add(rows);
+        }
+        if (table.Rows.Count == 0) return false;
+        foreach (DataRow item in table.Rows) {
+          dm_khuvuc model = new dm_khuvuc();
+          model.Idnhamang = idNhamang;
+          model.loai = idloai;
+          model.ma = item[0].ToString();
+          model.name = item[1].ToString();
+          SQLDatabase.Adddm_khuvuc(model);
+        }
+        return true;
+      }
+      catch (Exception ex) {
+        return false;
+      }
+    }
+
+    private void làmTươiToolStripMenuItem2_Click(object sender, EventArgs e) {
+      BindKhuVuc();
+    }
+
+    private void importToolStripMenuItem_Click(object sender, EventArgs e) {
+      button4_Click(null, null);
+    }
+
+    private void xoáToolStripMenuItem_Click(object sender, EventArgs e) {
+      int idNhamang = ConvertType.ToInt(cmbNhaMang.SelectedValue.ToString());
+      int idloai = cmbTinhThanhXa.SelectedIndex;
+
+      SQLDatabase.ExcNonQuery(string.Format("delete from dm_khuvuc where Idnhamang='{0}' and loai='{1}'", idNhamang, idloai));
+      BindKhuVuc();
+    }
+
+    private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+      try {
+        string filePath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        string fileName = "MaufileImportTinhHuyenXa";
+        bool temp = false;
+        new Waiting(() => temp = xuatfilemain(filePath + "\\" + fileName), "Vui Lòng Chờ").ShowDialog();
+        if (temp)
+          MessageBox.Show("Đã xuất thành công file.\n File:" + fileName, "Thông Báo");
+      }
+      catch (Exception ex) {
+        MessageBox.Show(ex.Message, "linkLabel1_LinkClicked");
+      }
+    }
+    private bool xuatfilemain(string filePath) {
+      try {
+        DataTable table = new DataTable();
+        table.Columns.Add("Mã Phường/Xã", typeof(string));
+        table.Columns.Add("Tên Phường/Xã", typeof(string));
+
+        ExcelAdapter excel = new ExcelAdapter(filePath);
+        excel.CreateAndWrite(table, "Sheet1", 1);
+        return true;
+      }
+      catch (Exception ex) {
+        return false;
+      }
+
     }
   }
 }

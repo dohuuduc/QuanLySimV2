@@ -131,7 +131,7 @@
       this.tabControl1.Location = new System.Drawing.Point(0, 24);
       this.tabControl1.Name = "tabControl1";
       this.tabControl1.SelectedIndex = 0;
-      this.tabControl1.Size = new System.Drawing.Size(847, 426);
+      this.tabControl1.Size = new System.Drawing.Size(847, 496);
       this.tabControl1.TabIndex = 1;
       // 
       // tabPage1
@@ -236,7 +236,7 @@
       this.tabPage2.Location = new System.Drawing.Point(4, 22);
       this.tabPage2.Name = "tabPage2";
       this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPage2.Size = new System.Drawing.Size(839, 400);
+      this.tabPage2.Size = new System.Drawing.Size(839, 470);
       this.tabPage2.TabIndex = 1;
       this.tabPage2.Text = "Import";
       this.tabPage2.UseVisualStyleBackColor = true;
@@ -248,16 +248,16 @@
       this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
       this.panel1.Location = new System.Drawing.Point(3, 50);
       this.panel1.Name = "panel1";
-      this.panel1.Size = new System.Drawing.Size(833, 347);
+      this.panel1.Size = new System.Drawing.Size(833, 417);
       this.panel1.TabIndex = 5;
       // 
       // panel2
       // 
       this.panel2.Controls.Add(this.panel3);
       this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.panel2.Location = new System.Drawing.Point(0, 177);
+      this.panel2.Location = new System.Drawing.Point(0, 218);
       this.panel2.Name = "panel2";
-      this.panel2.Size = new System.Drawing.Size(833, 170);
+      this.panel2.Size = new System.Drawing.Size(833, 199);
       this.panel2.TabIndex = 5;
       // 
       // panel3
@@ -266,7 +266,7 @@
       this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
       this.panel3.Location = new System.Drawing.Point(0, 0);
       this.panel3.Name = "panel3";
-      this.panel3.Size = new System.Drawing.Size(833, 170);
+      this.panel3.Size = new System.Drawing.Size(833, 199);
       this.panel3.TabIndex = 1;
       // 
       // panel5
@@ -276,7 +276,7 @@
       this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
       this.panel5.Location = new System.Drawing.Point(0, 0);
       this.panel5.Name = "panel5";
-      this.panel5.Size = new System.Drawing.Size(833, 170);
+      this.panel5.Size = new System.Drawing.Size(833, 199);
       this.panel5.TabIndex = 1;
       // 
       // panel6
@@ -285,7 +285,7 @@
       this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
       this.panel6.Location = new System.Drawing.Point(0, 0);
       this.panel6.Name = "panel6";
-      this.panel6.Size = new System.Drawing.Size(833, 145);
+      this.panel6.Size = new System.Drawing.Size(833, 174);
       this.panel6.TabIndex = 3;
       // 
       // tabControl2
@@ -296,7 +296,7 @@
       this.tabControl2.Location = new System.Drawing.Point(0, 0);
       this.tabControl2.Name = "tabControl2";
       this.tabControl2.SelectedIndex = 0;
-      this.tabControl2.Size = new System.Drawing.Size(833, 145);
+      this.tabControl2.Size = new System.Drawing.Size(833, 174);
       this.tabControl2.TabIndex = 0;
       // 
       // tabPage3
@@ -310,7 +310,7 @@
       this.tabPage3.Location = new System.Drawing.Point(4, 22);
       this.tabPage3.Name = "tabPage3";
       this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPage3.Size = new System.Drawing.Size(825, 119);
+      this.tabPage3.Size = new System.Drawing.Size(825, 148);
       this.tabPage3.TabIndex = 0;
       this.tabPage3.Text = "Khách Hàng Đã Tồn Tại Ở File Gốc";
       this.tabPage3.UseVisualStyleBackColor = true;
@@ -321,7 +321,7 @@
       this.lblDatontai.AutoSize = true;
       this.lblDatontai.BackColor = System.Drawing.SystemColors.Control;
       this.lblDatontai.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-      this.lblDatontai.Location = new System.Drawing.Point(354, 100);
+      this.lblDatontai.Location = new System.Drawing.Point(354, 115);
       this.lblDatontai.Name = "lblDatontai";
       this.lblDatontai.Size = new System.Drawing.Size(117, 13);
       this.lblDatontai.TabIndex = 14;
@@ -334,7 +334,7 @@
       this.picDaTonTai.BackColor = System.Drawing.Color.Transparent;
       this.picDaTonTai.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
       this.picDaTonTai.Image = global::DiDong.Properties.Resources.ajax_loader;
-      this.picDaTonTai.Location = new System.Drawing.Point(386, 49);
+      this.picDaTonTai.Location = new System.Drawing.Point(386, 64);
       this.picDaTonTai.Name = "picDaTonTai";
       this.picDaTonTai.Size = new System.Drawing.Size(50, 50);
       this.picDaTonTai.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -346,7 +346,7 @@
       // 
       this.btnDatonXoaGoc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.btnDatonXoaGoc.Enabled = false;
-      this.btnDatonXoaGoc.Location = new System.Drawing.Point(750, 90);
+      this.btnDatonXoaGoc.Location = new System.Drawing.Point(750, 119);
       this.btnDatonXoaGoc.Name = "btnDatonXoaGoc";
       this.btnDatonXoaGoc.Size = new System.Drawing.Size(70, 23);
       this.btnDatonXoaGoc.TabIndex = 12;
@@ -358,7 +358,7 @@
       // 
       this.btnDatonXuatFile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.btnDatonXuatFile.Enabled = false;
-      this.btnDatonXuatFile.Location = new System.Drawing.Point(592, 90);
+      this.btnDatonXuatFile.Location = new System.Drawing.Point(592, 119);
       this.btnDatonXuatFile.Name = "btnDatonXuatFile";
       this.btnDatonXuatFile.Size = new System.Drawing.Size(75, 23);
       this.btnDatonXuatFile.TabIndex = 11;
@@ -370,7 +370,7 @@
       // 
       this.btnDatonCapNhat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.btnDatonCapNhat.Enabled = false;
-      this.btnDatonCapNhat.Location = new System.Drawing.Point(671, 90);
+      this.btnDatonCapNhat.Location = new System.Drawing.Point(671, 119);
       this.btnDatonCapNhat.Name = "btnDatonCapNhat";
       this.btnDatonCapNhat.Size = new System.Drawing.Size(75, 23);
       this.btnDatonCapNhat.TabIndex = 10;
@@ -390,7 +390,7 @@
       this.dataGridView_tontai.Name = "dataGridView_tontai";
       this.dataGridView_tontai.RowHeadersVisible = false;
       this.dataGridView_tontai.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-      this.dataGridView_tontai.Size = new System.Drawing.Size(819, 113);
+      this.dataGridView_tontai.Size = new System.Drawing.Size(819, 142);
       this.dataGridView_tontai.TabIndex = 0;
       // 
       // tabPage4
@@ -480,7 +480,7 @@
       this.panel4.Controls.Add(this.panel8);
       this.panel4.Controls.Add(this.panel7);
       this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
-      this.panel4.Location = new System.Drawing.Point(0, 145);
+      this.panel4.Location = new System.Drawing.Point(0, 174);
       this.panel4.Name = "panel4";
       this.panel4.Size = new System.Drawing.Size(833, 25);
       this.panel4.TabIndex = 2;
@@ -528,7 +528,7 @@
       this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
       this.groupBox2.Location = new System.Drawing.Point(0, 0);
       this.groupBox2.Name = "groupBox2";
-      this.groupBox2.Size = new System.Drawing.Size(833, 177);
+      this.groupBox2.Size = new System.Drawing.Size(833, 218);
       this.groupBox2.TabIndex = 4;
       this.groupBox2.TabStop = false;
       // 
@@ -549,10 +549,12 @@
       this.palSIPLogs.Dock = System.Windows.Forms.DockStyle.Fill;
       this.palSIPLogs.Location = new System.Drawing.Point(3, 16);
       this.palSIPLogs.Name = "palSIPLogs";
-      this.palSIPLogs.RowCount = 2;
-      this.palSIPLogs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-      this.palSIPLogs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-      this.palSIPLogs.Size = new System.Drawing.Size(827, 158);
+      this.palSIPLogs.RowCount = 3;
+      this.palSIPLogs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+      this.palSIPLogs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+      this.palSIPLogs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+      this.palSIPLogs.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+      this.palSIPLogs.Size = new System.Drawing.Size(827, 199);
       this.palSIPLogs.TabIndex = 7;
       // 
       // groupBox3
@@ -675,7 +677,7 @@
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(847, 450);
+      this.ClientSize = new System.Drawing.Size(847, 520);
       this.Controls.Add(this.tabControl1);
       this.Controls.Add(this.menuStrip1);
       this.Name = "frmMain";

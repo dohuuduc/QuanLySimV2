@@ -615,6 +615,7 @@ namespace QuanLyData {
       radio.Name = string.Format(string.Format("rad_{0}", model.ma));
       radio.Text = string.Format("{0}_{1}", model.name,index);
       radio.Tag = model.ma;
+      //radio.Height = 14;
       radio.Checked = model.isKey;
       radio.Click += Radio_Click;
       return radio;
@@ -658,6 +659,7 @@ namespace QuanLyData {
       com.Location = new Point(index, 50);
       com.Name = string.Format(string.Format("cbb_{0}", model.ma));
       com.DropDownStyle = ComboBoxStyle.DropDownList;
+      com.Height = 12;
       return com;
     }
     //http://blog.appconus.com/2017/04/01/net-async-dung-co-tuong-bo-async-la-no-asynchronous-nha/
