@@ -626,6 +626,7 @@ namespace QuanLyData {
         List<dm_column> model = new List<dm_column>();
         if(Cotstt)
           model.Add(new dm_column() { ma = "RowNumber", name = "STT" });
+        model.Add(new dm_column() {  ma="id", name="id"});
         foreach (var item in SQLDatabase.Loaddm_column("select * from dm_column order by OrderId")) {
           model.Add(item);
         } 
@@ -647,6 +648,8 @@ namespace QuanLyData {
           columns[i].Name = model[i].ma;
           columns[i].Width=180;
           columns[i].ReadOnly = true;
+          if (model[i].ma.Contains("id"))
+            columns[i].Visible = false;
         }
       }
       catch (Exception ex) {
@@ -868,14 +871,14 @@ namespace QuanLyData {
 
         
         CommandToGetCount = string.Format("Select COUNT(*) As TotalRow From dbo.root {0} {1}", strChuoiDieuKien, _dm_Batdongbo.ma.Trim());
-        CommandToGetData = string.Format(" with Tel as (select ROW_NUMBER() Over (Order By {3} asc) As RowNumber, {0} " +
-                                         " from dbo.root {1} {2}) Select * From Tel where ", Utilities.SelectColumn(""), 
+        CommandToGetData = string.Format(" with Tel as (select ROW_NUMBER() Over (Order By {2} asc) As RowNumber,id, {0} " +
+                                         " from dbo.root {1}) Select * From Tel where ", Utilities.SelectColumn(""), 
                                                                                       strChuoiDieuKien, 
-                                                                                      _dm_Batdongbo.ma.Trim(),
                                                                                       Utilities.OrderColumn(""));
         
         cachedData.CommandToGetCount = CommandToGetCount;
         cachedData.CommandToGetData = CommandToGetData;
+        cachedData.CommandBatDongBo = _dm_Batdongbo.ma.Trim();
 
         cachedData.UpdateCachedData(0);
         GridViewMain.Invoke((Action)delegate {
@@ -1209,6 +1212,23 @@ namespace QuanLyData {
         return false;
       }
 
+    }
+
+    private void GridViewMain_CellClick(object sender, DataGridViewCellEventArgs e) {
+      if (e.RowIndex != -1) {
+       string x= GridViewMain.Rows[e.RowIndex].Cells["id"].Value.ToString();
+        frmEditInfo frm = new frmEditInfo();
+        frm.Id = x;
+        if (frm.ShowDialog() == DialogResult.OK) {
+          LoadBindRoot();
+        }
+      }
+    }
+
+    private void txtTim_KeyDown(object sender, KeyEventArgs e) {
+      if (e.KeyCode == Keys.Enter) {
+        btntim_Click(this, new EventArgs());
+      }
     }
   }
 }

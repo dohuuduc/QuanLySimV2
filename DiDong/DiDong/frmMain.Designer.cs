@@ -119,7 +119,7 @@
       // cấuHìnhToolStripMenuItem1
       // 
       this.cấuHìnhToolStripMenuItem1.Name = "cấuHìnhToolStripMenuItem1";
-      this.cấuHìnhToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
+      this.cấuHìnhToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
       this.cấuHìnhToolStripMenuItem1.Text = "Cấu Hình";
       this.cấuHìnhToolStripMenuItem1.Click += new System.EventHandler(this.cấuHìnhToolStripMenuItem1_Click);
       // 
@@ -141,7 +141,7 @@
       this.tabPage1.Location = new System.Drawing.Point(4, 22);
       this.tabPage1.Name = "tabPage1";
       this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPage1.Size = new System.Drawing.Size(839, 400);
+      this.tabPage1.Size = new System.Drawing.Size(839, 470);
       this.tabPage1.TabIndex = 0;
       this.tabPage1.Text = "Main";
       this.tabPage1.UseVisualStyleBackColor = true;
@@ -152,7 +152,7 @@
       this.groupMain.Dock = System.Windows.Forms.DockStyle.Fill;
       this.groupMain.Location = new System.Drawing.Point(3, 51);
       this.groupMain.Name = "groupMain";
-      this.groupMain.Size = new System.Drawing.Size(833, 346);
+      this.groupMain.Size = new System.Drawing.Size(833, 416);
       this.groupMain.TabIndex = 2;
       this.groupMain.TabStop = false;
       this.groupMain.Text = "Xem Tất Cả Khách Hàng";
@@ -169,8 +169,9 @@
       this.GridViewMain.Name = "GridViewMain";
       this.GridViewMain.RowHeadersVisible = false;
       this.GridViewMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-      this.GridViewMain.Size = new System.Drawing.Size(827, 327);
+      this.GridViewMain.Size = new System.Drawing.Size(827, 397);
       this.GridViewMain.TabIndex = 1;
+      this.GridViewMain.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GridViewMain_CellClick);
       this.GridViewMain.CellValueNeeded += new System.Windows.Forms.DataGridViewCellValueEventHandler(this.GridViewMain_CellValueNeeded);
       // 
       // groupBox1
@@ -228,6 +229,7 @@
       this.txtTim.Name = "txtTim";
       this.txtTim.Size = new System.Drawing.Size(554, 20);
       this.txtTim.TabIndex = 1;
+      this.txtTim.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtTim_KeyDown);
       // 
       // tabPage2
       // 
@@ -403,7 +405,7 @@
       this.tabPage4.Location = new System.Drawing.Point(4, 22);
       this.tabPage4.Name = "tabPage4";
       this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPage4.Size = new System.Drawing.Size(825, 119);
+      this.tabPage4.Size = new System.Drawing.Size(825, 148);
       this.tabPage4.TabIndex = 1;
       this.tabPage4.Text = "Khách Hàng Chưa Tồn Tại Ở File Gốc";
       this.tabPage4.UseVisualStyleBackColor = true;
@@ -414,7 +416,7 @@
       this.picChuaTonTai.BackColor = System.Drawing.Color.Transparent;
       this.picChuaTonTai.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
       this.picChuaTonTai.Image = global::DiDong.Properties.Resources.ajax_loader;
-      this.picChuaTonTai.Location = new System.Drawing.Point(384, 47);
+      this.picChuaTonTai.Location = new System.Drawing.Point(384, 62);
       this.picChuaTonTai.Name = "picChuaTonTai";
       this.picChuaTonTai.Size = new System.Drawing.Size(50, 50);
       this.picChuaTonTai.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -428,7 +430,7 @@
       this.lblChuaTonTai.AutoSize = true;
       this.lblChuaTonTai.BackColor = System.Drawing.SystemColors.Control;
       this.lblChuaTonTai.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-      this.lblChuaTonTai.Location = new System.Drawing.Point(356, 100);
+      this.lblChuaTonTai.Location = new System.Drawing.Point(356, 115);
       this.lblChuaTonTai.Name = "lblChuaTonTai";
       this.lblChuaTonTai.Size = new System.Drawing.Size(117, 13);
       this.lblChuaTonTai.TabIndex = 11;
@@ -439,7 +441,7 @@
       // 
       this.btnChuatontaiXuatfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.btnChuatontaiXuatfile.Enabled = false;
-      this.btnChuatontaiXuatfile.Location = new System.Drawing.Point(744, 90);
+      this.btnChuatontaiXuatfile.Location = new System.Drawing.Point(744, 119);
       this.btnChuatontaiXuatfile.Name = "btnChuatontaiXuatfile";
       this.btnChuatontaiXuatfile.Size = new System.Drawing.Size(75, 23);
       this.btnChuatontaiXuatfile.TabIndex = 9;
@@ -451,7 +453,7 @@
       // 
       this.btnChuaTonTaiAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
       this.btnChuaTonTaiAdd.Enabled = false;
-      this.btnChuaTonTaiAdd.Location = new System.Drawing.Point(663, 90);
+      this.btnChuaTonTaiAdd.Location = new System.Drawing.Point(663, 119);
       this.btnChuaTonTaiAdd.Name = "btnChuaTonTaiAdd";
       this.btnChuaTonTaiAdd.Size = new System.Drawing.Size(75, 23);
       this.btnChuaTonTaiAdd.TabIndex = 8;
@@ -472,7 +474,7 @@
       this.dataGridView_chuatontai.Name = "dataGridView_chuatontai";
       this.dataGridView_chuatontai.RowHeadersVisible = false;
       this.dataGridView_chuatontai.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-      this.dataGridView_chuatontai.Size = new System.Drawing.Size(819, 113);
+      this.dataGridView_chuatontai.Size = new System.Drawing.Size(819, 142);
       this.dataGridView_chuatontai.TabIndex = 1;
       // 
       // panel4

@@ -484,6 +484,7 @@ namespace DiDong {
 
 
     private string commandToGetData = "";
+    private string commandBatDongBo = "";
 
     #endregion  // Fields
 
@@ -523,6 +524,9 @@ namespace DiDong {
       set { commandToGetData = value; }
     }
 
+    public string CommandBatDongBo {
+      set { commandBatDongBo = value; }
+    }
     #endregion  // Properties
 
     #region Methods
@@ -560,7 +564,7 @@ namespace DiDong {
         sqlCommand = commandToGetData;
         sqlCommand += " RowNumber Between " + minIndex.ToString() + " and ";
         sqlCommand += maxIndex.ToString();
-        sqlCommand += string.Format(" order by RowNumber ASC");
+        sqlCommand += string.Format(" order by RowNumber ASC {0}", commandBatDongBo);
 
 
 

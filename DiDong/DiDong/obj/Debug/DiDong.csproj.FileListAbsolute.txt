@@ -75,3 +75,4 @@ C:\Users\luulong\Documents\GitHub\QuanLySimV2\DiDong\DiDong\obj\Debug\DiDong.frm
 C:\Users\luulong\Documents\GitHub\QuanLySimV2\DiDong\DiDong\obj\Debug\DiDong.frmXemTruoc.resources
 D:\GitHubDesktop\QuanLySimV2\DiDong\DiDong\obj\Debug\DiDong.frmXemTruoc.resources
 C:\Users\luulong\Documents\GitHub\QuanLySimV2\DiDong\DiDong\obj\Debug\DiDong.csprojAssemblyReference.cache
+C:\Users\luulong\Documents\GitHub\QuanLySimV2\DiDong\DiDong\obj\Debug\DiDong.frmEditInfo.resources
