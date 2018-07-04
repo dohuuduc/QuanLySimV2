@@ -160,7 +160,15 @@ namespace QuanLyData {
           cmboCotDienThoaiTinhthanh.ValueMember = "ma"; // --> once hes here, he just jumps out the method
           cmboCotDienThoaiTinhthanh.DisplayMember = "name";
         });
+        DataTable dataTable = tb.Copy();
+        cmbLocTrung.Invoke((Action)delegate {
+          cmbLocTrung.DataSource = dataTable;
+          cmbLocTrung.ValueMember = "ma"; // --> once hes here, he just jumps out the method
+          cmbLocTrung.DisplayMember = "name";
+        });
 
+        dm_column _Columns = SQLDatabase.Loaddm_column("select  * from dm_column  where isKey=1").FirstOrDefault();
+        cmbLocTrung.SelectedValue = _Columns.ma;
       }
       catch (Exception ex) {
         MessageBox.Show(ex.Message, "BindGrid");
@@ -942,10 +950,10 @@ namespace QuanLyData {
           kq.Add(string.Format("{0}={1},", ma, strcommand.Replace("xxx", ma)));
         }
         string commandKq = "update dbo.root set ";
-        //foreach (var item in kq) {
-        //  foreach (var item in kq) {
-        //  commandKq += item;
-        //}
+        foreach (var item in kq) {
+         //foreach (var item in kq) {
+          commandKq += item;
+        }
 
         string xx = commandKq.Substring(0, commandKq.Length - 1);
         return xx;
@@ -980,13 +988,14 @@ namespace QuanLyData {
 
     private void button7_Click(object sender, EventArgs e) {
       try {
-        if (checkBox2.Checked) {
-          SQLDatabase.ExcNonQuery(strSqlChuanHoaPhone());
-        }
-        if (checkBox3.Checked) {
-          dm_batdongbo model = SQLDatabase.Loaddm_batdongbo("select * from dm_batdongbo where isAct=1").FirstOrDefault();
-          bool isUpdateAll = cmbChuanHoa.SelectedIndex == 0 ? false : true;
-        
+        new Waiting(() => {
+          if (checkBox2.Checked) {
+            SQLDatabase.ExcNonQuery(strSqlChuanHoaPhone());
+          }
+          if (checkBox3.Checked) {
+            dm_batdongbo model = SQLDatabase.Loaddm_batdongbo("select * from dm_batdongbo where isAct=1").FirstOrDefault();
+            bool isUpdateAll = cmbChuanHoa.SelectedIndex == 0 ? false : true;
+
             if (isUpdateAll) {
               SQLDatabase.ExcNonQuery(String.Format("update root WITH(TABLOCK) set isSearch = 0 {0}", model.ma));
             }
@@ -1003,13 +1012,31 @@ namespace QuanLyData {
               strcommand += string.Format(" {0} ", model.ma);
               SQLDatabase.ExcNonQuery(strcommand);
             }
-        }
-        if (checkBox4.Checked) {
-          SQLDatabase.ExcNonQuery(strSqlChuanHoaTinhThanh());
-        }
-        if (checkBox5.Checked) {
-          SQLDatabase.ExcNonQuery(strSqlChuanHoaPhone());
-        }
+          }
+          if (checkBox4.Checked) {
+            SQLDatabase.ExcNonQuery(strSqlChuanHoaTinhThanh());
+          }
+          if (checkBox5.Checked) {
+            SQLDatabase.ExcNonQuery(strSqlChuanHoaPhone());
+          }
+          if (checkBox6.Checked) {
+            /*Bước 1:delete tất cả các giá trị null*/
+            SQLDatabase.ExcNonQuery(string.Format(" delete from dbo.root where {0} is null", cmbLocTrung.SelectedValue));
+            SQLDatabase.ExcNonQuery("IF OBJECT_ID('dbo.temp_root', 'U') IS NOT NULL  DROP TABLE dbo.temp_root; ");
+            SQLDatabase.ExcNonQuery(";WITH cte AS " +
+                                   "( " +
+                                   string.Format(" SELECT *, ROW_NUMBER() OVER(PARTITION BY {0} ORDER BY create_date DESC) AS rn ", cmbLocTrung.SelectedValue) +
+                                   " FROM [dbo].root " +
+                                   " )" +
+                                   " SELECT * into temp_root " +
+                                   "  FROM cte " +
+                                   "  WHERE rn = 1");
+            SQLDatabase.ExcNonQuery("TRUNCATE TABLE root");
+            SQLDatabase.ExcNonQuery("ALTER TABLE temp_root drop COLUMN rn");
+            SQLDatabase.ExcNonQuery("Insert into dbo.root select * from temp_root");
+          }
+        }).ShowDialog();
+        MessageBox.Show("Kết Thúc Chuẩn Hoá", "Thông Báo");
       }
       catch (Exception) {
 
@@ -1036,6 +1063,14 @@ namespace QuanLyData {
       catch (Exception ex) {
         MessageBox.Show(ex.Message, "gridviewCharacter_CellClick");
       }
+    }
+
+    private void checkBox5_CheckedChanged(object sender, EventArgs e) {
+      groupBox10.Enabled = checkBox5.Checked;
+    }
+
+    private void checkBox6_CheckedChanged(object sender, EventArgs e) {
+      groupBoxLocTrung.Enabled = checkBox6.Checked;
     }
   }
 }

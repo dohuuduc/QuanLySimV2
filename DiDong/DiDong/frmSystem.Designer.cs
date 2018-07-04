@@ -24,7 +24,7 @@
     /// </summary>
     private void InitializeComponent() {
       this.components = new System.ComponentModel.Container();
-      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
       this.tabControl1 = new System.Windows.Forms.TabControl();
       this.tabPage2 = new System.Windows.Forms.TabPage();
       this.panel2 = new System.Windows.Forms.Panel();
@@ -171,6 +171,11 @@
       this.làmTươiToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
       this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.xoáToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.checkBox6 = new System.Windows.Forms.CheckBox();
+      this.groupBoxLocTrung = new System.Windows.Forms.GroupBox();
+      this.label8 = new System.Windows.Forms.Label();
+      this.cmbLocTrung = new System.Windows.Forms.ComboBox();
+      this.label9 = new System.Windows.Forms.Label();
       this.tabControl1.SuspendLayout();
       this.tabPage2.SuspendLayout();
       this.panel2.SuspendLayout();
@@ -222,6 +227,7 @@
       this.panel21.SuspendLayout();
       this.panel20.SuspendLayout();
       this.contextMenuStripKhuVuc.SuspendLayout();
+      this.groupBoxLocTrung.SuspendLayout();
       this.SuspendLayout();
       // 
       // tabControl1
@@ -898,8 +904,8 @@
       // orderid
       // 
       this.orderid.DataPropertyName = "orderid";
-      dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-      this.orderid.DefaultCellStyle = dataGridViewCellStyle5;
+      dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+      this.orderid.DefaultCellStyle = dataGridViewCellStyle4;
       this.orderid.HeaderText = "Vị trí";
       this.orderid.Name = "orderid";
       this.orderid.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -1339,6 +1345,9 @@
       // 
       // groupBox14
       // 
+      this.groupBox14.Controls.Add(this.label9);
+      this.groupBox14.Controls.Add(this.checkBox6);
+      this.groupBox14.Controls.Add(this.groupBoxLocTrung);
       this.groupBox14.Controls.Add(this.button7);
       this.groupBox14.Controls.Add(this.checkBox4);
       this.groupBox14.Controls.Add(this.checkBox2);
@@ -1371,7 +1380,7 @@
       this.checkBox4.AutoSize = true;
       this.checkBox4.Checked = true;
       this.checkBox4.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.checkBox4.Location = new System.Drawing.Point(3, 84);
+      this.checkBox4.Location = new System.Drawing.Point(3, 81);
       this.checkBox4.Name = "checkBox4";
       this.checkBox4.Size = new System.Drawing.Size(216, 17);
       this.checkBox4.TabIndex = 7;
@@ -1457,9 +1466,9 @@
       // groupBox11
       // 
       this.groupBox11.Controls.Add(this.panel13);
-      this.groupBox11.Location = new System.Drawing.Point(0, 101);
+      this.groupBox11.Location = new System.Drawing.Point(0, 93);
       this.groupBox11.Name = "groupBox11";
-      this.groupBox11.Size = new System.Drawing.Size(267, 322);
+      this.groupBox11.Size = new System.Drawing.Size(267, 229);
       this.groupBox11.TabIndex = 7;
       this.groupBox11.TabStop = false;
       // 
@@ -1470,7 +1479,7 @@
       this.panel13.Dock = System.Windows.Forms.DockStyle.Fill;
       this.panel13.Location = new System.Drawing.Point(3, 16);
       this.panel13.Name = "panel13";
-      this.panel13.Size = new System.Drawing.Size(261, 303);
+      this.panel13.Size = new System.Drawing.Size(261, 210);
       this.panel13.TabIndex = 6;
       // 
       // panel16
@@ -1479,7 +1488,7 @@
       this.panel16.Dock = System.Windows.Forms.DockStyle.Fill;
       this.panel16.Location = new System.Drawing.Point(0, 30);
       this.panel16.Name = "panel16";
-      this.panel16.Size = new System.Drawing.Size(261, 273);
+      this.panel16.Size = new System.Drawing.Size(261, 180);
       this.panel16.TabIndex = 2;
       // 
       // panel17
@@ -1489,7 +1498,7 @@
       this.panel17.Dock = System.Windows.Forms.DockStyle.Fill;
       this.panel17.Location = new System.Drawing.Point(0, 0);
       this.panel17.Name = "panel17";
-      this.panel17.Size = new System.Drawing.Size(261, 273);
+      this.panel17.Size = new System.Drawing.Size(261, 180);
       this.panel17.TabIndex = 2;
       // 
       // panel19
@@ -1498,7 +1507,7 @@
       this.panel19.Dock = System.Windows.Forms.DockStyle.Fill;
       this.panel19.Location = new System.Drawing.Point(0, 26);
       this.panel19.Name = "panel19";
-      this.panel19.Size = new System.Drawing.Size(261, 247);
+      this.panel19.Size = new System.Drawing.Size(261, 154);
       this.panel19.TabIndex = 3;
       // 
       // tableLayoutPanel1
@@ -1517,7 +1526,7 @@
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
       this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-      this.tableLayoutPanel1.Size = new System.Drawing.Size(261, 247);
+      this.tableLayoutPanel1.Size = new System.Drawing.Size(261, 154);
       this.tableLayoutPanel1.TabIndex = 1;
       // 
       // panel18
@@ -1609,19 +1618,20 @@
       this.checkBox5.AutoSize = true;
       this.checkBox5.Checked = true;
       this.checkBox5.CheckState = System.Windows.Forms.CheckState.Checked;
-      this.checkBox5.Location = new System.Drawing.Point(271, 84);
+      this.checkBox5.Location = new System.Drawing.Point(271, 81);
       this.checkBox5.Name = "checkBox5";
       this.checkBox5.Size = new System.Drawing.Size(101, 17);
       this.checkBox5.TabIndex = 4;
       this.checkBox5.Text = "4-Ký tự đặc biệt";
       this.checkBox5.UseVisualStyleBackColor = true;
+      this.checkBox5.CheckedChanged += new System.EventHandler(this.checkBox5_CheckedChanged);
       // 
       // groupBox10
       // 
       this.groupBox10.Controls.Add(this.panel14);
-      this.groupBox10.Location = new System.Drawing.Point(268, 101);
+      this.groupBox10.Location = new System.Drawing.Point(268, 93);
       this.groupBox10.Name = "groupBox10";
-      this.groupBox10.Size = new System.Drawing.Size(169, 325);
+      this.groupBox10.Size = new System.Drawing.Size(169, 343);
       this.groupBox10.TabIndex = 6;
       this.groupBox10.TabStop = false;
       // 
@@ -1632,7 +1642,7 @@
       this.panel14.Dock = System.Windows.Forms.DockStyle.Fill;
       this.panel14.Location = new System.Drawing.Point(3, 16);
       this.panel14.Name = "panel14";
-      this.panel14.Size = new System.Drawing.Size(163, 306);
+      this.panel14.Size = new System.Drawing.Size(163, 324);
       this.panel14.TabIndex = 0;
       // 
       // panel21
@@ -1641,7 +1651,7 @@
       this.panel21.Dock = System.Windows.Forms.DockStyle.Fill;
       this.panel21.Location = new System.Drawing.Point(0, 24);
       this.panel21.Name = "panel21";
-      this.panel21.Size = new System.Drawing.Size(163, 282);
+      this.panel21.Size = new System.Drawing.Size(163, 300);
       this.panel21.TabIndex = 3;
       // 
       // chkListChuanHoa
@@ -1650,7 +1660,7 @@
       this.chkListChuanHoa.FormattingEnabled = true;
       this.chkListChuanHoa.Location = new System.Drawing.Point(0, 0);
       this.chkListChuanHoa.Name = "chkListChuanHoa";
-      this.chkListChuanHoa.Size = new System.Drawing.Size(163, 282);
+      this.chkListChuanHoa.Size = new System.Drawing.Size(163, 300);
       this.chkListChuanHoa.TabIndex = 0;
       // 
       // panel20
@@ -1702,6 +1712,58 @@
       this.xoáToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
       this.xoáToolStripMenuItem.Text = "Xoá";
       this.xoáToolStripMenuItem.Click += new System.EventHandler(this.xoáToolStripMenuItem_Click);
+      // 
+      // checkBox6
+      // 
+      this.checkBox6.AutoSize = true;
+      this.checkBox6.Checked = true;
+      this.checkBox6.CheckState = System.Windows.Forms.CheckState.Checked;
+      this.checkBox6.Location = new System.Drawing.Point(3, 325);
+      this.checkBox6.Name = "checkBox6";
+      this.checkBox6.Size = new System.Drawing.Size(139, 17);
+      this.checkBox6.TabIndex = 13;
+      this.checkBox6.Text = "5-Lộc Trùng (Theo Key)";
+      this.checkBox6.UseVisualStyleBackColor = true;
+      this.checkBox6.CheckedChanged += new System.EventHandler(this.checkBox6_CheckedChanged);
+      // 
+      // groupBoxLocTrung
+      // 
+      this.groupBoxLocTrung.Controls.Add(this.label8);
+      this.groupBoxLocTrung.Controls.Add(this.cmbLocTrung);
+      this.groupBoxLocTrung.Location = new System.Drawing.Point(1, 338);
+      this.groupBoxLocTrung.Name = "groupBoxLocTrung";
+      this.groupBoxLocTrung.Size = new System.Drawing.Size(264, 53);
+      this.groupBoxLocTrung.TabIndex = 12;
+      this.groupBoxLocTrung.TabStop = false;
+      // 
+      // label8
+      // 
+      this.label8.AutoSize = true;
+      this.label8.Location = new System.Drawing.Point(6, 23);
+      this.label8.Name = "label8";
+      this.label8.Size = new System.Drawing.Size(44, 13);
+      this.label8.TabIndex = 1;
+      this.label8.Text = "Cột Key";
+      // 
+      // cmbLocTrung
+      // 
+      this.cmbLocTrung.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+      this.cmbLocTrung.FormattingEnabled = true;
+      this.cmbLocTrung.Location = new System.Drawing.Point(90, 20);
+      this.cmbLocTrung.Name = "cmbLocTrung";
+      this.cmbLocTrung.Size = new System.Drawing.Size(99, 21);
+      this.cmbLocTrung.TabIndex = 0;
+      // 
+      // label9
+      // 
+      this.label9.AutoSize = true;
+      this.label9.ForeColor = System.Drawing.Color.Red;
+      this.label9.Location = new System.Drawing.Point(0, 397);
+      this.label9.Name = "label9";
+      this.label9.Size = new System.Drawing.Size(228, 39);
+      this.label9.TabIndex = 14;
+      this.label9.Text = "Note: Chuẩn hoá lộc trùng\r\n1/ Xoá đi dữ liệu rỗng ở cột chọn là khoá (key)\r\n2/ Gô" +
+    "m dữ liệu trùng, chỉ lấy 1 dòng mới";
       // 
       // frmSystem
       // 
@@ -1777,6 +1839,8 @@
       this.panel20.ResumeLayout(false);
       this.panel20.PerformLayout();
       this.contextMenuStripKhuVuc.ResumeLayout(false);
+      this.groupBoxLocTrung.ResumeLayout(false);
+      this.groupBoxLocTrung.PerformLayout();
       this.ResumeLayout(false);
 
     }
@@ -1929,5 +1993,10 @@
     private System.Windows.Forms.DataGridViewImageColumn xoa;
     private System.Windows.Forms.Label label5;
     private System.Windows.Forms.ComboBox cmboCotDienThoaiTinhthanh;
+    private System.Windows.Forms.CheckBox checkBox6;
+    private System.Windows.Forms.GroupBox groupBoxLocTrung;
+    private System.Windows.Forms.Label label8;
+    private System.Windows.Forms.ComboBox cmbLocTrung;
+    private System.Windows.Forms.Label label9;
   }
 }
