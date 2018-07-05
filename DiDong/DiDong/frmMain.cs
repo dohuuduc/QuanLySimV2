@@ -1131,13 +1131,13 @@ namespace QuanLyData {
         }
 
         string filePath = folderpath == "" ? Environment.GetFolderPath(Environment.SpecialFolder.Desktop) : folderpath;
-        fileName = string.Format("chuatontai_{0}", _cauhinh.IsExportTxt ? ".txt" : ".xls");
+        fileName = string.Format("datontai_{0}", _cauhinh.IsExportTxt ? ".txt" : ".xls");
 
         new Waiting((MethodInvoker)delegate {
 
           string strcommand = string.Format(@"select {0} from {4}.dbo.import a inner join {4}.dbo.root b on a.{1}=b.{1} order by {2} {3}", Utilities.SelectColumn("a"),
                                                                                                                                    radioButtons.Where(p => p.Checked).FirstOrDefault().Tag.ToString().Replace("'", "''"),
-                                                                                                                                   Utilities.OrderColumn(""),
+                                                                                                                                   Utilities.OrderColumn("a"),
                                                                                                                                    _dm_Batdongbo.ma.Replace("'", "''"),
                                                                                                                                    _strDB_NameDatabase
                                                                                                                                     );
@@ -1169,7 +1169,7 @@ namespace QuanLyData {
 
           string strcommand = string.Format(@"select {0} from {4}.dbo.import a left join {4}.dbo.root b on a.{1}=b.{1} where b.{1} is null order by {2} {3}", Utilities.SelectColumn("a"),
                                                                                                                                    radioButtons.Where(p => p.Checked).FirstOrDefault().Tag.ToString().Replace("'","''"),
-                                                                                                                                   Utilities.OrderColumn(""),
+                                                                                                                                   Utilities.OrderColumn("a"),
                                                                                                                                    _dm_Batdongbo.ma.Replace("'","''"),
                                                                                                                                    _strDB_NameDatabase
                                                                                                                                     );

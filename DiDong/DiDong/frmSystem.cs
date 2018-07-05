@@ -39,6 +39,8 @@ namespace QuanLyData {
         BindNhamang();
         BindChuanHoaCotDienThoai();
         BindchkListChuanHoa();
+        BindKhuVucLoai();
+        BindLoaiKhuVuc();
       }).ShowDialog();
 
       if (cau_Hinh.MaxTop == -1) {
@@ -52,7 +54,7 @@ namespace QuanLyData {
       radExcel.Checked = !cau_Hinh.IsExportTxt;
       ckhDelImport.Checked = cau_Hinh.DelImportTruocImport;
       cmbChuanHoa.SelectedIndex = 0;
-      cmbTinhThanhXa.SelectedIndex = 0;
+      cmbLoaiTinhThanhXa.SelectedIndex = 0;
 
 
       this.Text = string.Format("{0} - {1}", this.Text, SQLDatabase.ExcDataTable("select @@VERSION").Rows[0][0].ToString());
@@ -111,21 +113,26 @@ namespace QuanLyData {
       return com;
     }
 
-    private ComboBox CreateComboxLoai(int index) {
-      DataTable table = new DataTable();
-      table.Columns.Add("ma", typeof(string));
-      table.Columns.Add("name", typeof(string));
+    private void BindLoaiKhuVuc() {
+      string str = string.Format("select  * from dm_khuvucLoai  order by OrderId");
+      DataTable tb = SQLDatabase.ExcDataTable(str);
+      cmbLoaiTinhThanhXa.Invoke((Action)delegate {
+        cmbLoaiTinhThanhXa.DataSource = tb;
+        cmbLoaiTinhThanhXa.ValueMember = "id";
+        cmbLoaiTinhThanhXa.DisplayMember = "name";
+      });
+    }
 
-      table.Rows.Add("0", "Tỉnh Thành");
-      table.Rows.Add("1", "Huyện");
-      table.Rows.Add("2", "Xã");
+    private ComboBox CreateComboxLoai(int index) {
+      List<dm_khuvucLoai> khuvucLoais = SQLDatabase.Loaddm_khuvucLoai("select  * from dm_khuvucLoai  order by OrderId");
+
       ComboBox com = new ComboBox();
       com.Width = 100;
       com.Location = new Point(120, 20 + index * 35);
       com.DropDownStyle = ComboBoxStyle.DropDownList;
       com.Name = string.Format("cmbLoai_", index);
-      com.DataSource = table;
-      com.ValueMember = "ma";
+      com.DataSource = khuvucLoais;
+      com.ValueMember = "id";
       com.DisplayMember = "name";
       com.Tag = index;
       return com;
@@ -208,7 +215,7 @@ namespace QuanLyData {
     void BindKhuVuc() {
       try {
         int idNhamang = ConvertType.ToInt(cmbNhaMang.SelectedValue.ToString());
-        int idloai = cmbTinhThanhXa.SelectedIndex;
+        int idloai = cmbLoaiTinhThanhXa.SelectedIndex;
 
         string str = string.Format("select  ROW_NUMBER() OVER(ORDER BY ma) AS stt,* from dm_khuvuc where loai={0} and Idnhamang={1} order by ma", idloai, idNhamang);
         DataTable tb = SQLDatabase.ExcDataTable(str);
@@ -216,7 +223,19 @@ namespace QuanLyData {
           gridviewKhuVuc.DataSource = tb;
         });
         groupBox12.Invoke((Action)delegate {
-          groupBox12.Text = string.Format("{0} ~ {1}", cmbTinhThanhXa.Text, tb.Rows.Count);
+          groupBox12.Text = string.Format("{0} ~ {1}", cmbLoaiTinhThanhXa.Text, tb.Rows.Count);
+        });
+      }
+      catch (Exception ex) {
+        MessageBox.Show(ex.Message, "BindGrid");
+      }
+    }
+    void BindKhuVucLoai() {
+      try {
+        string str = string.Format("select ROW_NUMBER() OVER(ORDER BY orderid) AS stt,* from [dbo].[dm_khuvucLoai] order by orderid");
+        DataTable tb = SQLDatabase.ExcDataTable(str);
+        gridLoaiKhuvuc.Invoke((Action)delegate {
+          gridLoaiKhuvuc.DataSource = tb;
         });
       }
       catch (Exception ex) {
@@ -265,7 +284,7 @@ namespace QuanLyData {
 
     void Binddm_madausoquocgia() {
       try {
-        string str = string.Format("select ROW_NUMBER() OVER(ORDER BY name) AS stt,* from [dbo].[dm_madausoquocgia]");
+        string str = string.Format("select ROW_NUMBER() OVER(ORDER BY ma desc) AS stt,* from [dbo].[dm_madausoquocgia] order by ma desc");
         DataTable tb = SQLDatabase.ExcDataTable(str);
         gridMaDauSoQuocgia.Invoke((Action)delegate {
           gridMaDauSoQuocgia.DataSource = tb;
@@ -766,7 +785,7 @@ namespace QuanLyData {
     private void button4_Click(object sender, EventArgs e) {
       OpenFileDialog ofd = new OpenFileDialog();
       int idNhamang = ConvertType.ToInt(cmbNhaMang.SelectedValue.ToString());
-      int idloai = cmbTinhThanhXa.SelectedIndex;
+      int idloai = cmbLoaiTinhThanhXa.SelectedIndex;
 
       if (radioButton1.Checked)
         ofd.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
@@ -876,7 +895,7 @@ namespace QuanLyData {
 
     private void xoáToolStripMenuItem_Click(object sender, EventArgs e) {
       int idNhamang = ConvertType.ToInt(cmbNhaMang.SelectedValue.ToString());
-      int idloai = cmbTinhThanhXa.SelectedIndex;
+      int idloai = cmbLoaiTinhThanhXa.SelectedIndex;
 
       SQLDatabase.ExcNonQuery(string.Format("delete from dm_khuvuc where Idnhamang='{0}' and loai='{1}'", idNhamang, idloai));
       BindKhuVuc();
@@ -927,35 +946,22 @@ namespace QuanLyData {
     private void checkBox4_CheckedChanged(object sender, EventArgs e) {
       groupBox11.Enabled = checkBox4.Checked;
     }
-
-    private string strSqlChuanHoaPhone() {
+    private string strSqlChuanHoaKyTuChar13Char10Char09ToChar32() {
       try {
+        dm_batdongbo dm_Batdongbo = SQLDatabase.Loaddm_batdongbo("select * from dm_batdongbo where isAct=1").FirstOrDefault();
         if (chkListChuanHoa.CheckedItems.Count == 0) return "";
         List<string> kq = new List<string>();
         foreach (object itemChecked in chkListChuanHoa.CheckedItems) {
           DataRowView castedItem = itemChecked as DataRowView;
           string ma = castedItem["ma"].ToString();
-
-          List<string> list = new List<string>();
-          foreach (var item in SQLDatabase.Loaddm_madausoquocgia("select * from dm_madausoquocgia")) {
-            list.Add(string.Format("REPLACE(xxx,'{0}',0)", item.ma));
-          }
-          string strcommand = "";
-          /*có danh sách list*/
-          if (list.Count() == 0) return "";
-          strcommand = list[0];
-          for (int i = 1; i < list.Count; i++) {
-            strcommand = strcommand.Replace("xxx", list[i]);
-          }
-          kq.Add(string.Format("{0}={1},", ma, strcommand.Replace("xxx", ma)));
+          kq.Add(string.Format(" {0}=REPLACE(REPLACE(REPLACE({0}, CHAR(13), CHAR(32)), CHAR(10), CHAR(32)),CHAR(09),CHAR(32)),", ma));
         }
         string commandKq = "update dbo.root set ";
         foreach (var item in kq) {
-         //foreach (var item in kq) {
           commandKq += item;
         }
 
-        string xx = commandKq.Substring(0, commandKq.Length - 1);
+        string xx = string.Format("{0} {1}", commandKq.Substring(0, commandKq.Length - 1), dm_Batdongbo.ma);
         return xx;
       }
       catch (Exception ex) {
@@ -963,8 +969,38 @@ namespace QuanLyData {
       }
     }
 
+    private string strSqlChuanHoaPhone() {
+      try {
+        dm_batdongbo dm_Batdongbo = SQLDatabase.Loaddm_batdongbo("select * from dm_batdongbo where isAct=1").FirstOrDefault();
+
+        string kq = "";
+        string ma = cmbCotDienThoai.SelectedValue.ToString();
+
+        List<string> list = new List<string>();
+        foreach (var item in SQLDatabase.Loaddm_madausoquocgia("select * from dm_madausoquocgia order by ma desc")) {
+          list.Add(string.Format("REPLACE(xxx,'{0}',0)", item.ma));
+        }
+        string strcommand = "";
+        /*có danh sách list*/
+        if (list.Count() == 0) return "";
+        strcommand = list[0];
+        for (int i = 1; i < list.Count; i++) {
+          strcommand = strcommand.Replace("xxx", list[i]);
+        }
+        kq = string.Format("{0}=dbo.[ReplacePhone]({1}),", ma, strcommand.Replace("xxx", ma));
+        string commandKq = string.Format("update dbo.root set {0}", kq);
+        string xx = string.Format("{0} {1}", commandKq.Substring(0, commandKq.Length - 1), dm_Batdongbo.ma);
+        return xx;
+      }
+      catch (Exception ex) {
+        return "";
+      }
+    }
+
+
     private string strSqlChuanHoaTinhThanh() {
       try {
+        dm_batdongbo dm_Batdongbo = SQLDatabase.Loaddm_batdongbo("select * from dm_batdongbo where isAct=1").FirstOrDefault();
         string strCommand = "";
         int i = 1;
         foreach (var item in groupbox) {
@@ -975,7 +1011,7 @@ namespace QuanLyData {
           string.Format(" set {0} = c.name ", comboxCot.SelectedValue) +
           string.Format(" from import a inner join dm_nhamang b on a.{0} like b.dauso + '%' ", cmboCotDienThoaiTinhthanh.SelectedValue) +
           string.Format(" inner join dm_khuvuc c on b.parentId = c.Idnhamang and c.ma = {0} ", comboxCot.SelectedValue);
-          string.Format(" where loai='{0}'", comboxLoai.SelectedValue);
+          string.Format(" where loai='{0}' {1} ", comboxLoai.SelectedValue, dm_Batdongbo.ma);
           string.Format(" go ");
         }
         return strCommand;
@@ -988,12 +1024,20 @@ namespace QuanLyData {
 
     private void button7_Click(object sender, EventArgs e) {
       try {
+        /**/
+        if (checkBox5.Checked) {
+          if (chkListChuanHoa.CheckedItems.Count == 0) {
+            MessageBox.Show("Để chuẩn hoá các ký tự xuống dòng của dữ liệu. Vui lòng chọn cột cần chuẩn hoá", "Thông Báo");
+            return;
+          }
+        }
+        dm_batdongbo model = SQLDatabase.Loaddm_batdongbo("select * from dm_batdongbo where isAct=1").FirstOrDefault();
         new Waiting(() => {
           if (checkBox2.Checked) {
             SQLDatabase.ExcNonQuery(strSqlChuanHoaPhone());
           }
           if (checkBox3.Checked) {
-            dm_batdongbo model = SQLDatabase.Loaddm_batdongbo("select * from dm_batdongbo where isAct=1").FirstOrDefault();
+            
             bool isUpdateAll = cmbChuanHoa.SelectedIndex == 0 ? false : true;
 
             if (isUpdateAll) {
@@ -1017,11 +1061,11 @@ namespace QuanLyData {
             SQLDatabase.ExcNonQuery(strSqlChuanHoaTinhThanh());
           }
           if (checkBox5.Checked) {
-            SQLDatabase.ExcNonQuery(strSqlChuanHoaPhone());
+            SQLDatabase.ExcNonQuery(strSqlChuanHoaKyTuChar13Char10Char09ToChar32());
           }
           if (checkBox6.Checked) {
             /*Bước 1:delete tất cả các giá trị null*/
-            SQLDatabase.ExcNonQuery(string.Format(" delete from dbo.root where {0} is null", cmbLocTrung.SelectedValue));
+            SQLDatabase.ExcNonQuery(string.Format(" delete from dbo.root where {0} is null {1}", cmbLocTrung.SelectedValue,model.ma));
             SQLDatabase.ExcNonQuery("IF OBJECT_ID('dbo.temp_root', 'U') IS NOT NULL  DROP TABLE dbo.temp_root; ");
             SQLDatabase.ExcNonQuery(";WITH cte AS " +
                                    "( " +
@@ -1030,10 +1074,10 @@ namespace QuanLyData {
                                    " )" +
                                    " SELECT * into temp_root " +
                                    "  FROM cte " +
-                                   "  WHERE rn = 1");
+                                   string.Format("  WHERE rn = 1 {0}", model.ma));
             SQLDatabase.ExcNonQuery("TRUNCATE TABLE root");
             SQLDatabase.ExcNonQuery("ALTER TABLE temp_root drop COLUMN rn");
-            SQLDatabase.ExcNonQuery("Insert into dbo.root select * from temp_root");
+            SQLDatabase.ExcNonQuery(string.Format("Insert into dbo.root select * from temp_root {0}",model.ma));
           }
         }).ShowDialog();
         MessageBox.Show("Kết Thúc Chuẩn Hoá", "Thông Báo");
@@ -1071,6 +1115,62 @@ namespace QuanLyData {
 
     private void checkBox6_CheckedChanged(object sender, EventArgs e) {
       groupBoxLocTrung.Enabled = checkBox6.Checked;
+    }
+
+    private void lamTươiToolStripMenuItem2_Click(object sender, EventArgs e) {
+      BindKhuVucLoai();
+    }
+
+    private void gridLoaiKhuvuc_CellClick(object sender, DataGridViewCellEventArgs e) {
+      try {
+        if (e.ColumnIndex != -1) {
+          if (e.ColumnIndex == 0) {
+            string Id = gridLoaiKhuvuc.Rows[e.RowIndex].Cells["idloaikhuvuc"].Value.ToString();
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc là sẽ xoá loại khu vực?", "Xoá Loại Khu Vực", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes) {
+              SQLDatabase.ExcNonQuery(String.Format("DELETE FROM dm_khuvucLoai WHERE ID='{0}'", Id));
+              BindKhuVucLoai();
+            }
+          }
+        }
+      }
+      catch (Exception ex) {
+        MessageBox.Show(ex.Message, "gridLoaiKhuvuc_CellClick");
+      }
+    }
+
+    private void gridLoaiKhuvuc_CellValueChanged(object sender, DataGridViewCellEventArgs e) {
+      try {
+
+        if (e.RowIndex != -1) {
+          string Id = gridLoaiKhuvuc.Rows[e.RowIndex].Cells["idloaikhuvuc"].Value.ToString();
+          string name = gridLoaiKhuvuc.Rows[e.RowIndex].Cells["nameloaikhuvuc"].Value.ToString();
+          int orderid = ConvertType.ToInt(gridLoaiKhuvuc.Rows[e.RowIndex].Cells["orderiddm_khuvucLoai"].Value);
+
+          dm_khuvucLoai madauso = SQLDatabase.Loaddm_khuvucLoai(string.Format("select * from [dm_khuvucLoai] where id='{0}'", Id)).FirstOrDefault();
+          madauso.name = name;
+          madauso.orderid = orderid;
+
+          SQLDatabase.Updm_khuvucLoai(madauso);
+
+        }
+      }
+      catch (Exception ex) {
+        MessageBox.Show("Unable to save the record. There might be a blank cell. ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+      }
+    }
+
+    private void thêmToolStripMenuItem2_Click(object sender, EventArgs e) {
+      try {
+        dm_khuvucLoai model = new dm_khuvucLoai();
+        model.name = "";
+        model.orderid = ConvertType.ToInt(SQLDatabase.ExcDataTable("select max(orderid) from dm_khuvucLoai").Rows[0][0])+1;
+        SQLDatabase.Adddm_khuvucLoai(model);
+        BindKhuVucLoai();
+      }
+      catch (Exception ex) {
+        MessageBox.Show(ex.Message, "thêmToolStripMenuItem2_Click");
+      }
     }
   }
 }

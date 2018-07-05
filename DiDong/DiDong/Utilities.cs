@@ -32,7 +32,8 @@ namespace DiDong {
       try {
         string strSelect = "";
         List<dm_column> dm_Columns = SQLDatabase.Loaddm_column("select* from dm_column where isorder=1 order by orderid asc");
-        if (dm_Columns.Count() == 0) return "create_date";
+        if (dm_Columns.Count() == 0)
+          return x == "" ? "create_date" : string.Format("{0}.{1}", x, "create_date");
         foreach (var item in dm_Columns) {
           strSelect += string.Format("{0}{1},", x == "" ? "" : string.Format("{0}.", x), item.ma);
         }

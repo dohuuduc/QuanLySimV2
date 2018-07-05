@@ -77,6 +77,11 @@ namespace QuanLyData {
     public string ma { get; set; }
     public string name { get; set; }
   }
+  public class dm_khuvucLoai {
+    public int id { get; set; }
+    public string name { get; set; }
+    public int orderid { get; set; }
+  }
   public class dm_khuvuc {
     public int id { get; set; }
     public int Idnhamang { get; set; }
@@ -816,6 +821,127 @@ namespace QuanLyData {
     }
 
     #endregion
+
+    #region dm_khuvucLoai
+    public static List<dm_khuvucLoai> Loaddm_khuvucLoai(string sql) {
+      SqlConnection cnn = null;
+      SqlCommand cmd = null;
+      SqlDataReader reader = null;
+      dm_khuvucLoai InfoCOMMANDTABLE;
+      List<dm_khuvucLoai> InfoCOMMANDTABLEs = null;
+
+      try {
+        InfoCOMMANDTABLEs = new List<dm_khuvucLoai>();
+
+        cnn = new SqlConnection();
+        cnn.ConnectionString = ConnectionString;
+        cnn.Open();
+        cnn.FireInfoMessageEventOnUserErrors = false;
+
+        cmd = new SqlCommand();
+        cmd.CommandText = sql;
+        cmd.Connection = cnn;
+        reader = cmd.ExecuteReader();
+        while (reader.Read()) {
+          InfoCOMMANDTABLE = new dm_khuvucLoai();
+
+
+          if (!reader.IsDBNull(0))
+            InfoCOMMANDTABLE.id = reader.GetInt32(0);
+          if (!reader.IsDBNull(1))
+            InfoCOMMANDTABLE.name = reader.GetString(1);
+          if (!reader.IsDBNull(2))
+            InfoCOMMANDTABLE.orderid = reader.GetInt32(2);
+          InfoCOMMANDTABLEs.Add(InfoCOMMANDTABLE);
+        }
+        return InfoCOMMANDTABLEs;
+      }
+      catch (Exception ex) {
+        throw ex;
+      }
+      finally {
+        if (cnn.State == ConnectionState.Open)
+          cnn.Close();
+      }
+    }
+
+    public static bool Adddm_khuvucLoai(dm_khuvucLoai record) {
+      SqlConnection cnn = null;
+      SqlCommand cmd = null;
+      object objectID = null;
+      try {
+        if (record == null)
+          return false;
+
+        cnn = new SqlConnection();
+        cnn.ConnectionString = ConnectionString;
+        cnn.FireInfoMessageEventOnUserErrors = false;
+        cnn.Open();
+
+        cmd = new SqlCommand();
+        cmd.Connection = cnn;
+        //--- Insert Record
+        cmd.CommandText = "Insert into dm_khuvucLoai([name], [orderid]) OUTPUT inserted.id " +
+                            "values( @name, @orderid)";
+
+        cmd.Parameters.AddWithValue("@name", record.name);
+        cmd.Parameters.AddWithValue("@orderid", record.orderid);
+
+        objectID = cmd.ExecuteScalar();
+
+        if (objectID == null || objectID == DBNull.Value) return false;
+
+        record.id = Convert.ToInt32(objectID);
+
+        return true;
+      }
+      catch (Exception ex) {
+        return false;
+      }
+      finally {
+        if (cnn.State == ConnectionState.Open)
+          cnn.Close();
+      }
+    }
+
+    public static bool Updm_khuvucLoai(dm_khuvucLoai record) {
+      SqlConnection connection = null;
+      SqlCommand cmd = null;
+
+      try {
+        if (record == null) return false;
+
+        // Make connection to database
+        connection = new SqlConnection();
+        connection.ConnectionString = ConnectionString;
+        connection.FireInfoMessageEventOnUserErrors = false;
+        connection.Open();
+        cmd = new SqlCommand();
+        cmd.Connection = connection;
+        cmd.CommandText = "Update dm_khuvucLoai " +
+                            " Set   name=@name," +
+                            "       orderid=@orderid " +
+                            " where ID='" + record.id + "'";
+        cmd.CommandType = CommandType.Text;
+
+        cmd.Parameters.AddWithValue("@name", record.name);
+        cmd.Parameters.AddWithValue("@orderid", record.orderid);
+
+        cmd.ExecuteNonQuery();
+        return true;
+      }
+      catch (Exception ex) {
+        MessageBox.Show(ex.Message, "Updm_khuvucLoai");
+        return false;
+      }
+      finally {
+        if (connection != null)
+          connection.Close();
+      }
+    }
+
+    #endregion
+
     #region Execute SQL
 
     public static bool ExcNonQuery(string sqlcommand) {

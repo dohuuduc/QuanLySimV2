@@ -119,7 +119,7 @@
       // cấuHìnhToolStripMenuItem1
       // 
       this.cấuHìnhToolStripMenuItem1.Name = "cấuHìnhToolStripMenuItem1";
-      this.cấuHìnhToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+      this.cấuHìnhToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
       this.cấuHìnhToolStripMenuItem1.Text = "Cấu Hình";
       this.cấuHìnhToolStripMenuItem1.Click += new System.EventHandler(this.cấuHìnhToolStripMenuItem1_Click);
       // 
