@@ -41,6 +41,7 @@ namespace QuanLyData {
         BindchkListChuanHoa();
         BindKhuVucLoai();
         BindLoaiKhuVuc();
+        BindNhaMang();
       }).ShowDialog();
 
       if (cau_Hinh.MaxTop == -1) {
@@ -292,6 +293,19 @@ namespace QuanLyData {
       }
       catch (Exception ex) {
         MessageBox.Show(ex.Message, "BindSQLBatdongbo");
+      }
+    }
+    void BindNhaMang() {
+      try {
+
+        string str = string.Format("select  ROW_NUMBER() OVER(ORDER BY id) AS stt,* from dm_nhamang");
+        DataTable tb = SQLDatabase.ExcDataTable(str);
+        gridNhamang.Invoke((Action)delegate {
+          gridNhamang.DataSource = tb;
+        });
+      }
+      catch (Exception ex) {
+        MessageBox.Show(ex.Message, "BindGrid");
       }
     }
 

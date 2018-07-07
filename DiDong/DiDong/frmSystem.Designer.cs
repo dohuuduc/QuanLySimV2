@@ -24,7 +24,7 @@
     /// </summary>
     private void InitializeComponent() {
       this.components = new System.ComponentModel.Container();
-      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+      System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
       this.tabControl1 = new System.Windows.Forms.TabControl();
       this.tabPage2 = new System.Windows.Forms.TabPage();
       this.panel2 = new System.Windows.Forms.Panel();
@@ -168,24 +168,34 @@
       this.tabPage4 = new System.Windows.Forms.TabPage();
       this.groupBox13 = new System.Windows.Forms.GroupBox();
       this.gridLoaiKhuvuc = new System.Windows.Forms.DataGridView();
-      this.contextMenuStripMaQuocGia = new System.Windows.Forms.ContextMenuStrip(this.components);
-      this.làmTươiToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-      this.thêmToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-      this.groupBox7 = new System.Windows.Forms.GroupBox();
-      this.gridMaDauSoQuocgia = new System.Windows.Forms.DataGridView();
-      this.contextMenuLoaiKhuVuc = new System.Windows.Forms.ContextMenuStrip(this.components);
-      this.lamTươiToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-      this.thêmToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-      this.sttmadausoquocgia = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.idmadausoquocgia = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.Mamadausoquocgia = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.Namemadausoquocgia = new System.Windows.Forms.DataGridViewTextBoxColumn();
-      this.xoa = new System.Windows.Forms.DataGridViewImageColumn();
       this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.idloaikhuvuc = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.nameloaikhuvuc = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.orderiddm_khuvucLoai = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.dataGridViewImageColumn2 = new System.Windows.Forms.DataGridViewImageColumn();
+      this.contextMenuLoaiKhuVuc = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.lamTươiToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+      this.thêmToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+      this.groupBox7 = new System.Windows.Forms.GroupBox();
+      this.gridMaDauSoQuocgia = new System.Windows.Forms.DataGridView();
+      this.sttmadausoquocgia = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.idmadausoquocgia = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.Mamadausoquocgia = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.Namemadausoquocgia = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.xoa = new System.Windows.Forms.DataGridViewImageColumn();
+      this.contextMenuStripMaQuocGia = new System.Windows.Forms.ContextMenuStrip(this.components);
+      this.làmTươiToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+      this.thêmToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+      this.groupBox15 = new System.Windows.Forms.GroupBox();
+      this.gridNhamang = new System.Windows.Forms.DataGridView();
+      this.stt_nhamang = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.id_nhamang = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.nhamang = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.parentId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.dauso = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.lenght = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.orderid_nhamang = new System.Windows.Forms.DataGridViewTextBoxColumn();
+      this.createdate_nhamang = new System.Windows.Forms.DataGridViewTextBoxColumn();
       this.tabControl1.SuspendLayout();
       this.tabPage2.SuspendLayout();
       this.panel2.SuspendLayout();
@@ -237,10 +247,12 @@
       this.tabPage4.SuspendLayout();
       this.groupBox13.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.gridLoaiKhuvuc)).BeginInit();
-      this.contextMenuStripMaQuocGia.SuspendLayout();
+      this.contextMenuLoaiKhuVuc.SuspendLayout();
       this.groupBox7.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.gridMaDauSoQuocgia)).BeginInit();
-      this.contextMenuLoaiKhuVuc.SuspendLayout();
+      this.contextMenuStripMaQuocGia.SuspendLayout();
+      this.groupBox15.SuspendLayout();
+      ((System.ComponentModel.ISupportInitialize)(this.gridNhamang)).BeginInit();
       this.SuspendLayout();
       // 
       // tabControl1
@@ -918,8 +930,8 @@
       // orderid
       // 
       this.orderid.DataPropertyName = "orderid";
-      dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-      this.orderid.DefaultCellStyle = dataGridViewCellStyle1;
+      dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+      this.orderid.DefaultCellStyle = dataGridViewCellStyle5;
       this.orderid.HeaderText = "Vị trí";
       this.orderid.Name = "orderid";
       this.orderid.Resizable = System.Windows.Forms.DataGridViewTriState.True;
@@ -1685,6 +1697,7 @@
       // 
       // tabPage4
       // 
+      this.tabPage4.Controls.Add(this.groupBox15);
       this.tabPage4.Controls.Add(this.groupBox13);
       this.tabPage4.Controls.Add(this.groupBox7);
       this.tabPage4.Location = new System.Drawing.Point(4, 22);
@@ -1729,27 +1742,61 @@
       this.gridLoaiKhuvuc.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridLoaiKhuvuc_CellClick);
       this.gridLoaiKhuvuc.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridLoaiKhuvuc_CellValueChanged);
       // 
-      // contextMenuStripMaQuocGia
+      // dataGridViewTextBoxColumn1
       // 
-      this.contextMenuStripMaQuocGia.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.làmTươiToolStripMenuItem1,
-            this.thêmToolStripMenuItem1});
-      this.contextMenuStripMaQuocGia.Name = "contextMenuStripMaQuocGia";
-      this.contextMenuStripMaQuocGia.Size = new System.Drawing.Size(125, 48);
+      this.dataGridViewTextBoxColumn1.DataPropertyName = "stt";
+      this.dataGridViewTextBoxColumn1.HeaderText = "STT";
+      this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+      this.dataGridViewTextBoxColumn1.Width = 30;
       // 
-      // làmTươiToolStripMenuItem1
+      // idloaikhuvuc
       // 
-      this.làmTươiToolStripMenuItem1.Name = "làmTươiToolStripMenuItem1";
-      this.làmTươiToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
-      this.làmTươiToolStripMenuItem1.Text = "Làm Tươi";
-      this.làmTươiToolStripMenuItem1.Click += new System.EventHandler(this.làmTươiToolStripMenuItem1_Click);
+      this.idloaikhuvuc.DataPropertyName = "id";
+      this.idloaikhuvuc.HeaderText = "id";
+      this.idloaikhuvuc.Name = "idloaikhuvuc";
+      this.idloaikhuvuc.Visible = false;
       // 
-      // thêmToolStripMenuItem1
+      // nameloaikhuvuc
       // 
-      this.thêmToolStripMenuItem1.Name = "thêmToolStripMenuItem1";
-      this.thêmToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
-      this.thêmToolStripMenuItem1.Text = "Thêm";
-      this.thêmToolStripMenuItem1.Click += new System.EventHandler(this.thêmToolStripMenuItem1_Click);
+      this.nameloaikhuvuc.DataPropertyName = "name";
+      this.nameloaikhuvuc.HeaderText = "Tên Phân Loại";
+      this.nameloaikhuvuc.Name = "nameloaikhuvuc";
+      this.nameloaikhuvuc.Width = 250;
+      // 
+      // orderiddm_khuvucLoai
+      // 
+      this.orderiddm_khuvucLoai.DataPropertyName = "orderid";
+      this.orderiddm_khuvucLoai.HeaderText = "Vị Trí";
+      this.orderiddm_khuvucLoai.Name = "orderiddm_khuvucLoai";
+      this.orderiddm_khuvucLoai.Width = 80;
+      // 
+      // dataGridViewImageColumn2
+      // 
+      this.dataGridViewImageColumn2.HeaderText = "Xóa";
+      this.dataGridViewImageColumn2.Name = "dataGridViewImageColumn2";
+      this.dataGridViewImageColumn2.Width = 30;
+      // 
+      // contextMenuLoaiKhuVuc
+      // 
+      this.contextMenuLoaiKhuVuc.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.lamTươiToolStripMenuItem2,
+            this.thêmToolStripMenuItem2});
+      this.contextMenuLoaiKhuVuc.Name = "contextMenuLoaiKhuVuc";
+      this.contextMenuLoaiKhuVuc.Size = new System.Drawing.Size(125, 48);
+      // 
+      // lamTươiToolStripMenuItem2
+      // 
+      this.lamTươiToolStripMenuItem2.Name = "lamTươiToolStripMenuItem2";
+      this.lamTươiToolStripMenuItem2.Size = new System.Drawing.Size(124, 22);
+      this.lamTươiToolStripMenuItem2.Text = "Làm Tươi";
+      this.lamTươiToolStripMenuItem2.Click += new System.EventHandler(this.lamTươiToolStripMenuItem2_Click);
+      // 
+      // thêmToolStripMenuItem2
+      // 
+      this.thêmToolStripMenuItem2.Name = "thêmToolStripMenuItem2";
+      this.thêmToolStripMenuItem2.Size = new System.Drawing.Size(124, 22);
+      this.thêmToolStripMenuItem2.Text = "Thêm";
+      this.thêmToolStripMenuItem2.Click += new System.EventHandler(this.thêmToolStripMenuItem2_Click);
       // 
       // groupBox7
       // 
@@ -1785,28 +1832,6 @@
       this.gridMaDauSoQuocgia.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridMaDauSoQuocgia_CellClick);
       this.gridMaDauSoQuocgia.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridMaDauSoQuocgia_CellValueChanged);
       // 
-      // contextMenuLoaiKhuVuc
-      // 
-      this.contextMenuLoaiKhuVuc.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lamTươiToolStripMenuItem2,
-            this.thêmToolStripMenuItem2});
-      this.contextMenuLoaiKhuVuc.Name = "contextMenuLoaiKhuVuc";
-      this.contextMenuLoaiKhuVuc.Size = new System.Drawing.Size(125, 48);
-      // 
-      // lamTươiToolStripMenuItem2
-      // 
-      this.lamTươiToolStripMenuItem2.Name = "lamTươiToolStripMenuItem2";
-      this.lamTươiToolStripMenuItem2.Size = new System.Drawing.Size(124, 22);
-      this.lamTươiToolStripMenuItem2.Text = "Làm Tươi";
-      this.lamTươiToolStripMenuItem2.Click += new System.EventHandler(this.lamTươiToolStripMenuItem2_Click);
-      // 
-      // thêmToolStripMenuItem2
-      // 
-      this.thêmToolStripMenuItem2.Name = "thêmToolStripMenuItem2";
-      this.thêmToolStripMenuItem2.Size = new System.Drawing.Size(124, 22);
-      this.thêmToolStripMenuItem2.Text = "Thêm";
-      this.thêmToolStripMenuItem2.Click += new System.EventHandler(this.thêmToolStripMenuItem2_Click);
-      // 
       // sttmadausoquocgia
       // 
       this.sttmadausoquocgia.DataPropertyName = "stt";
@@ -1841,39 +1866,122 @@
       this.xoa.Name = "xoa";
       this.xoa.Width = 30;
       // 
-      // dataGridViewTextBoxColumn1
+      // contextMenuStripMaQuocGia
       // 
-      this.dataGridViewTextBoxColumn1.DataPropertyName = "stt";
-      this.dataGridViewTextBoxColumn1.HeaderText = "STT";
-      this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-      this.dataGridViewTextBoxColumn1.Width = 30;
+      this.contextMenuStripMaQuocGia.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.làmTươiToolStripMenuItem1,
+            this.thêmToolStripMenuItem1});
+      this.contextMenuStripMaQuocGia.Name = "contextMenuStripMaQuocGia";
+      this.contextMenuStripMaQuocGia.Size = new System.Drawing.Size(125, 48);
       // 
-      // idloaikhuvuc
+      // làmTươiToolStripMenuItem1
       // 
-      this.idloaikhuvuc.DataPropertyName = "id";
-      this.idloaikhuvuc.HeaderText = "id";
-      this.idloaikhuvuc.Name = "idloaikhuvuc";
-      this.idloaikhuvuc.Visible = false;
+      this.làmTươiToolStripMenuItem1.Name = "làmTươiToolStripMenuItem1";
+      this.làmTươiToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
+      this.làmTươiToolStripMenuItem1.Text = "Làm Tươi";
+      this.làmTươiToolStripMenuItem1.Click += new System.EventHandler(this.làmTươiToolStripMenuItem1_Click);
       // 
-      // nameloaikhuvuc
+      // thêmToolStripMenuItem1
       // 
-      this.nameloaikhuvuc.DataPropertyName = "name";
-      this.nameloaikhuvuc.HeaderText = "Tên Phân Loại";
-      this.nameloaikhuvuc.Name = "nameloaikhuvuc";
-      this.nameloaikhuvuc.Width = 250;
+      this.thêmToolStripMenuItem1.Name = "thêmToolStripMenuItem1";
+      this.thêmToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
+      this.thêmToolStripMenuItem1.Text = "Thêm";
+      this.thêmToolStripMenuItem1.Click += new System.EventHandler(this.thêmToolStripMenuItem1_Click);
       // 
-      // orderiddm_khuvucLoai
+      // groupBox15
       // 
-      this.orderiddm_khuvucLoai.DataPropertyName = "orderid";
-      this.orderiddm_khuvucLoai.HeaderText = "Vị Trí";
-      this.orderiddm_khuvucLoai.Name = "orderiddm_khuvucLoai";
-      this.orderiddm_khuvucLoai.Width = 80;
+      this.groupBox15.Controls.Add(this.gridNhamang);
+      this.groupBox15.Location = new System.Drawing.Point(8, 163);
+      this.groupBox15.Name = "groupBox15";
+      this.groupBox15.Size = new System.Drawing.Size(794, 297);
+      this.groupBox15.TabIndex = 3;
+      this.groupBox15.TabStop = false;
+      this.groupBox15.Text = "Nhà Mạng & Đầu Số";
       // 
-      // dataGridViewImageColumn2
+      // gridNhamang
       // 
-      this.dataGridViewImageColumn2.HeaderText = "Xóa";
-      this.dataGridViewImageColumn2.Name = "dataGridViewImageColumn2";
-      this.dataGridViewImageColumn2.Width = 30;
+      this.gridNhamang.AllowUserToAddRows = false;
+      this.gridNhamang.AllowUserToDeleteRows = false;
+      this.gridNhamang.AllowUserToResizeColumns = false;
+      this.gridNhamang.AllowUserToResizeRows = false;
+      this.gridNhamang.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+      this.gridNhamang.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+      this.gridNhamang.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.stt_nhamang,
+            this.id_nhamang,
+            this.nhamang,
+            this.parentId,
+            this.dauso,
+            this.lenght,
+            this.orderid_nhamang,
+            this.createdate_nhamang});
+      this.gridNhamang.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.gridNhamang.Location = new System.Drawing.Point(3, 16);
+      this.gridNhamang.Name = "gridNhamang";
+      this.gridNhamang.RowHeadersVisible = false;
+      this.gridNhamang.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+      this.gridNhamang.Size = new System.Drawing.Size(788, 278);
+      this.gridNhamang.TabIndex = 0;
+      // 
+      // stt_nhamang
+      // 
+      this.stt_nhamang.DataPropertyName = "stt";
+      this.stt_nhamang.HeaderText = "STT";
+      this.stt_nhamang.Name = "stt_nhamang";
+      this.stt_nhamang.ReadOnly = true;
+      this.stt_nhamang.Width = 50;
+      // 
+      // id_nhamang
+      // 
+      this.id_nhamang.DataPropertyName = "id";
+      this.id_nhamang.HeaderText = "id";
+      this.id_nhamang.Name = "id_nhamang";
+      this.id_nhamang.ReadOnly = true;
+      this.id_nhamang.Visible = false;
+      // 
+      // nhamang
+      // 
+      this.nhamang.DataPropertyName = "nhamang";
+      this.nhamang.HeaderText = "Tên Nhà Mạng";
+      this.nhamang.Name = "nhamang";
+      this.nhamang.ReadOnly = true;
+      this.nhamang.Width = 160;
+      // 
+      // parentId
+      // 
+      this.parentId.DataPropertyName = "parentId";
+      this.parentId.HeaderText = "ParentId";
+      this.parentId.Name = "parentId";
+      this.parentId.ReadOnly = true;
+      // 
+      // dauso
+      // 
+      this.dauso.DataPropertyName = "dauso";
+      this.dauso.HeaderText = "Đầu Số";
+      this.dauso.Name = "dauso";
+      this.dauso.ReadOnly = true;
+      // 
+      // lenght
+      // 
+      this.lenght.DataPropertyName = "lenght";
+      this.lenght.HeaderText = "Độ Dài Số";
+      this.lenght.Name = "lenght";
+      this.lenght.ReadOnly = true;
+      // 
+      // orderid_nhamang
+      // 
+      this.orderid_nhamang.DataPropertyName = "orderid";
+      this.orderid_nhamang.HeaderText = "orderid";
+      this.orderid_nhamang.Name = "orderid_nhamang";
+      this.orderid_nhamang.ReadOnly = true;
+      this.orderid_nhamang.Visible = false;
+      // 
+      // createdate_nhamang
+      // 
+      this.createdate_nhamang.DataPropertyName = "createdate";
+      this.createdate_nhamang.HeaderText = "createdate";
+      this.createdate_nhamang.Name = "createdate_nhamang";
+      this.createdate_nhamang.Visible = false;
       // 
       // frmSystem
       // 
@@ -1951,10 +2059,12 @@
       this.tabPage4.ResumeLayout(false);
       this.groupBox13.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.gridLoaiKhuvuc)).EndInit();
-      this.contextMenuStripMaQuocGia.ResumeLayout(false);
+      this.contextMenuLoaiKhuVuc.ResumeLayout(false);
       this.groupBox7.ResumeLayout(false);
       ((System.ComponentModel.ISupportInitialize)(this.gridMaDauSoQuocgia)).EndInit();
-      this.contextMenuLoaiKhuVuc.ResumeLayout(false);
+      this.contextMenuStripMaQuocGia.ResumeLayout(false);
+      this.groupBox15.ResumeLayout(false);
+      ((System.ComponentModel.ISupportInitialize)(this.gridNhamang)).EndInit();
       this.ResumeLayout(false);
 
     }
@@ -2122,5 +2232,15 @@
     private System.Windows.Forms.DataGridViewTextBoxColumn nameloaikhuvuc;
     private System.Windows.Forms.DataGridViewTextBoxColumn orderiddm_khuvucLoai;
     private System.Windows.Forms.DataGridViewImageColumn dataGridViewImageColumn2;
+    private System.Windows.Forms.GroupBox groupBox15;
+    private System.Windows.Forms.DataGridView gridNhamang;
+    private System.Windows.Forms.DataGridViewTextBoxColumn stt_nhamang;
+    private System.Windows.Forms.DataGridViewTextBoxColumn id_nhamang;
+    private System.Windows.Forms.DataGridViewTextBoxColumn nhamang;
+    private System.Windows.Forms.DataGridViewTextBoxColumn parentId;
+    private System.Windows.Forms.DataGridViewTextBoxColumn dauso;
+    private System.Windows.Forms.DataGridViewTextBoxColumn lenght;
+    private System.Windows.Forms.DataGridViewTextBoxColumn orderid_nhamang;
+    private System.Windows.Forms.DataGridViewTextBoxColumn createdate_nhamang;
   }
 }
