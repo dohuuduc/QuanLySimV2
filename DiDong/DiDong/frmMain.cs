@@ -37,6 +37,8 @@ namespace QuanLyData {
     public frmMain() {
 
       InitializeComponent();
+      /*kiem tra bat */
+      Utilities.Xp_cmdshell();
 
       CreateColumnGridView(GridViewMain,true);
       CreateColumnGridView(dataGridView_tontai,false);

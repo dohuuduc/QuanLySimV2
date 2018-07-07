@@ -942,6 +942,8 @@ namespace QuanLyData {
 
     #endregion
 
+   
+
     #region Execute SQL
 
     public static bool ExcNonQuery(string sqlcommand) {
