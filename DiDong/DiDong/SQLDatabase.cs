@@ -14,6 +14,7 @@ namespace QuanLyData {
     public bool DelImportTruocImport { get; set; }
     public int MaxTop { get; set; }
     public bool IsExportTxt { get; set; }
+        public bool isRemoveCharInFileImport { get; set; }
   }
   public class dm_batdongbo {
     public int id { get; set; }
@@ -34,7 +35,7 @@ namespace QuanLyData {
     public bool isSearch { get; set; }
     public int orderid { get; set; }
   }
-  public class dm_Character {
+  public class dm_Font {
     public Guid id { get; set; }
     public string ma { get; set; }
     public string name { get; set; }
@@ -89,8 +90,14 @@ namespace QuanLyData {
     public string name { get; set; }
     public int loai { get; set; }
   }
+    public class dm_Char
+    {
+        public int id { get; set; }
+        public string Char { get; set; }
+        public string note { get; set; }
+    }
 
-  class SQLDatabase {
+    class SQLDatabase {
     #region Fields
     public static string ConnectionString {
       get {
@@ -427,8 +434,10 @@ namespace QuanLyData {
             InfoCOMMANDTABLE.MaxTop = reader.GetInt32(2);
           if (!reader.IsDBNull(3))
             InfoCOMMANDTABLE.IsExportTxt = reader.GetBoolean(3);
+                    if (!reader.IsDBNull(4))
+                        InfoCOMMANDTABLE.isRemoveCharInFileImport = reader.GetBoolean(4);
 
-          InfoCOMMANDTABLEs.Add(InfoCOMMANDTABLE);
+                    InfoCOMMANDTABLEs.Add(InfoCOMMANDTABLE);
         }
         return InfoCOMMANDTABLEs;
       }
@@ -459,15 +468,17 @@ namespace QuanLyData {
         cmd.CommandText = "Update cau_hinh " +
                             " Set   DelImportTruocImport=@DelImportTruocImport," +
                             "       MaxTop=@MaxTop," +
-                            "       IsExportTxt=@IsExportTxt"+
+                            "       IsExportTxt=@IsExportTxt,"+
+                            "       isRemoveCharInFileImport=@isRemoveCharInFileImport " +
                             " where ID='" + record.id + "'";
         cmd.CommandType = CommandType.Text;
 
         cmd.Parameters.AddWithValue("@DelImportTruocImport", record.DelImportTruocImport);
         cmd.Parameters.AddWithValue("@MaxTop", record.MaxTop);
         cmd.Parameters.AddWithValue("@IsExportTxt", record.IsExportTxt);
+                cmd.Parameters.AddWithValue("@isRemoveCharInFileImport", record.isRemoveCharInFileImport);
 
-        cmd.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();
         return true;
       }
       catch (Exception ex) {
@@ -482,17 +493,17 @@ namespace QuanLyData {
 
     #endregion
 
-    #region dm_Character
+    #region dm_Font
 
-    public static List<dm_Character> Loaddm_Character(string sql) {
+    public static List<dm_Font> Loaddm_Character(string sql) {
       SqlConnection cnn = null;
       SqlCommand cmd = null;
       SqlDataReader reader = null;
-      dm_Character InfoCOMMANDTABLE;
-      List<dm_Character> InfoCOMMANDTABLEs = null;
+      dm_Font InfoCOMMANDTABLE;
+      List<dm_Font> InfoCOMMANDTABLEs = null;
 
       try {
-        InfoCOMMANDTABLEs = new List<dm_Character>();
+        InfoCOMMANDTABLEs = new List<dm_Font>();
 
         cnn = new SqlConnection();
         cnn.ConnectionString = ConnectionString;
@@ -504,7 +515,7 @@ namespace QuanLyData {
         cmd.Connection = cnn;
         reader = cmd.ExecuteReader();
         while (reader.Read()) {
-          InfoCOMMANDTABLE = new dm_Character();
+          InfoCOMMANDTABLE = new dm_Font();
 
 
           if (!reader.IsDBNull(0))
@@ -530,7 +541,7 @@ namespace QuanLyData {
       }
     }
 
-    public static bool Updm_Character(dm_Character record) {
+    public static bool Updm_Character(dm_Font record) {
       SqlConnection connection = null;
       SqlCommand cmd = null;
 
@@ -545,7 +556,7 @@ namespace QuanLyData {
         // Create command to update GeneralGuessGroup record
         cmd = new SqlCommand();
         cmd.Connection = connection;
-        cmd.CommandText = "Update dm_Character " +
+        cmd.CommandText = "Update dm_Font " +
                             " Set   ma=@ma," +
                             "       name=@name," +
                             "       isAct=@isAct," +
@@ -571,7 +582,7 @@ namespace QuanLyData {
       }
     }
 
-    public static bool Adddm_Character(dm_Character record) {
+    public static bool Adddm_Character(dm_Font record) {
       SqlConnection cnn = null;
       SqlCommand cmd = null;
       try {
@@ -586,7 +597,7 @@ namespace QuanLyData {
         cmd = new SqlCommand();
         cmd.Connection = cnn;
         //--- Insert Record
-        cmd.CommandText = "Insert into dm_Character( ma, name, isAct, orderid) OUTPUT inserted.id " +
+        cmd.CommandText = "Insert into dm_Font( ma, name, isAct, orderid) OUTPUT inserted.id " +
                             "values( @ma, @name, @isAct, @orderid)";
 
         cmd.Parameters.AddWithValue("@ma", record.ma);
@@ -940,13 +951,145 @@ namespace QuanLyData {
       }
     }
 
-    #endregion
+        #endregion
 
-   
+        #region dm_Char
+        public static List<dm_Char> Loaddm_Char(string sql)
+        {
+            SqlConnection cnn = null;
+            SqlCommand cmd = null;
+            SqlDataReader reader = null;
+            dm_Char InfoCOMMANDTABLE;
+            List<dm_Char> InfoCOMMANDTABLEs = null;
 
-    #region Execute SQL
+            try
+            {
+                InfoCOMMANDTABLEs = new List<dm_Char>();
 
-    public static bool ExcNonQuery(string sqlcommand) {
+                cnn = new SqlConnection();
+                cnn.ConnectionString = ConnectionString;
+                cnn.Open();
+                cnn.FireInfoMessageEventOnUserErrors = false;
+
+                cmd = new SqlCommand();
+                cmd.CommandText = sql;
+                cmd.Connection = cnn;
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    InfoCOMMANDTABLE = new dm_Char();
+
+                    //[id], [Char], [note]
+                    if (!reader.IsDBNull(0))
+                        InfoCOMMANDTABLE.id = reader.GetInt32(0);
+                    if (!reader.IsDBNull(1))
+                        InfoCOMMANDTABLE.Char = reader.GetString(1);
+                    if (!reader.IsDBNull(2))
+                        InfoCOMMANDTABLE.note = reader.GetString(2);
+                    InfoCOMMANDTABLEs.Add(InfoCOMMANDTABLE);
+                }
+                return InfoCOMMANDTABLEs;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if (cnn.State == ConnectionState.Open)
+                    cnn.Close();
+            }
+        }
+
+        public static bool Adddm_Char(dm_Char record)
+        {
+            SqlConnection cnn = null;
+            SqlCommand cmd = null;
+            object objectID = null;
+            try
+            {
+                if (record == null)
+                    return false;
+
+                cnn = new SqlConnection();
+                cnn.ConnectionString = ConnectionString;
+                cnn.FireInfoMessageEventOnUserErrors = false;
+                cnn.Open();
+
+                cmd = new SqlCommand();
+                cmd.Connection = cnn;
+                //--- Insert Record
+                cmd.CommandText = "Insert into dm_Char( [Char], [note]) OUTPUT inserted.id " +
+                                    "values( @Char, @note)";
+
+                cmd.Parameters.AddWithValue("@Char", record.Char);
+                cmd.Parameters.AddWithValue("@note", record.note);
+
+                objectID = cmd.ExecuteScalar();
+
+                if (objectID == null || objectID == DBNull.Value) return false;
+
+                record.id = Convert.ToInt32(objectID);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            finally
+            {
+                if (cnn.State == ConnectionState.Open)
+                    cnn.Close();
+            }
+        }
+
+        public static bool Updm_Char(dm_Char record)
+        {
+            SqlConnection connection = null;
+            SqlCommand cmd = null;
+
+            try
+            {
+                if (record == null) return false;
+
+                // Make connection to database
+                connection = new SqlConnection();
+                connection.ConnectionString = ConnectionString;
+                connection.FireInfoMessageEventOnUserErrors = false;
+                connection.Open();
+                cmd = new SqlCommand();
+                cmd.Connection = connection;
+                cmd.CommandText = "Update dm_Char " +
+                                    " Set   [Char]=@Char," +
+                                    "       note=@note " +
+                                    " where ID='" + record.id + "'";
+                cmd.CommandType = CommandType.Text;
+
+                cmd.Parameters.AddWithValue("@Char", record.Char);
+                cmd.Parameters.AddWithValue("@note", record.note);
+
+                cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Updm_Char");
+                return false;
+            }
+            finally
+            {
+                if (connection != null)
+                    connection.Close();
+            }
+        }
+
+        #endregion
+
+
+        #region Execute SQL
+
+        public static bool ExcNonQuery(string sqlcommand) {
       SqlConnection connection = null;
       SqlCommand command = null;
 

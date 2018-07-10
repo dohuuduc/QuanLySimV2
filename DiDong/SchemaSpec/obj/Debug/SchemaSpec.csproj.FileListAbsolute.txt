@@ -35,3 +35,4 @@ C:\Users\luulong\Documents\GitHub\QuanLySimV2\DiDong\DiDong\bin\Debug\SchemaSpec
 C:\Users\luulong\Documents\GitHub\QuanLySimV2\DiDong\SchemaSpec\obj\Debug\SchemaSpec.csproj.CoreCompileInputs.cache
 C:\Users\luulong\Documents\GitHub\QuanLySimV2\DiDong\SchemaSpec\obj\Debug\SchemaSpec.dll
 C:\Users\luulong\Documents\GitHub\QuanLySimV2\DiDong\SchemaSpec\obj\Debug\SchemaSpec.pdb
+C:\Users\luulong\Documents\GitHub\QuanLySimV2\DiDong\SchemaSpec\obj\Debug\SchemaSpec.csprojAssemblyReference.cache

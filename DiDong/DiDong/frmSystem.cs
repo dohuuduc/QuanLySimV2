@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -32,7 +33,7 @@ namespace QuanLyData {
       new Waiting(() => {
         cau_Hinh = SQLDatabase.Loadcau_hinh("select * from cau_hinh").FirstOrDefault();
         BindColumn();
-        BindCharacter();
+        BindFont();
         BindSQLBatdongbo();
         Bindparallelism();
         Binddm_madausoquocgia();
@@ -42,6 +43,7 @@ namespace QuanLyData {
         BindKhuVucLoai();
         BindLoaiKhuVuc();
         BindNhaMang();
+        BindChar();
       }).ShowDialog();
 
       if (cau_Hinh.MaxTop == -1) {
@@ -54,6 +56,8 @@ namespace QuanLyData {
       radText.Checked = cau_Hinh.IsExportTxt;
       radExcel.Checked = !cau_Hinh.IsExportTxt;
       ckhDelImport.Checked = cau_Hinh.DelImportTruocImport;
+      chkDelChartrongfile.Checked = cau_Hinh.isRemoveCharInFileImport;
+
       cmbChuanHoa.SelectedIndex = 0;
       cmbLoaiTinhThanhXa.SelectedIndex = 0;
 
@@ -258,9 +262,9 @@ namespace QuanLyData {
       }
     }
 
-    void BindCharacter() {
+    void BindFont() {
       try {
-        string str = string.Format("select * from dm_Character order by OrderId");
+        string str = string.Format("select * from dm_Font order by OrderId");
         DataTable tb = SQLDatabase.ExcDataTable(str);
         gridviewCharacter.Invoke((Action)delegate {
           gridviewCharacter.DataSource = tb;
@@ -308,9 +312,24 @@ namespace QuanLyData {
         MessageBox.Show(ex.Message, "BindGrid");
       }
     }
+        void BindChar()
+        {
+            try
+            {
 
+                string str = string.Format("select  ROW_NUMBER() OVER(ORDER BY id) AS stt,* from dm_Char");
+                DataTable tb = SQLDatabase.ExcDataTable(str);
+                gridchar.Invoke((Action)delegate {
+                    gridchar.DataSource = tb;
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "BindGrid");
+            }
+        }
 
-    private void cậpNhậtToolStripMenuItem_Click(object sender, EventArgs e) {
+        private void cậpNhậtToolStripMenuItem_Click(object sender, EventArgs e) {
       try {
         string str = string.Format("SELECT COLUMN_NAME,CHARACTER_MAXIMUM_LENGTH FROM {0}.INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = N'Root' AND CHARACTER_MAXIMUM_LENGTH IS NOT NULL", _strDatabase);
         DataTable tb = SQLDatabase.ExcDataTable(str);
@@ -445,7 +464,7 @@ namespace QuanLyData {
           bool isActive = (Boolean)gridviewCharacter.Rows[e.RowIndex].Cells["isActCharacter"].Value;
           int vitri = ConvertType.ToInt(gridviewCharacter.Rows[e.RowIndex].Cells["orderidCharacter"].Value);
 
-          dm_Character dm_column = SQLDatabase.Loaddm_Character(string.Format("select * from dm_Character where id='{0}'", Id)).FirstOrDefault();
+          dm_Font dm_column = SQLDatabase.Loaddm_Character(string.Format("select * from dm_Font where id='{0}'", Id)).FirstOrDefault();
           dm_column.ma = ma;
           dm_column.name = name;
           dm_column.isAct = isActive;
@@ -461,18 +480,18 @@ namespace QuanLyData {
     }
 
     private void lamTươiToolStripMenuItem_Click(object sender, EventArgs e) {
-      BindCharacter();
+      BindFont();
     }
 
     private void thêmToolStripMenuItem_Click(object sender, EventArgs e) {
       try {
-        dm_Character model = new dm_Character();
+        dm_Font model = new dm_Font();
         model.ma = "";
         model.name = "";
         model.isAct = false;
-        model.orderid = ConvertType.ToInt(SQLDatabase.ExcDataTable(string.Format("select max([orderid]) from dm_Character")).Rows[0][0]) + 1;
+        model.orderid = ConvertType.ToInt(SQLDatabase.ExcDataTable(string.Format("select max([orderid]) from dm_Font")).Rows[0][0]) + 1;
         SQLDatabase.Adddm_Character(model);
-        BindCharacter();
+        BindFont();
       }
       catch (Exception ex) {
         MessageBox.Show(ex.Message, "thêmToolStripMenuItem_Click");
@@ -487,8 +506,8 @@ namespace QuanLyData {
             DialogResult dialogResult = MessageBox.Show("Bạn có chắc là sẽ xoá Character?", "Xoá Character", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes) {
               //do something
-              SQLDatabase.ExcNonQuery(String.Format("DELETE FROM dm_Character WHERE ID='{0}'", Id));
-              BindCharacter();
+              SQLDatabase.ExcNonQuery(String.Format("DELETE FROM dm_Font WHERE ID='{0}'", Id));
+              BindFont();
             }
           }
         }
@@ -532,8 +551,8 @@ namespace QuanLyData {
         }
       }
 
-      SQLDatabase.ExcNonQuery("update dm_Character set [isAct]=0");
-      SQLDatabase.ExcNonQuery(string.Format("update dm_Character set [isAct]=1 where id='{0}'", id));
+      SQLDatabase.ExcNonQuery("update dm_Font set [isAct]=0");
+      SQLDatabase.ExcNonQuery(string.Format("update dm_Font set [isAct]=1 where id='{0}'", id));
     }
 
     private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
@@ -542,34 +561,7 @@ namespace QuanLyData {
       linkLabel1.Links.Add(link);
     }
 
-    //private void button3_Click(object sender, EventArgs e) {
-    //  try {
-    //    dm_batdongbo model = SQLDatabase.Loaddm_batdongbo("select * from dm_batdongbo where isAct=1").FirstOrDefault();
-    //    bool isUpdateAll = cmbChuanHoa.SelectedIndex == 0 ? false : true;
-    //    new Waiting(() => {
-    //      if (isUpdateAll) {
-    //        SQLDatabase.ExcNonQuery(String.Format("update root WITH(TABLOCK) set isSearch = 0 {0}", model.ma));
-    //      }
-    //      else {
-    //        List<dm_column> dm_Columns = SQLDatabase.Loaddm_column("select * from dm_column where isSearch=1  order by orderid ");
-    //        string strcommand = "update dbo.root WITH(TABLOCK) set valueskeySearch=";
-    //        string dscot = "";
-    //        foreach (dm_column item in dm_Columns) {
-    //          dscot += string.Format("isnull({0},'') +", item.ma);
-    //        }
-    //        dscot = dscot.Substring(0, dscot.Length - 1);
-    //        strcommand += string.Format(" dbo.GetUnsignString({0}) ", dscot);
-    //        strcommand += ", isSearch=1 where isSearch=0 ";
-    //        strcommand += string.Format(" {0} ", model.ma);
-    //        SQLDatabase.ExcNonQuery(strcommand);
-    //      }
-    //    }).ShowDialog();
-    //    MessageBox.Show("Chuẩn hoá thông tin tìm kiếm thành công", "Thông Báo");
-    //  }
-    //  catch (Exception ex) {
-    //    MessageBox.Show(ex.Message, "button3_Click");
-    //  }
-    //}
+   
 
     private void button1_Click(object sender, EventArgs e) {
       try {
@@ -577,7 +569,7 @@ namespace QuanLyData {
         cau_Hinh.DelImportTruocImport = ckhDelImport.Checked;
         cau_Hinh.MaxTop = ckhSoLuongHienThi.Checked ? -1 : ConvertType.ToInt(numericUpDown1.Value);
         cau_Hinh.IsExportTxt = radText.Checked;
-        //cau_Hinh.idBatdongbo = ConvertType.ToInt(cmdBatDongBo.SelectedValue);
+        cau_Hinh.isRemoveCharInFileImport = chkDelChartrongfile.Checked;
         if (SQLDatabase.Upcau_hinh(cau_Hinh)) {
           MessageBox.Show("Lưu cấu hình thành công, vui lòng khởi động lại hệ thống", "Thông Báo");
         }
@@ -1186,5 +1178,78 @@ namespace QuanLyData {
         MessageBox.Show(ex.Message, "thêmToolStripMenuItem2_Click");
       }
     }
-  }
+
+        private void lamTươiToolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            BindChar();
+        }
+
+        private void gridchar_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.ColumnIndex != -1)
+                {
+                    if (e.ColumnIndex == 0)
+                    {
+                        string Id = gridchar.Rows[e.RowIndex].Cells["id_char"].Value.ToString();
+                        DialogResult dialogResult = MessageBox.Show("Bạn có chắc là sẽ char?", "Xoá char", MessageBoxButtons.YesNo);
+                        if (dialogResult == DialogResult.Yes)
+                        {
+                            SQLDatabase.ExcNonQuery(String.Format("DELETE FROM dm_char WHERE ID='{0}'", Id));
+                            BindChar();
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "gridLoaiKhuvuc_CellClick");
+            }
+        }
+
+        private void gridchar_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+
+                if (e.RowIndex != -1)
+                {
+                    string Id = gridchar.Rows[e.RowIndex].Cells["id_char"].Value.ToString();
+                    string char_char = gridchar.Rows[e.RowIndex].Cells["char_char"].Value.ToString();
+                    string note = gridchar.Rows[e.RowIndex].Cells["note_char"].Value.ToString();
+                    dm_Char madauso = SQLDatabase.Loaddm_Char(string.Format("select * from [dm_char] where id='{0}'", Id)).FirstOrDefault();
+                    madauso.Char = char_char;
+                    madauso.note = note;
+                    SQLDatabase.Updm_Char(madauso);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unable to save the record. There might be a blank cell. ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void thêmToolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                dm_Char model = new dm_Char();
+                model.Char = "";
+                model.note = "";
+                SQLDatabase.Adddm_Char(model);
+                BindChar();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "thêmToolStripMenuItem2_Click");
+            }
+        }
+
+        private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("https://www.dotnetperls.com/ascii-table");
+        }
+    }
 }
